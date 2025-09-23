@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast - Dự báo thời tiết</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --primary-light: #4285f4;
+            --secondary: #34a853;
+            --accent: #fbbc05;
+            --accent-dark: #f9ab00;
+            --danger: #ea4335;
+            --light: #f8f9fa;
+            --light-blue: #e8f0fe;
+            --dark: #202124;
+            --text: #3c4043;
+            --text-light: #5f6368;
+            --border: #dadce0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-light: 0 2px 6px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+            --gradient-primary: linear-gradient(135deg, #1a73e8, #4285f4);
+            --gradient-sunny: linear-gradient(135deg, #ffd740, #ffab00);
+            --gradient-cloudy: linear-gradient(135deg, #bbdefb, #64b5f6);
+            --gradient-rainy: linear-gradient(135deg, #80deea, #4dd0e1);
+            --gradient-night: linear-gradient(135deg, #5c6bc0, #3949ab);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 18px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            margin-right: 12px;
+            font-size: 2rem;
+            color: var(--accent);
+        }
+
+        .search-container {
+            display: flex;
+            flex: 1;
+            max-width: 500px;
+            margin: 0 25px;
+            position: relative;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+
+        .search-btn {
+            background: var(--accent);
+            color: var(--dark);
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            margin-left: 10px;
+            box-shadow: var(--shadow-light);
+        }
+
+        .search-btn:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .language-select, .region-select {
+            padding: 10px 15px;
+            border: none;
+            border-radius: var(--radius);
+            margin-left: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .language-select:hover, .region-select:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .language-select option, .region-select option {
+            color: var(--dark);
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            padding: 30px 0;
+        }
+
+        .api-section {
+            background: white;
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+            transition: transform 0.3s;
+        }
+
+        .api-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+
+        .section-icon {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        /* Current Weather */
+        .current-weather {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .weather-main {
+            text-align: center;
+            padding: 25px;
+            background: var(--gradient-sunny);
+            border-radius: var(--radius);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .weather-icon {
+            font-size: 5rem;
+            margin-bottom: 15px;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .temperature {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .weather-description {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .location {
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+
+        .weather-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background: var(--light-blue);
+            border-radius: var(--radius);
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .detail-item:hover {
+            background: #dbeafe;
+            transform: translateX(5px);
+        }
+
+        .detail-item i {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-right: 10px;
+        }
+
+        .detail-label {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Forecast */
+        .forecast-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px;
+        }
+
+        .forecast-day {
+            text-align: center;
+            padding: 20px 15px;
+            background: var(--light-blue);
+            border-radius: var(--radius);
+            transition: all 0.3s;
+            box-shadow: var(--shadow-light);
+        }
+
+        .forecast-day:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow);
+        }
+
+        .forecast-date {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+
+        .forecast-icon {
+            font-size: 2.5rem;
+            margin: 15px 0;
+            color: var(--primary);
+        }
+
+        .forecast-temp {
+            display: flex;
+            justify-content: space-around;
+            font-weight: 600;
+        }
+
+        .max-temp {
+            color: var(--danger);
+        }
+
+        .min-temp {
+            color: var(--primary);
+        }
+
+        /* Search Results */
+        .search-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .search-result {
+            padding: 20px;
+            background: var(--light-blue);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-light);
+        }
+
+        .search-result:hover {
+            background: #dbeafe;
+            transform: scale(1.03);
+        }
+
+        /* Alerts */
+        .alert-item {
+            padding: 20px;
+            background: #ffecb3;
+            border-left: 5px solid var(--accent);
+            border-radius: var(--radius);
+            margin-bottom: 15px;
+            box-shadow: var(--shadow-light);
+        }
+
+        .alert-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .alert-icon {
+            color: var(--accent-dark);
+            margin-right: 12px;
+            font-size: 1.5rem;
+        }
+
+        /* Future Forecast */
+        .future-forecast {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .future-day {
+            padding: 20px;
+            background: var(--light-blue);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s;
+        }
+
+        .future-day:hover {
+            transform: translateY(-5px);
+        }
+
+        .future-date {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        /* Marine */
+        .marine-data {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .marine-item {
+            padding: 20px;
+            background: var(--light-blue);
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s;
+        }
+
+        .marine-item:hover {
+            transform: scale(1.05);
+        }
+
+        .marine-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .marine-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Astronomy */
+        .astronomy-data {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .sun-phase, .moon-phase {
+            text-align: center;
+            padding: 25px;
+            background: var(--gradient-night);
+            border-radius: var(--radius);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .sun-phase h3, .moon-phase h3 {
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+
+        .sunrise, .sunset {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
+            font-size: 1.2rem;
+        }
+
+        .sunrise i, .sunset i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .moon-icon {
+            font-size: 4rem;
+            margin: 15px 0;
+        }
+
+        /* Timezone */
+        .timezone-info {
+            text-align: center;
+            padding: 30px;
+            background: var(--gradient-primary);
+            border-radius: var(--radius);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .timezone-name {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .local-time {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 15px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Sports */
+        .sports-events {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .sport-event {
+            padding: 20px;
+            background: var(--light-blue);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s;
+        }
+
+        .sport-event:hover {
+            background: #dbeafe;
+            transform: translateY(-5px);
+        }
+
+        .sport-name {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            color: var(--accent);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-section ul li i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+
+        .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .copyright {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: #bdc3c7;
+        }
+
+        /* Weather condition backgrounds */
+        .weather-sunny {
+            background: var(--gradient-sunny);
+        }
+
+        .weather-cloudy {
+            background: var(--gradient-cloudy);
+        }
+
+        .weather-rainy {
+            background: var(--gradient-rainy);
+        }
+
+        .weather-night {
+            background: var(--gradient-night);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+
+            .search-container {
+                margin: 20px 0;
+                max-width: 100%;
+            }
+
+            .header-controls {
+                margin-top: 20px;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .current-weather {
+                grid-template-columns: 1fr;
+            }
+
+            .astronomy-data {
+                grid-template-columns: 1fr;
+            }
+
+            .weather-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header với tìm kiếm và lựa chọn -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-cloud-sun"></i>
+                    <span>Weather Forecast</span>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Tìm kiếm thành phố, khu vực...">
+                    <button class="search-btn"><i class="fas fa-search"></i> Tìm kiếm</button>
+                </div>
+                
+                <div class="header-controls">
+                    <select class="language-select">
+                        <option value="vi">Tiếng Việt</option>
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="es">Español</option>
+                    </select>
+                    
+                    <select class="region-select">
+                        <option value="vn">Việt Nam</option>
+                        <option value="us">United States</option>
+                        <option value="uk">United Kingdom</option>
+                        <option value="fr">France</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Nội dung chính với các phần API -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Current Weather API -->
+            <section class="api-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-temperature-high"></i> Thời tiết hiện tại</h2>
+                    <i class="fas fa-sun section-icon"></i>
+                </div>
+                <div class="current-weather">
+                    <div class="weather-main weather-sunny">
+                        <i class="fas fa-sun weather-icon"></i>
+                        <div class="temperature">28°C</div>
+                        <div class="weather-description">Nắng đẹp</div>
+                        <div class="location">Hà Nội, Việt Nam</div>
+                    </div>
+                    <div class="weather-details">
+                        <div class="detail-item">
+                            <div class="detail-label">
+                                <i class="fas fa-tint"></i>
+                                <span>Độ ẩm</span>
+                            </div>
+                            <span>65%</span>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">
+                                <i class="fas fa-wind"></i>
+                                <span>Gió</span>
+                            </div>
+                            <span>10 km/h</span>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <span>Áp suất</span>
+                            </div>
+                            <span>1013 hPa</span>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">
+                                <i class="fas fa-eye"></i>
+                                <span>Tầm nhìn</span>
+                            </div>
+                            <span>10 km</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Forecast API -->
+            <section class="api-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-calendar-alt"></i> Dự báo 5 ngày</h2>
+                    <i class="fas fa-chart-line section-icon"></i>
+                </div>
+                <div class="forecast-container">
+                    <div class="forecast-day">
+                        <div class="forecast-date">Thứ 4</div>
+                        <i class="fas fa-sun forecast-icon"></i>
+                        <div class="forecast-temp">
+                            <span class="max-temp">30°C</span>
+                            <span class="min-temp">25°C</span>
+                        </div>
+                    </div>
+                    <div class="forecast-day">
+                        <div class="forecast-date">Thứ 5</div>
+                        <i class="fas fa-cloud-sun forecast-icon"></i>
+                        <div class="forecast-temp">
+                            <span class="max-temp">29°C</span>
+                            <span class="min-temp">24°C</span>
+                        </div>
+                    </div>
+                    <div class="forecast-day">
+                        <div class="forecast-date">Thứ 6</div>
+                        <i class="fas fa-cloud forecast-icon"></i>
+                        <div class="forecast-temp">
+                            <span class="max-temp">28°C</span>
+                            <span class="min-temp">23°C</span>
+                        </div>
+                    </div>
+                    <div class="forecast-day">
+                        <div class="forecast-date">Thứ 7</div>
+                        <i class="fas fa-cloud-rain forecast-icon"></i>
+                        <div class="forecast-temp">
+                            <span class="max-temp">27°C</span>
+                            <span class="min-temp">22°C</span>
+                        </div>
+                    </div>
+                    <div class="forecast-day">
+                        <div class="forecast-date">Chủ nhật</div>
+                        <i class="fas fa-sun forecast-icon"></i>
+                        <div class="forecast-temp">
+                            <span class="max-temp">29°C</span>
+                            <span class="min-temp">24°C</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Search API -->
+            <section class="api-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-search"></i> Kết quả tìm kiếm</h2>
+                    <i class="fas fa-map-marker-alt section-icon"></i>
+                </div>
+                <div class="search-results">
+                    <div class="search-result">
+                        <div class="location">Hà Nội, Việt Nam</div>
+                        <div class="temperature">28°C</div>
+                    </div>
+                    <div class="search-result">
+                        <div class="location">Hồ Chí Minh, Việt Nam</div>
+                        <div class="temperature">32°C</div>
+                    </div>
+                    <div class="search-result">
+                        <div class="location">Đà Nẵng, Việt Nam</div>
+                        <div class="temperature">30°C</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Alerts API -->
+            <section class="api-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-exclamation-triangle"></i> Cảnh báo thời tiết</h2>
+                    <i class="fas fa-bell section-icon"></i>
+                </div>
+                <div class="alert-item">
+                    <div class="alert-title">
+                        <i class="fas fa-bolt alert-icon"></i>
+                        <strong>Cảnh báo mưa lớn</strong>
+                    </div>
+                    <div class="alert-description">
+                        Dự báo mưa lớn kèm giông lốc tại khu vực Hà Nội từ 15:00 đến 18:00.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Future API -->
+            <section class="api-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-chart-line"></i> Dự báo tương lai</h2>
+                    <i class="fas fa-clock section-icon"></i>
+                </div>
+                <div class="future-forecast">
+                    <div class="future-day">
+                        <div class="future-date">Tuần tới</div>
+                        <div class="future-temp">Nhiệt độ trung bình: 28°C</div>
+                        <div class="future-desc">Thời tiết ổn định, có mưa rào vào cuối tuần</div>
+                    </div>
+                    <div class="future-day">
+                        <div class="future-date">Tháng tới</div>
+                        <div class="future-temp">Nhiệt độ trung bình: 26°C</div>
+                        <div class="future-desc">Bắt đầu mùa mưa, độ ẩm tăng cao</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Marine API -->
+            <section class="api-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-water"></i> Thời tiết biển</h2>
+                    <i class="fas fa-ship section-icon"></i>
+                </div>
+                <div class="marine-data">
+                    <div class="marine-item">
+                        <div class="marine-title">Nhiệt độ nước biển</div>
+                        <div class="marine-value">27°C</div>
+                    </div>
+                    <div class="marine-item">
+                        <div class="marine-title">Sóng biển</div>
+                        <div class="marine-value">0.5 - 1.5m</div>
+                    </div>
+                    <div class="marine-item">
+                        <div class="marine-title">Thủy triều</div>
+                        <div class="marine-value">1.2m</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Astronomy API -->
+            <section class="api-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-moon"></i> Thiên văn</h2>
+                    <i class="fas fa-star section-icon"></i>
+                </div>
+                <div class="astronomy-data">
+                    <div class="sun-phase">
+                        <h3>Mặt trời</h3>
+                        <div class="sunrise">
+                            <i class="fas fa-sun"></i>
+                            <div>Mọc: 5:42 AM</div>
+                        </div>
+                        <div class="sunset">
+                            <i class="fas fa-moon"></i>
+                            <div>Lặn: 6:15 PM</div>
+                        </div>
+                    </div>
+                    <div class="moon-phase">
+                        <h3>Mặt trăng</h3>
+                        <div class="moon-icon">
+                            <i class="fas fa-moon"></i>
+                        </div>
+                        <div class="moon-phase-name">Trăng khuyết đầu tháng</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Timezone API -->
+            <section class="api-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-clock"></i> Múi giờ</h2>
+                    <i class="fas fa-globe section-icon"></i>
+                </div>
+                <div class="timezone-info">
+                    <div class="timezone-name">Múi giờ: GMT+7</div>
+                    <div class="local-time">15:30:45</div>
+                    <div class="timezone-date">Thứ Tư, 12 tháng 7, 2023</div>
+                </div>
+            </section>
+
+            <!-- Sports API -->
+            <section class="api-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-running"></i> Thời tiết thể thao</h2>
+                    <i class="fas fa-futbol section-icon"></i>
+                </div>
+                <div class="sports-events">
+                    <div class="sport-event">
+                        <div class="sport-name">Bóng đá</div>
+                        <div class="event-details">Trận đấu: Việt Nam vs Thái Lan</div>
+                        <div class="weather-condition">Thời tiết: Nắng nhẹ, 28°C</div>
+                    </div>
+                    <div class="sport-event">
+                        <div class="sport-name">Tennis</div>
+                        <div class="event-details">Giải quần vợt quốc tế</div>
+                        <div class="weather-condition">Thời tiết: Ít mây, 27°C</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Về chúng tôi</h3>
+                    <p>Weather Forecast cung cấp thông tin thời tiết chính xác và cập nhật nhất cho mọi khu vực trên thế giới.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Liên kết nhanh</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i><a href="#">Trang chủ</a></li>
+                        <li><i class="fas fa-chevron-right"></i><a href="#">Dự báo</a></li>
+                        <li><i class="fas fa-chevron-right"></i><a href="#">Bản đồ thời tiết</a></li>
+                        <li><i class="fas fa-chevron-right"></i><a href="#">Tin tức</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>API</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i><a href="#">Tài liệu API</a></li>
+                        <li><i class="fas fa-chevron-right"></i><a href="#">Đăng ký API Key</a></li>
+                        <li><i class="fas fa-chevron-right"></i><a href="#">Hướng dẫn sử dụng</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Liên hệ</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> contact@weatherforecast.com</li>
+                        <li><i class="fas fa-phone"></i> +84 123 456 789</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Hà Nội, Việt Nam</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Weather Forecast. Tất cả các quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Xử lý tìm kiếm
+        document.querySelector('.search-btn').addEventListener('click', function() {
+            const searchTerm = document.querySelector('.search-input').value;
+            if (searchTerm.trim() !== '') {
+                alert(`Đang tìm kiếm thông tin thời tiết cho: ${searchTerm}`);
+                // Ở đây sẽ gọi API tìm kiếm thực tế
+            }
+        });
+
+        // Xử lý nhấn Enter trong ô tìm kiếm
+        document.querySelector('.search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('.search-btn').click();
+            }
+        });
+
+        // Cập nhật thời gian thực
+        function updateTime() {
+            const now = new Date();
+            const timeElement = document.querySelector('.local-time');
+            const dateElement = document.querySelector('.timezone-date');
+            
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            
+            timeElement.textContent = now.toLocaleTimeString('vi-VN');
+            dateElement.textContent = now.toLocaleDateString('vi-VN', options);
+        }
+
+        // Cập nhật thời gian mỗi giây
+        setInterval(updateTime, 1000);
+        updateTime(); // Gọi lần đầu
+
+        // Xử lý chọn kết quả tìm kiếm
+        document.querySelectorAll('.search-result').forEach(item => {
+            item.addEventListener('click', function() {
+                const location = this.querySelector('.location').textContent;
+                document.querySelector('.search-input').value = location;
+                alert(`Đang tải thông tin thời tiết cho: ${location}`);
+                // Ở đây sẽ gọi API để cập nhật thông tin thời tiết
+            });
+        });
+
+        // Thêm hiệu ứng hover cho các phần tử
+        document.querySelectorAll('.api-section').forEach(section => {
+            section.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.15)';
+            });
+            
+            section.addEventListener('mouseleave', function() {
+                this.style.boxShadow = 'var(--shadow)';
+            });
+        });
+    </script>
+</body>
+</html>

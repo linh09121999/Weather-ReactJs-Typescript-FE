@@ -2,6 +2,31 @@ import React, { createContext, useContext, useState } from "react";
 import type { JSX, ReactNode } from "react";
 import { useMediaQuery } from "@mui/material"
 
+import {
+    FaFacebookF,
+    FaLinkedinIn,
+    FaUser,
+    FaHome,
+    FaMapMarkerAlt,
+    FaAngleDoubleUp,
+} from "react-icons/fa";
+import { CgMenu } from "react-icons/cg";
+import {
+    IoClose,
+    IoHomeOutline
+} from "react-icons/io5";
+import {
+    MdNavigateNext,
+    MdOutlineBusinessCenter,
+    MdOutlineScience,
+    MdOutlineSportsBasketball,
+    MdOutlineHealthAndSafety
+} from "react-icons/md";
+import { RiMovie2AiLine } from "react-icons/ri";
+import { GrTechnology } from "react-icons/gr";
+import { TbBrandGithubFilled } from "react-icons/tb";
+import { IoMdSearch } from "react-icons/io";
+
 // Định nghĩa interface cho cấu trúc dữ liệu vị trí
 export interface Location {
     name: string;
@@ -290,46 +315,263 @@ export interface Lang {
 }
 
 const defaultLang: Lang[] = [
-    { id: "ar", title: "Arabic", img: "https://flagcdn.com/w40/sa.png" },
-    { id: "bn", title: "Bengali", img: "https://flagcdn.com/w40/bd.png" },
-    { id: "bg", title: "Bulgarian", img: "https://flagcdn.com/w40/bg.png" },
-    { id: "zh", title: "Chinese Simplified", img: "https://flagcdn.com/w40/cn.png" },
-    { id: "zh_tw", title: "Chinese Traditional", img: "https://flagcdn.com/w40/tw.png" },
-    { id: "cs", title: "Czech", img: "https://flagcdn.com/w40/cz.png" },
-    { id: "da", title: "Danish", img: "https://flagcdn.com/w40/dk.png" },
-    { id: "nl", title: "Dutch", img: "https://flagcdn.com/w40/nl.png" },
-    { id: "fi", title: "Finnish", img: "https://flagcdn.com/w40/fi.png" },
-    { id: "fr", title: "French", img: "https://flagcdn.com/w40/fr.png" },
-    { id: "de", title: "German", img: "https://flagcdn.com/w40/de.png" },
-    { id: "el", title: "Greek", img: "https://flagcdn.com/w40/gr.png" },
-    { id: "hi", title: "Hindi", img: "https://flagcdn.com/w40/in.png" },
-    { id: "hu", title: "Hungarian", img: "https://flagcdn.com/w40/hu.png" },
-    { id: "it", title: "Italian", img: "https://flagcdn.com/w40/it.png" },
-    { id: "ja", title: "Japanese", img: "https://flagcdn.com/w40/jp.png" },
-    { id: "jv", title: "Javanese", img: "https://flagcdn.com/w40/id.png" },
-    { id: "ko", title: "Korean", img: "https://flagcdn.com/w40/kr.png" },
-    { id: "zh_cmn", title: "Mandarin", img: "https://flagcdn.com/w40/cn.png" },
-    { id: "mr", title: "Marathi", img: "https://flagcdn.com/w40/in.png" },
-    { id: "pl", title: "Polish", img: "https://flagcdn.com/w40/pl.png" },
-    { id: "pt", title: "Portuguese", img: "https://flagcdn.com/w40/pt.png" },
-    { id: "pa", title: "Punjabi", img: "https://flagcdn.com/w40/in.png" },
-    { id: "ro", title: "Romanian", img: "https://flagcdn.com/w40/ro.png" },
-    { id: "ru", title: "Russian", img: "https://flagcdn.com/w40/ru.png" },
-    { id: "sr", title: "Serbian", img: "https://flagcdn.com/w40/rs.png" },
-    { id: "si", title: "Sinhalese", img: "https://flagcdn.com/w40/lk.png" },
-    { id: "sk", title: "Slovak", img: "https://flagcdn.com/w40/sk.png" },
-    { id: "es", title: "Spanish", img: "https://flagcdn.com/w40/es.png" },
-    { id: "sv", title: "Swedish", img: "https://flagcdn.com/w40/se.png" },
-    { id: "ta", title: "Tamil", img: "https://flagcdn.com/w40/in.png" },
-    { id: "te", title: "Telugu", img: "https://flagcdn.com/w40/in.png" },
-    { id: "tr", title: "Turkish", img: "https://flagcdn.com/w40/tr.png" },
-    { id: "uk", title: "Ukrainian", img: "https://flagcdn.com/w40/ua.png" },
-    { id: "ur", title: "Urdu", img: "https://flagcdn.com/w40/pk.png" },
-    { id: "vi", title: "Vietnamese", img: "https://flagcdn.com/w40/vn.png" },
-    { id: "zh_wuu", title: "Wu (Shanghainese)", img: "https://flagcdn.com/w40/cn.png" },
-    { id: "zh_hsn", title: "Xiang", img: "https://flagcdn.com/w40/cn.png" },
-    { id: "zh_yue", title: "Yue (Cantonese)", img: "https://flagcdn.com/w40/hk.png" },
-    { id: "zu", title: "Zulu", img: "https://flagcdn.com/w40/za.png" }
+    {
+        id: "ar",
+        title: "Arabic",
+        img: "https://flagcdn.com/w40/sa.png"
+    },
+    {
+        id: "bn",
+        title: "Bengali",
+        img: "https://flagcdn.com/w40/bd.png"
+    },
+    {
+        id: "bg",
+        title: "Bulgarian",
+        img: "https://flagcdn.com/w40/bg.png"
+    },
+    {
+        id: "zh",
+        title: "Chinese Simplified",
+        img: "https://flagcdn.com/w40/cn.png"
+    },
+    {
+        id: "zh_tw",
+        title: "Chinese Traditional",
+        img: "https://flagcdn.com/w40/tw.png"
+    },
+    {
+        id: "cs",
+        title: "Czech",
+        img: "https://flagcdn.com/w40/cz.png"
+    },
+    {
+        id: "da",
+        title: "Danish",
+        img: "https://flagcdn.com/w40/dk.png"
+    },
+    {
+        id: "nl",
+        title: "Dutch",
+        img: "https://flagcdn.com/w40/nl.png"
+    },
+    {
+        id: "fi",
+        title: "Finnish",
+        img: "https://flagcdn.com/w40/fi.png"
+    },
+    {
+        id: "fr",
+        title: "French",
+        img: "https://flagcdn.com/w40/fr.png"
+    },
+    {
+        id: "de",
+        title: "German",
+        img: "https://flagcdn.com/w40/de.png"
+    },
+    {
+        id: "el",
+        title: "Greek",
+        img: "https://flagcdn.com/w40/gr.png"
+    },
+    {
+        id: "hi",
+        title: "Hindi",
+        img: "https://flagcdn.com/w40/in.png"
+    },
+    {
+        id: "hu",
+        title: "Hungarian",
+        img: "https://flagcdn.com/w40/hu.png"
+    },
+    {
+        id: "it",
+        title: "Italian",
+        img: "https://flagcdn.com/w40/it.png"
+    },
+    {
+        id: "ja",
+        title: "Japanese",
+        img: "https://flagcdn.com/w40/jp.png"
+    },
+    {
+        id: "jv",
+        title: "Javanese",
+        img: "https://flagcdn.com/w40/id.png"
+    },
+    {
+        id: "ko",
+        title: "Korean",
+        img: "https://flagcdn.com/w40/kr.png"
+    },
+    {
+        id: "zh_cmn",
+        title: "Mandarin",
+        img: "https://flagcdn.com/w40/cn.png"
+    },
+    {
+        id: "mr",
+        title: "Marathi",
+        img: "https://flagcdn.com/w40/in.png"
+    },
+    {
+        id: "pl",
+        title: "Polish",
+        img: "https://flagcdn.com/w40/pl.png"
+    },
+    {
+        id: "pt",
+        title: "Portuguese",
+        img: "https://flagcdn.com/w40/pt.png"
+    },
+    {
+        id: "pa",
+        title: "Punjabi",
+        img: "https://flagcdn.com/w40/in.png"
+    },
+    {
+        id: "ro",
+        title: "Romanian",
+        img: "https://flagcdn.com/w40/ro.png"
+    },
+    {
+        id: "ru",
+        title: "Russian",
+        img: "https://flagcdn.com/w40/ru.png"
+    },
+    {
+        id: "sr",
+        title: "Serbian",
+        img: "https://flagcdn.com/w40/rs.png"
+    },
+    {
+        id: "si",
+        title: "Sinhalese",
+        img: "https://flagcdn.com/w40/lk.png"
+    },
+    {
+        id: "sk",
+        title: "Slovak",
+        img: "https://flagcdn.com/w40/sk.png"
+    },
+    {
+        id: "es",
+        title: "Spanish",
+        img: "https://flagcdn.com/w40/es.png"
+    },
+    {
+        id: "sv",
+        title: "Swedish",
+        img: "https://flagcdn.com/w40/se.png"
+    },
+    {
+        id: "ta",
+        title: "Tamil",
+        img: "https://flagcdn.com/w40/in.png"
+    },
+    {
+        id: "te",
+        title: "Telugu",
+        img: "https://flagcdn.com/w40/in.png"
+    },
+    {
+        id: "tr",
+        title: "Turkish",
+        img: "https://flagcdn.com/w40/tr.png"
+    },
+    {
+        id: "uk",
+        title: "Ukrainian",
+        img: "https://flagcdn.com/w40/ua.png"
+    },
+    {
+        id: "ur",
+        title: "Urdu",
+        img: "https://flagcdn.com/w40/pk.png"
+    },
+    {
+        id: "vi",
+        title: "Vietnamese",
+        img: "https://flagcdn.com/w40/vn.png"
+    },
+    {
+        id: "zh_wuu",
+        title: "Wu (Shanghainese)",
+        img: "https://flagcdn.com/w40/cn.png"
+    },
+    {
+        id: "zh_hsn",
+        title: "Xiang",
+        img: "https://flagcdn.com/w40/cn.png"
+    },
+    {
+        id: "zh_yue",
+        title: "Yue (Cantonese)",
+        img: "https://flagcdn.com/w40/hk.png"
+    },
+    {
+        id: "zu",
+        title: "Zulu",
+        img: "https://flagcdn.com/w40/za.png"
+    }
+]
+
+export interface Icons {
+    iconMenu: JSX.Element;
+    iconClose: JSX.Element;
+    iconBackToTop: JSX.Element;
+    iconMap: JSX.Element;
+    iconNext: JSX.Element;
+    iconUser: JSX.Element
+}
+
+const defaultIcons: Icons = {
+    iconMenu: <CgMenu />,
+    iconClose: <IoClose />,
+    iconBackToTop: <FaAngleDoubleUp />,
+    iconMap: <FaMapMarkerAlt size={30} />,
+    iconNext: <MdNavigateNext size={24} />,
+    iconUser: <FaUser />
+}
+
+export interface Header {
+    title: string;
+    iconSearch: JSX.Element;
+    descSearch: string;
+    date: Date | null;
+}
+
+const defaultHeader: Header = {
+    title: "Dự báo thời tiết",
+    iconSearch: <IoMdSearch />,
+    descSearch: "Tìm kiếm thành phố ...",
+    date: new Date()
+}
+
+export interface ListCity {
+    code: number;
+    codename: string;
+    division_type: string;
+    name: string;
+    phone_code: number;
+    wards: string[]
+}
+
+export interface TypeCF {
+    id: number;
+    title: string
+}
+
+const defaultTypeCF: TypeCF[] = [
+    {
+        id: 0,
+        title: "°F"
+    },
+    {
+        id: 1,
+        title: "°C"
+    }
 ]
 
 export interface GlobalState {
@@ -375,8 +617,16 @@ export interface GlobalState {
     setSelectDays: (selectDays: number) => void;
     dt: string;
     setDt: (dt: string) => void;
-    selectQ: string;
-    setSelectQ: (selectQ: string) => void;
+    selectQ: string | undefined;
+    setSelectQ: (selectQ: string | undefined) => void;
+
+    icons: Icons;
+
+    header: Header;
+    typeCF: TypeCF[];
+    selectTypeCF: number;
+    setSelectTypeCF: (selectTypeCF: number) => void
+
 }
 
 
@@ -397,7 +647,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     const [resTimeZone, setResTimeZone] = useState<ResTimeZone>();
     const [resSports, setResSports] = useState<ResSports>();
 
-    const [selectQ, setSelectQ] = useState<string>("HaNoi")
+    const [selectQ, setSelectQ] = useState<string | undefined>(undefined);
 
     const [selectLang, selectSetLang] = useState<string>("vi")
 
@@ -410,6 +660,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     const [selectDays, setSelectDays] = useState<number>(1)
 
     const [dt, setDt] = useState<string>("2025-09-23")
+    const [selectTypeCF, setSelectTypeCF] = useState<number>(0)
 
     const value = {
         resCurrent, setResCurrent,
@@ -431,7 +682,11 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         days,
         selectDays, setSelectDays,
         dt, setDt,
-        selectQ, setSelectQ
+        selectQ, setSelectQ,
+        icons: defaultIcons,
+        header: defaultHeader,
+        typeCF: defaultTypeCF,
+        selectTypeCF, setSelectTypeCF
     }
 
     return (
