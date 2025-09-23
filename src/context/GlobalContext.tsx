@@ -574,6 +574,16 @@ const defaultTypeCF: TypeCF[] = [
     }
 ]
 
+export interface Footer {
+    footerText: string;
+    yearFull: number;
+}
+
+const defaultFooter: Footer = {
+    footerText: "Dữ liệu được cung cấp bởi các API thời tiết hàng đầu.",
+    yearFull: new Date().getFullYear(),
+}
+
 export interface GlobalState {
     resCurrent: ResCurrent | undefined;
     setResCurrent: React.Dispatch<React.SetStateAction<ResCurrent | undefined>>;
@@ -626,6 +636,8 @@ export interface GlobalState {
     typeCF: TypeCF[];
     selectTypeCF: number;
     setSelectTypeCF: (selectTypeCF: number) => void
+
+    footerContent: Footer;
 
 }
 
@@ -686,7 +698,8 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         icons: defaultIcons,
         header: defaultHeader,
         typeCF: defaultTypeCF,
-        selectTypeCF, setSelectTypeCF
+        selectTypeCF, setSelectTypeCF,
+        footerContent: defaultFooter,
     }
 
     return (
