@@ -21,7 +21,9 @@ const Home: React.FC = () => {
         days,
         selectDays, setSelectDays,
         dt, setDt,
-        selectQ, setSelectQ
+        selectQ, setSelectQ,
+        selectTypeCF, setSelectTypeCF,
+        icons
     } = useGlobal();
 
     const Api_findCurrent = async (q: string, aqi: string, lang: string) => {
@@ -257,22 +259,54 @@ const Home: React.FC = () => {
     }
 
     useEffect(() => {
-        // Api_findCurrent(selectQ, selectAqi, selectLang)
-        // Api_findForecast(selectQ, selectDays, selectAqi, selectAlerts, selectLang)
-        // Api_findSearch(selectQ, selectLang)
-        // Api_findAlerts(selectQ, selectLang)
-        // Api_findFuture(selectQ, dt, selectLang)
-        // Api_findMarine(selectQ, selectDays, selectLang)
-        // Api_findAstronomy(selectQ, dt, selectLang)
-        // Api_findTimezone(selectQ, selectLang)
-        // Api_findSports(selectQ, selectLang)
-    }, [])
+        Api_findForecast(selectQ!, selectDays, selectAqi, selectAlerts, selectLang)
+        // Api_findSearch(selectQ!, selectLang)
+        // Api_findAlerts(selectQ!, selectLang)
+        // Api_findFuture(selectQ!, dt, selectLang)
+        // Api_findMarine(selectQ!, selectDays, selectLang)
+        // Api_findAstronomy(selectQ!, dt, selectLang)
+        // Api_findTimezone(selectQ!, selectLang)
+        // Api_findSports(selectQ!, selectLang)
+    }, [selectQ])
 
 
     return (
         <>
-            <div className="text-3xl font-bold underline flex items-center justify-center h-full text-black" > {resCurrent?.location.name}
-            </div>
+            <main className="min-h-[69vh] my-[30px] p-[20px]">
+                <section className="max-w-[1350px] mx-auto grid  items-center gap-4 bg-white/5 border-[1px] border-solid border-white/40 backdrop-blur-[10px] p-[25px] shadow-[0 8px 32px rgba(0, 0, 0, 0.1)] rounded-[20px]">
+                    <div className="grid grid-col-1 md:grid-cols-2">
+                        {/* loaction */}
+                        <div className="grid gap-2">
+                            <div className="flex text-white items-center gap-5">
+                                <p className="text-white text-4xl font-bold md:relative md:after:absolute md:after:w-[4px] md:after:h-full md:after:bg-white md:after:right-[-10px]">{resForecast?.location.name} </p>
+                                <p className="text-xl">{resForecast?.location.country}</p>
+                            </div>
+                            <p className="text-white">{resForecast?.current.last_updated}</p>
+                            <p className="text-white text-8xl font-bold">{selectTypeCF === 0 ? resForecast?.current.temp_f + "°F" : resForecast?.current.temp_c + "°C"}</p>
+                            <p className="text-white/70 text-xl ">Cảm giác như {selectTypeCF === 0 ? resForecast?.current.feelslike_f + "°F" : resForecast?.current.feelslike_c + "°C"}</p>
+                        </div>
+
+                        {/* img */}
+                        <div className="justify-self-end">
+                            <div className="grid justify-center">
+                                <img className="size-35 justify-self-center" alt={resForecast?.current.condition.text} src={resForecast?.current.condition.icon} />
+                                <p className="text-white text-xl text-center">{resForecast?.current.condition.text}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                    {resForecast?.forecast.forecastday[0].hour.map((hour, index) => (
+                        <div key={index}></div>
+                    ))}
+                </section>
+                <section className="max-w-[1350px] mt-[30px] mx-auto grid p-[25px] items-center gap-4 bg-white/5 border-[1px] border-solid border-white/40 backdrop-blur-[10px]  shadow-[0 8px 32px rgba(0, 0, 0, 0.1)] rounded-[20px]">
+                    <div className="flex grid grid-col-1 md:grid-cols-2 border-b-[2px] border-b-white/50">
+                        <p className=" text-white/70 flex gap-2 items-center pb-[10px]">{icons.iconCalendar} Dự báo {selectDays} ngày tới</p>
+                        <div className="justify-self-end"></div>
+                    </div>
+                    <div className=""></div>
+                </section>
+            </main>
             <ToastContainer position="top-right" autoClose={3000} />
         </>
 

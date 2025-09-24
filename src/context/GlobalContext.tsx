@@ -10,6 +10,7 @@ import {
     FaMapMarkerAlt,
     FaAngleDoubleUp,
 } from "react-icons/fa";
+import { FaCalendarDays } from "react-icons/fa6";
 import { CgMenu } from "react-icons/cg";
 import {
     IoClose,
@@ -118,8 +119,24 @@ export interface Tides {
     tide: Tide[];
 }
 
+export interface Alert {
+    headline: string;
+    msgtype: string;
+    severity: string;
+    urgency: string;
+    areas: string;
+    category: string;
+    certainty: string;
+    event: string;
+    note: string;
+    effective: string;
+    expires: string;
+    desc: string;
+    instruction: string
+}
+
 export interface Alerts {
-    alert: string[]
+    alert: Alert[] | undefined
 }
 
 export interface Hour {
@@ -260,44 +277,49 @@ export interface ResCurrent {
     current: Current;
 }
 
+export interface Forecastday {
+    date: string;
+    date_epoch: number;
+}
+
+export interface ForecastdayForecast extends Forecastday {
+    day: DayForecast;
+    astro: AstroExtended;
+    hour: HourForecast[];
+}
+
 export interface ResForecast {
     location: Location;
     current: Current;
     forecast: {
-        forecastday: {
-            date: string;
-            date_epoch: number;
-            day: DayForecast;
-            astro: AstroExtended;
-            hour: HourForecast[];
-        }[];
+        forecastday: ForecastdayForecast[];
     };
     alerts?: Alerts
+}
+
+export interface ForecastdayFuture extends Forecastday {
+    day: Day;
+    astro: Astro;
+    hour: HourFuture[];
 }
 
 export interface ResFuture {
     location: Location;
     forecast: {
-        forecastday: {
-            date: string;
-            date_epoch: number;
-            day: Day;
-            astro: Astro;
-            hour: HourFuture[];
-        }[];
+        forecastday: ForecastdayFuture[];
     }
+}
+
+export interface ForecastdayMarine extends Forecastday {
+    day: DayMarine;
+    astro: AstroExtended;
+    hour: HourMarine[];
 }
 
 export interface ResMarine {
     location: Location;
     forecast: {
-        forecastday: {
-            date: string;
-            date_epoch: number;
-            day: DayMarine;
-            astro: AstroExtended;
-            hour: HourMarine[];
-        }[];
+        forecastday: ForecastdayMarine[];
     }
 }
 
@@ -523,7 +545,8 @@ export interface Icons {
     iconBackToTop: JSX.Element;
     iconMap: JSX.Element;
     iconNext: JSX.Element;
-    iconUser: JSX.Element
+    iconUser: JSX.Element;
+    iconCalendar: JSX.Element;
 }
 
 const defaultIcons: Icons = {
@@ -532,7 +555,8 @@ const defaultIcons: Icons = {
     iconBackToTop: <FaAngleDoubleUp />,
     iconMap: <FaMapMarkerAlt size={30} />,
     iconNext: <MdNavigateNext size={24} />,
-    iconUser: <FaUser />
+    iconUser: <FaUser />,
+    iconCalendar: <FaCalendarDays />
 }
 
 export interface Header {
@@ -659,20 +683,20 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     const [resTimeZone, setResTimeZone] = useState<ResTimeZone>();
     const [resSports, setResSports] = useState<ResSports>();
 
-    const [selectQ, setSelectQ] = useState<string | undefined>(undefined);
+    const [selectQ, setSelectQ] = useState<string | undefined>("HaNoi");
 
     const [selectLang, selectSetLang] = useState<string>("vi")
 
     const yes_no = ["yes", "no"]
     const days = [1, 2, 3, 4, 5, 6, 7]
 
-    const [selectAqi, setSelectAqi] = useState<string>("no")
+    const [selectAqi, setSelectAqi] = useState<string>("yes")
     const [selectAlerts, setSelectAlerts] = useState<string>("no")
 
-    const [selectDays, setSelectDays] = useState<number>(1)
+    const [selectDays, setSelectDays] = useState<number>(7)
 
     const [dt, setDt] = useState<string>("2025-09-23")
-    const [selectTypeCF, setSelectTypeCF] = useState<number>(0)
+    const [selectTypeCF, setSelectTypeCF] = useState<number>(1)
 
     const value = {
         resCurrent, setResCurrent,

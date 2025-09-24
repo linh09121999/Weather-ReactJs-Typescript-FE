@@ -24,8 +24,10 @@ const Header: React.FC = () => {
     const componentsProps = {
         paper: {
             sx: {
-                background: 'rgba(255, 255, 255, 0.2)',
-                backdropFilter: 'blur(10px)',
+                background: 'rgba(255, 255, 255, 0.1)',
+                backdropFilter: "blur(10px)",
+                WebkitBackdropFilter: "blur(10px)",
+                zIndex: 100,
                 '& .MuiAutocomplete-option': {
                     minHeight: '30px !important',
                     color: 'rgba(255, 255, 255, 0.7)',
@@ -33,6 +35,7 @@ const Header: React.FC = () => {
                 '& .MuiAutocomplete-option:hover': {
                     backgroundColor: 'rgba(255, 255, 255, 0.2) !important',
                     color: 'rgb(26,41,128) !important',
+                    fontWeight: 600
                 },
                 '& .MuiAutocomplete-option[aria-selected="true"]': {
                     backgroundColor: 'rgba(255, 255, 255, 0.2) !important',
