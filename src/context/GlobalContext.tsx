@@ -608,6 +608,34 @@ const defaultFooter: Footer = {
     yearFull: new Date().getFullYear(),
 }
 
+export interface SelectDays {
+    id: number;
+    desc: string
+}
+
+const defaultSelectDays: SelectDays[] = [
+    {
+        id: 3,
+        desc: "3 ngày tới"
+    },
+    {
+        id: 4,
+        desc: "4 ngày tới"
+    },
+    {
+        id: 5,
+        desc: "5 ngày tới"
+    },
+    {
+        id: 7,
+        desc: "7 ngày tới"
+    },
+    {
+        id: 7,
+        desc: "7 ngày tới"
+    },
+]
+
 export interface GlobalState {
     resCurrent: ResCurrent | undefined;
     setResCurrent: React.Dispatch<React.SetStateAction<ResCurrent | undefined>>;
@@ -646,7 +674,7 @@ export interface GlobalState {
     setSelectAqi: (selectAqi: string) => void;
     selectAlerts: string;
     setSelectAlerts: (selectAlerts: string) => void;
-    days: number[]
+    days: SelectDays[]
     selectDays: number;
     setSelectDays: (selectDays: number) => void;
     dt: string;
@@ -688,7 +716,6 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     const [selectLang, selectSetLang] = useState<string>("vi")
 
     const yes_no = ["yes", "no"]
-    const days = [1, 2, 3, 4, 5, 6, 7]
 
     const [selectAqi, setSelectAqi] = useState<string>("yes")
     const [selectAlerts, setSelectAlerts] = useState<string>("no")
@@ -715,7 +742,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         yes_no,
         selectAqi, setSelectAqi,
         selectAlerts, setSelectAlerts,
-        days,
+        days: defaultSelectDays,
         selectDays, setSelectDays,
         dt, setDt,
         selectQ, setSelectQ,

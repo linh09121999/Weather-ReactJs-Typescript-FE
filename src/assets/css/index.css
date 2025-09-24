@@ -31,4 +31,16 @@
     animation: fly-1 0.6s ease-in-out infinite alternate;
 }
 
-@keyframes fly-1 { from { transform: translateY(0.1em); } to { transform: translateY(-0.1em); } }
+@keyframes fly-1 {
+    from {
+        transform: translateY(0.1em);
+    }
+
+    to {
+        transform: translateY(-0.1em);
+    }
+}
+
+.backdrop-blur-sm {
+    --tw-backdrop-blur: none !important;
+}

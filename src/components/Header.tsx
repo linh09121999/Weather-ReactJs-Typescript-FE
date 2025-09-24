@@ -21,7 +21,7 @@ const Header: React.FC = () => {
         margin: 0
     }
 
-    const componentsProps = {
+    const componentsProps: SxProps<Theme> = {
         paper: {
             sx: {
                 background: 'rgba(255, 255, 255, 0.1)',
@@ -46,7 +46,7 @@ const Header: React.FC = () => {
         }
     }
 
-    const sxText = {
+    const sxText: SxProps<Theme> = {
         '& .MuiOutlinedInput-root': {
             backdropFilter: 'blur(10px)',
             borderRadius: '50px',
