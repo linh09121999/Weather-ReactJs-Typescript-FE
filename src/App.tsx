@@ -3,7 +3,7 @@ import { Route, Routes, Navigate, Outlet, BrowserRouter } from 'react-router-dom
 
 import { Footer, Header, Nav, BackToTop } from './components';
 
-const Home = React.lazy(() => import('./view/index'));
+const Home = React.lazy(() => import('./view/forecast/index'));
 const Page404 = React.lazy(() => import('./view/pages/page404/Page404'));
 const Page500 = React.lazy(() => import('./view/pages/page500/Page500'));
 
@@ -12,7 +12,7 @@ const ProtectedRoute: React.FC = () => {
   return (
     <div className="flex flex-col w-full min-h-screen" >
       {/* <!-- Header --> */}
-      <div className='text-center p-[5px] bg-white text-red-900 font-[600]'>! Kết quả có thể chưa chính xác vì api của quốc tế</div>
+      <div className='text-center p-[5px] bg-white text-red-900 font-[600]'>! Địa điểm có thể chưa chính xác vì api của quốc tế</div>
       <BackToTop />
       <Header />
       <Nav />

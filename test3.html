@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông Số Thời Tiết Theo Nhóm</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .weather-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .card-icon {
+            font-size: 24px;
+            margin-right: 10px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #f0f5ff;
+            color: #2a5298;
+        }
+        
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2a5298;
+        }
+        
+        .parameter {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .parameter:last-child {
+            border-bottom: none;
+        }
+        
+        .param-name {
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .param-value {
+            font-weight: 600;
+            color: #1e3c72;
+        }
+        
+        .highlight-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #e74c3c;
+        }
+        
+        .unit {
+            font-size: 0.9rem;
+            color: #777;
+            margin-left: 3px;
+        }
+        
+        .air-quality {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+        
+        .aqi-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #ffeb3b;
+            color: #333;
+        }
+        
+        .aqi-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .aqi-label {
+            font-size: 1.1rem;
+        }
+        
+        .radiation {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .radiation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .radiation-item {
+            text-align: center;
+            padding: 15px;
+            background: #f5f9ff;
+            border-radius: 10px;
+        }
+        
+        .radiation-value {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #1e3c72;
+            margin: 10px 0;
+        }
+        
+        .radiation-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .weather-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        .temperature-badge {
+            display: inline-block;
+            background: linear-gradient(to right, #3498db, #e74c3c);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Thông Số Thời Tiết Theo Nhóm</h1>
+            <p class="subtitle">Dữ liệu khí tượng được chia thành các nhóm thông số chi tiết</p>
+        </header>
+        
+        <div class="weather-grid">
+            <!-- Nhóm Nhiệt độ -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-thermometer-half"></i>
+                    </div>
+                    <h2 class="card-title">Nhiệt Độ</h2>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Nhiệt độ cảm nhận</span>
+                    <span class="param-value">39.1<span class="unit">°C</span> / 102.3<span class="unit">°F</span></span>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Nhiệt độ gió lạnh</span>
+                    <span class="param-value">33.7<span class="unit">°C</span> / 92.7<span class="unit">°F</span></span>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Chỉ số nhiệt</span>
+                    <span class="param-value">37.8<span class="unit">°C</span> / 100.1<span class="unit">°F</span></span>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Điểm sương</span>
+                    <span class="param-value">21.3<span class="unit">°C</span> / 70.3<span class="unit">°F</span></span>
+                </div>
+            </div>
+            
+            <!-- Nhóm Gió -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <h2 class="card-title">Gió</h2>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Tốc độ gió</span>
+                    <span class="param-value">11.2<span class="unit">mph</span> / 18.0<span class="unit">km/h</span></span>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Hướng gió</span>
+                    <span class="param-value">340° <span class="unit">(Bắc Tây Bắc)</span></span>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Giật gió</span>
+                    <span class="param-value">14.3<span class="unit">mph</span> / 23.0<span class="unit">km/h</span></span>
+                </div>
+            </div>
+            
+            <!-- Nhóm Áp suất -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h2 class="card-title">Áp Suất</h2>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Áp suất không khí</span>
+                    <span class="param-value">1001.0<span class="unit">mb</span> / 29.56<span class="unit">in</span></span>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Trạng thái</span>
+                    <span class="param-value">Bình thường</span>
+                </div>
+            </div>
+            
+            <!-- Nhóm Lượng mưa -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-cloud-rain"></i>
+                    </div>
+                    <h2 class="card-title">Lượng Mưa</h2>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Lượng mưa</span>
+                    <span class="param-value">0.0<span class="unit">mm</span> / 0.0<span class="unit">in</span></span>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Dự báo mưa</span>
+                    <span class="param-value">Không có mưa</span>
+                </div>
+            </div>
+            
+            <!-- Nhóm Độ ẩm -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <h2 class="card-title">Độ Ẩm & Mây</h2>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Độ ẩm</span>
+                    <span class="param-value highlight-value">50%</span>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Mây che phủ</span>
+                    <span class="param-value">0% <span class="unit">(Trời quang)</span></span>
+                </div>
+            </div>
+            
+            <!-- Nhóm Tầm nhìn -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h2 class="card-title">Tầm Nhìn</h2>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Tầm nhìn</span>
+                    <span class="param-value">10.0<span class="unit">km</span> / 6.0<span class="unit">dặm</span></span>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Điều kiện</span>
+                    <span class="param-value">Tốt</span>
+                </div>
+            </div>
+            
+            <!-- Nhóm Chỉ số UV -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <h2 class="card-title">Chỉ Số UV</h2>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Chỉ số UV</span>
+                    <span class="param-value highlight-value">5.8</span>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Mức độ</span>
+                    <span class="param-value">Trung bình</span>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Khuyến nghị</span>
+                    <span class="param-value">Bảo vệ khi ra ngoài</span>
+                </div>
+            </div>
+            
+            <!-- Nhóm Bức xạ -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-solar-panel"></i>
+                    </div>
+                    <h2 class="card-title">Bức Xạ Mặt Trời</h2>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Bức xạ sóng ngắn</span>
+                    <span class="param-value">809.12<span class="unit">W/m²</span></span>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Bức xạ khuếch tán</span>
+                    <span class="param-value">109.29<span class="unit">W/m²</span></span>
+                </div>
+                <div class="parameter">
+                    <span class="param-name">Bức xạ trực tiếp</span>
+                    <span class="param-value">2479.28<span class="unit">W/m²</span></span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Phần Chất lượng không khí -->
+        <div class="air-quality">
+            <div class="card-header">
+                <div class="card-icon">
+                    <i class="fas fa-smog"></i>
+                </div>
+                <h2 class="card-title">Chất Lượng Không Khí</h2>
+            </div>
+            <div class="parameter">
+                <span class="param-name">Carbon Monoxide (CO)</span>
+                <span class="param-value">1128.5 μg/m³</span>
+            </div>
+            <div class="parameter">
+                <span class="param-name">Nitrogen Dioxide (NO₂)</span>
+                <span class="param-value">47.175 μg/m³</span>
+            </div>
+            <div class="parameter">
+                <span class="param-name">Ozone (O₃)</span>
+                <span class="param-value">42.0 μg/m³</span>
+            </div>
+            <div class="parameter">
+                <span class="param-name">Sulfur Dioxide (SO₂)</span>
+                <span class="param-value">35.89 μg/m³</span>
+            </div>
+            <div class="parameter">
+                <span class="param-name">Bụi mịn PM2.5</span>
+                <span class="param-value">60.125 μg/m³</span>
+            </div>
+            <div class="parameter">
+                <span class="param-name">Bụi mịn PM10</span>
+                <span class="param-value">60.125 μg/m³</span>
+            </div>
+            <div class="aqi-indicator">
+                <div>
+                    <div class="aqi-label">Chỉ số EPA Hoa Kỳ</div>
+                    <div class="aqi-value">3</div>
+                </div>
+                <div>
+                    <div class="aqi-label">Chỉ số Defra Anh</div>
+                    <div class="aqi-value">8</div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Hiển Thị Dữ Liệu Thời Tiết | Cập nhật lần cuối: Hôm nay</p>
+        </footer>
+    </div>
+</body>
+</html>

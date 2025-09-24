@@ -9,6 +9,17 @@ import {
     FaHome,
     FaMapMarkerAlt,
     FaAngleDoubleUp,
+    FaChevronDown,
+    FaChevronUp,
+    FaThermometerHalf,
+    FaWind,
+    FaTachometerAlt,
+    FaCloudRain,
+    FaTint,
+    FaEye,
+    FaSun,
+    FaSolarPanel,
+    FaSmog
 } from "react-icons/fa";
 import { FaCalendarDays } from "react-icons/fa6";
 import { CgMenu } from "react-icons/cg";
@@ -547,6 +558,17 @@ export interface Icons {
     iconNext: JSX.Element;
     iconUser: JSX.Element;
     iconCalendar: JSX.Element;
+    iconUp: JSX.Element;
+    iconDown: JSX.Element;
+    iconThermometer: JSX.Element;
+    iconWind: JSX.Element;
+    iconTachometer: JSX.Element;
+    iconCloudRain: JSX.Element;
+    iconTint: JSX.Element;
+    iconEye: JSX.Element;
+    iconSun: JSX.Element;
+    iconSolarPanel: JSX.Element;
+    iconSmog: JSX.Element;
 }
 
 const defaultIcons: Icons = {
@@ -556,7 +578,18 @@ const defaultIcons: Icons = {
     iconMap: <FaMapMarkerAlt size={30} />,
     iconNext: <MdNavigateNext size={24} />,
     iconUser: <FaUser />,
-    iconCalendar: <FaCalendarDays />
+    iconCalendar: <FaCalendarDays />,
+    iconUp: <FaChevronUp />,
+    iconDown: <FaChevronDown />,
+    iconThermometer: <FaThermometerHalf className="justify-self-center" />,
+    iconWind: <FaWind className="justify-self-center" />,
+    iconTachometer: <FaTachometerAlt className="justify-self-center" />,
+    iconCloudRain: <FaCloudRain className="justify-self-center" />,
+    iconTint: <FaTint className="justify-self-center" />,
+    iconEye: <FaEye className="justify-self-center" />,
+    iconSun: <FaSun className="justify-self-center" />,
+    iconSolarPanel: <FaSolarPanel className="justify-self-center" />,
+    iconSmog: <FaSmog className="justify-self-center" />,
 }
 
 export interface Header {
@@ -627,8 +660,8 @@ const defaultSelectDays: SelectDays[] = [
         desc: "5 ngày tới"
     },
     {
-        id: 7,
-        desc: "7 ngày tới"
+        id: 6,
+        desc: "6 ngày tới"
     },
     {
         id: 7,

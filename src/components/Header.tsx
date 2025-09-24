@@ -34,12 +34,12 @@ const Header: React.FC = () => {
                 },
                 '& .MuiAutocomplete-option:hover': {
                     backgroundColor: 'rgba(255, 255, 255, 0.2) !important',
-                    color: 'rgb(26,41,128) !important',
+                    color: 'var(--color-blue-800) !important',
                     fontWeight: 600
                 },
                 '& .MuiAutocomplete-option[aria-selected="true"]': {
                     backgroundColor: 'rgba(255, 255, 255, 0.2) !important',
-                    color: 'rgb(26,41,128) !important',
+                    color: 'var(--color-blue-800) !important',
                     fontWeight: 600
                 }
             }
@@ -52,12 +52,17 @@ const Header: React.FC = () => {
             borderRadius: '50px',
             background: 'rgba(255, 255, 255, 0.05)',
             color: 'white',
-            border: '1px solid rgba(255, 255, 255, 0.4)',
-            height: '40px'
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            height: '40px',
+            boxShadow: 'var(--shadow-lg)'
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+            border: 'none',
         },
         '&:hover .MuiOutlinedInput-notchedOutline': {
-            border: '1px solid rgba(255, 255, 255, 0.4) !important',
-            boxShadow: "0 0 0 0.25rem rgb(210, 134, 26, 0.2)"
+            // border: '1px solid rgba(255, 255, 255, 0.4) !important',
+            border: 'none',
+            boxShadow: 'var(--shadow-xl)'
         },
     }
 
@@ -99,7 +104,7 @@ const Header: React.FC = () => {
 
     return (
         <>
-            <header className='max-md:top-0 max-md:sticky z-100 backdrop-blur-[10px]'>
+            <header className='top-0 sticky z-100 backdrop-blur-[10px] border-b-[1px] border-b-white/40'>
                 <div className='max-w-[1350px] mx-auto py-[20px] justify-between flex items-center max-[1350px]:px-[20px]'>
                     <div className='flex items-center gap-4 max-md:grid max-md:gap-1'>
                         <span className='text-3xl font-bold text-white'>{header.title}</span>
@@ -147,7 +152,7 @@ const Header: React.FC = () => {
                                 )}
                             />
                         </FormControl>
-                        <div className='flex bg-white/5 rounded-[50px] backdrop-blur-[10px] border-[1px] border-solid border-white/40 px-[5px] py-[5px]'>
+                        <div className='flex bg-white/5 rounded-[50px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[5px] py-[5px] shadow-lg'>
                             {typeCF.map((type, index) => (
                                 <button key={index}
                                     className={`px-[12px] py-[2px] rounded-[50px] transition-all duration-300 ease text-white ${index === selectTypeCF ? "bg-white/30" : ""}`}
