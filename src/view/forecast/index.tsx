@@ -323,7 +323,7 @@ const Home: React.FC = () => {
                             <span className="justify-self-center">{icons.iconDown}</span>
                         </button>
                         <div className={`${showDetailForecast === true ? "" : "hidden"} transition-all duration-300 ease grid gap-5`}>
-                            <div className="grid lg:grid-cols-4 max-lg:grid-cols-2 max-md:grid-cols-1 gap-3 ">
+                            <div className="grid md:grid-cols-2 max-md:grid-cols-1 gap-3">
                                 <div className="rounded-[10px] justify-center bg-white/10 text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center text-xl">{icons.iconThermometer}</span>
@@ -373,6 +373,15 @@ const Home: React.FC = () => {
                                         <p className="w-[calc(100%-75px)]">Hướng gió</p>
                                         <p>{resForecast?.current.wind_degree}° {resForecast?.current.wind_dir}</p>
                                     </div>
+                                </div>
+                            </div>
+                            <div className="grid lg:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 gap-3 ">
+                                <div className="rounded-[10px] justify-center bg-white/10 text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                                    <div className="flex gap-2 items-center">
+                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center text-xl">{icons.iconCloud}</span>
+                                        <p className="text-white/70 text-xl">Mây</p>
+                                    </div>
+                                    <p className="text-3xl my-[15px] font-[600]">{resForecast?.current.cloud}</p>
                                 </div>
 
                                 <div className="rounded-[10px] justify-center bg-white/10 text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
@@ -451,6 +460,8 @@ const Home: React.FC = () => {
                                     </div>
                                     <p className="text-3xl my-[15px] font-[600]">{resForecast?.current.uv}</p>
                                 </div>
+                            </div>
+                            <div className="grid md:grid-cols-2 max-md:grid-cols-1 gap-3">
                                 <div className="rounded-[10px] justify-center bg-white/10 text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center text-xl">{icons.iconSolarPanel}</span>
@@ -464,13 +475,43 @@ const Home: React.FC = () => {
                                         <p className="w-[calc(100%-110px)]">Bức xạ khuếch tán</p>
                                         <p>{resForecast?.current.diff_rad} W/m²</p>
                                     </div>
-                                    <div className="flex border-b-[1px] border-b-white/2 pt-[15px] pb-[5px]">
+                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
                                         <p className="w-[calc(100%-110px)]">Bức xạ trực tiếp</p>
                                         <p>{resForecast?.current.dni} W/m²</p>
                                     </div>
                                     <div className="flex pt-[15px] pb-[5px]">
                                         <p className="w-[calc(100%-110px)]">Bức xạ nghiêng</p>
                                         <p>{resForecast?.current.gti} W/m²</p>
+                                    </div>
+                                </div>
+                                <div className="rounded-[10px] justify-center bg-white/10 text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                                    <div className="flex gap-2 items-center">
+                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center text-xl">{icons.iconSmog}</span>
+                                        <p className="text-white/70 text-xl">Chất Lượng Không Khí</p>
+                                    </div>
+                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
+                                        <p className="w-[calc(100%-110px)]">Carbon Monoxide (CO)</p>
+                                        <p>{resForecast?.current.air_quality?.co} μg/m³</p>
+                                    </div>
+                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
+                                        <p className="w-[calc(100%-110px)]">Nitrogen Dioxide (NO₂)</p>
+                                        <p>{resForecast?.current.air_quality?.no2} μg/m³</p>
+                                    </div>
+                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
+                                        <p className="w-[calc(100%-110px)]">Ozone (O₃)</p>
+                                        <p>{resForecast?.current.air_quality?.o3} μg/m³</p>
+                                    </div>
+                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
+                                        <p className="w-[calc(100%-110px)]">Sulfur Dioxide (SO₂)</p>
+                                        <p>{resForecast?.current.air_quality?.so2} μg/m³</p>
+                                    </div>
+                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
+                                        <p className="w-[calc(100%-110px)]">Bụi mịn PM2.5</p>
+                                        <p>{resForecast?.current.air_quality?.pm2_5} μg/m³</p>
+                                    </div>
+                                    <div className="flex pt-[15px] pb-[5px]">
+                                        <p className="w-[calc(100%-110px)]">Bụi mịn PM10</p>
+                                        <p>{resForecast?.current.air_quality?.pm10} μg/m³</p>
                                     </div>
                                 </div>
                             </div>

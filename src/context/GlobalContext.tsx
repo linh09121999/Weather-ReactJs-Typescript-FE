@@ -19,7 +19,8 @@ import {
     FaEye,
     FaSun,
     FaSolarPanel,
-    FaSmog
+    FaSmog,
+    FaCloud
 } from "react-icons/fa";
 import { FaCalendarDays } from "react-icons/fa6";
 import { CgMenu } from "react-icons/cg";
@@ -569,6 +570,7 @@ export interface Icons {
     iconSun: JSX.Element;
     iconSolarPanel: JSX.Element;
     iconSmog: JSX.Element;
+    iconCloud: JSX.Element;
 }
 
 const defaultIcons: Icons = {
@@ -590,6 +592,7 @@ const defaultIcons: Icons = {
     iconSun: <FaSun className="justify-self-center" />,
     iconSolarPanel: <FaSolarPanel className="justify-self-center" />,
     iconSmog: <FaSmog className="justify-self-center" />,
+    iconCloud: <FaCloud className="justify-self-center" />,
 }
 
 export interface Header {
