@@ -4,7 +4,7 @@ import { useGlobal } from '../context/GlobalContext';
 const Footer: React.FC = () => {
     const { footerContent, header } = useGlobal()
     return (
-        <footer className='text-center mt-[40px] p-[20px] text-white'>
+        <footer className='text-center p-[20px] text-white'>
             <p>&copy; {footerContent.yearFull}{' '}{header.title}. {footerContent.footerText}</p>
         </footer>
     )
