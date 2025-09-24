@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useGlobal } from '../../context/GlobalContext';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios";
-import { Select, MenuItem, Menu } from "@mui/material";
+import { MenuItem, Menu } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
 
 const Home: React.FC = () => {
@@ -50,20 +50,25 @@ const Home: React.FC = () => {
 
     const { keyApi,
         resForecast, setResForecast,
-        resFuture, setResFuture,
-        resMarine, setResMarine,
-        resAstronomy, setResAstronomy,
-        resTimeZone, setResTimeZone,
-        resSports, setResSports,
-        yes_no,
-        selectLang, selectSetLang,
-        selectAqi, setSelectAqi,
-        selectAlerts, setSelectAlerts,
+        // resFuture, setResFuture,
+        // resMarine, setResMarine,
+        // resAstronomy, setResAstronomy,
+        // resTimeZone, setResTimeZone,
+        // resSports, setResSports,
+        // yes_no,
+        selectLang,
+        // selectSetLang,
+        selectAqi,
+        // setSelectAqi,
+        selectAlerts,
+        // setSelectAlerts,
         days,
         selectDays, setSelectDays,
-        dt, setDt,
-        selectQ, setSelectQ,
-        selectTypeCF, setSelectTypeCF,
+        // dt, setDt,
+        selectQ,
+        // setSelectQ,
+        selectTypeCF,
+        // setSelectTypeCF,
         icons
     } = useGlobal();
 
@@ -95,133 +100,133 @@ const Home: React.FC = () => {
         }
     }
 
-    const Api_findFuture = async (q: string, dt: string, lang: string) => {
-        try {
-            const response = await axios.get("http://api.weatherapi.com/v1/future.json", { //https://weather-be-hhcd.onrender.com/api/future
-                params: {
-                    key: keyApi,
-                    q: q,
-                    dt: dt,
-                    lang: lang
-                },
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            })
-            setResFuture(response.data)
-        }
-        catch (err) {
-            if (axios.isAxiosError(err)) {
-                console.error("Axios error:", err.message);
-                toast.error(err.message);
-            } else {
-                console.error("Unexpected error:", err);
-            }
-        }
-    }
+    // const Api_findFuture = async (q: string, dt: string, lang: string) => {
+    //     try {
+    //         const response = await axios.get("http://api.weatherapi.com/v1/future.json", { //https://weather-be-hhcd.onrender.com/api/future
+    //             params: {
+    //                 key: keyApi,
+    //                 q: q,
+    //                 dt: dt,
+    //                 lang: lang
+    //             },
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Accept': 'application/json'
+    //             }
+    //         })
+    //         setResFuture(response.data)
+    //     }
+    //     catch (err) {
+    //         if (axios.isAxiosError(err)) {
+    //             console.error("Axios error:", err.message);
+    //             toast.error(err.message);
+    //         } else {
+    //             console.error("Unexpected error:", err);
+    //         }
+    //     }
+    // }
 
-    const Api_findMarine = async (q: string, days: number, lang: string) => {
-        try {
-            const response = await axios.get("http://api.weatherapi.com/v1/marine.json", { //https://weather-be-hhcd.onrender.com/api/marine
-                params: {
-                    key: keyApi,
-                    q: q,
-                    days: days,
-                    lang: lang
-                },
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            })
-            setResMarine(response.data)
-        }
-        catch (err) {
-            if (axios.isAxiosError(err)) {
-                console.error("Axios error:", err.message);
-                toast.error(err.message);
-            } else {
-                console.error("Unexpected error:", err);
-            }
-        }
-    }
+    // const Api_findMarine = async (q: string, days: number, lang: string) => {
+    //     try {
+    //         const response = await axios.get("http://api.weatherapi.com/v1/marine.json", { //https://weather-be-hhcd.onrender.com/api/marine
+    //             params: {
+    //                 key: keyApi,
+    //                 q: q,
+    //                 days: days,
+    //                 lang: lang
+    //             },
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Accept': 'application/json'
+    //             }
+    //         })
+    //         setResMarine(response.data)
+    //     }
+    //     catch (err) {
+    //         if (axios.isAxiosError(err)) {
+    //             console.error("Axios error:", err.message);
+    //             toast.error(err.message);
+    //         } else {
+    //             console.error("Unexpected error:", err);
+    //         }
+    //     }
+    // }
 
-    const Api_findAstronomy = async (q: string, dt: string, lang: string) => {
-        try {
-            const response = await axios.get("http://api.weatherapi.com/v1/astronomy.json", { //https://weather-be-hhcd.onrender.com/api/astronomy
-                params: {
-                    key: keyApi,
-                    q: q,
-                    dt: dt,
-                    lang: lang
-                },
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            })
-            setResAstronomy(response.data)
-        }
-        catch (err) {
-            if (axios.isAxiosError(err)) {
-                console.error("Axios error:", err.message);
-                toast.error(err.message);
-            } else {
-                console.error("Unexpected error:", err);
-            }
-        }
-    }
+    // const Api_findAstronomy = async (q: string, dt: string, lang: string) => {
+    //     try {
+    //         const response = await axios.get("http://api.weatherapi.com/v1/astronomy.json", { //https://weather-be-hhcd.onrender.com/api/astronomy
+    //             params: {
+    //                 key: keyApi,
+    //                 q: q,
+    //                 dt: dt,
+    //                 lang: lang
+    //             },
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Accept': 'application/json'
+    //             }
+    //         })
+    //         setResAstronomy(response.data)
+    //     }
+    //     catch (err) {
+    //         if (axios.isAxiosError(err)) {
+    //             console.error("Axios error:", err.message);
+    //             toast.error(err.message);
+    //         } else {
+    //             console.error("Unexpected error:", err);
+    //         }
+    //     }
+    // }
 
-    const Api_findTimezone = async (q: string, lang: string) => {
-        try {
-            const response = await axios.get("http://api.weatherapi.com/v1/timezone.json", { //https://weather-be-hhcd.onrender.com/api/timezone
-                params: {
-                    key: keyApi,
-                    q: q,
-                    lang: lang
-                },
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            })
-            setResTimeZone(response.data)
-        }
-        catch (err) {
-            if (axios.isAxiosError(err)) {
-                console.error("Axios error:", err.message);
-                toast.error(err.message);
-            } else {
-                console.error("Unexpected error:", err);
-            }
-        }
-    }
+    // const Api_findTimezone = async (q: string, lang: string) => {
+    //     try {
+    //         const response = await axios.get("http://api.weatherapi.com/v1/timezone.json", { //https://weather-be-hhcd.onrender.com/api/timezone
+    //             params: {
+    //                 key: keyApi,
+    //                 q: q,
+    //                 lang: lang
+    //             },
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Accept': 'application/json'
+    //             }
+    //         })
+    //         setResTimeZone(response.data)
+    //     }
+    //     catch (err) {
+    //         if (axios.isAxiosError(err)) {
+    //             console.error("Axios error:", err.message);
+    //             toast.error(err.message);
+    //         } else {
+    //             console.error("Unexpected error:", err);
+    //         }
+    //     }
+    // }
 
-    const Api_findSports = async (q: string, lang: string) => {
-        try {
-            const response = await axios.get("http://api.weatherapi.com/v1/sports.json", { //https://weather-be-hhcd.onrender.com/api/sports
-                params: {
-                    key: keyApi,
-                    q: q,
-                    lang: lang
-                },
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            })
-            setResSports(response.data)
-        }
-        catch (err) {
-            if (axios.isAxiosError(err)) {
-                console.error("Axios error:", err.message);
-                toast.error(err.message);
-            } else {
-                console.error("Unexpected error:", err);
-            }
-        }
-    }
+    // const Api_findSports = async (q: string, lang: string) => {
+    //     try {
+    //         const response = await axios.get("http://api.weatherapi.com/v1/sports.json", { //https://weather-be-hhcd.onrender.com/api/sports
+    //             params: {
+    //                 key: keyApi,
+    //                 q: q,
+    //                 lang: lang
+    //             },
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Accept': 'application/json'
+    //             }
+    //         })
+    //         setResSports(response.data)
+    //     }
+    //     catch (err) {
+    //         if (axios.isAxiosError(err)) {
+    //             console.error("Axios error:", err.message);
+    //             toast.error(err.message);
+    //         } else {
+    //             console.error("Unexpected error:", err);
+    //         }
+    //     }
+    // }
 
     useEffect(() => {
         Api_findForecast(formatCityName(selectQ!), selectDays, selectAqi, selectAlerts, selectLang)

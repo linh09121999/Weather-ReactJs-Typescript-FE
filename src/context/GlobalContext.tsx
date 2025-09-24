@@ -3,10 +3,7 @@ import type { JSX, ReactNode } from "react";
 import { useMediaQuery } from "@mui/material"
 
 import {
-    FaFacebookF,
-    FaLinkedinIn,
     FaUser,
-    FaHome,
     FaMapMarkerAlt,
     FaAngleDoubleUp,
     FaChevronDown,
@@ -26,18 +23,10 @@ import { FaCalendarDays } from "react-icons/fa6";
 import { CgMenu } from "react-icons/cg";
 import {
     IoClose,
-    IoHomeOutline
 } from "react-icons/io5";
 import {
     MdNavigateNext,
-    MdOutlineBusinessCenter,
-    MdOutlineScience,
-    MdOutlineSportsBasketball,
-    MdOutlineHealthAndSafety
 } from "react-icons/md";
-import { RiMovie2AiLine } from "react-icons/ri";
-import { GrTechnology } from "react-icons/gr";
-import { TbBrandGithubFilled } from "react-icons/tb";
 import { IoMdSearch } from "react-icons/io";
 
 // Định nghĩa interface cho cấu trúc dữ liệu vị trí
