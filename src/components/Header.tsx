@@ -31,12 +31,12 @@ const Header: React.FC = () => {
                 },
                 '& .MuiAutocomplete-option:hover': {
                     backgroundColor: 'rgba(255, 255, 255, 0.2) !important',
-                    color: 'var(--color-blue-800) !important',
+                    color: 'var(--color-cyan-300) !important',
                     fontWeight: 600
                 },
                 '& .MuiAutocomplete-option[aria-selected="true"]': {
                     backgroundColor: 'rgba(255, 255, 255, 0.2) !important',
-                    color: 'var(--color-blue-800) !important',
+                    color: 'var(--color-cyan-300) !important',
                     fontWeight: 600
                 }
             }
@@ -102,7 +102,7 @@ const Header: React.FC = () => {
     return (
         <>
             <header className='top-0 sticky z-100 backdrop-blur-[10px] border-b-[1px] border-b-white/40'>
-                <div className='max-w-[1350px] mx-auto py-[20px] justify-between flex items-center max-[1350px]:px-[20px]'>
+                <div className='max-w-[1350px] mx-auto py-[20px] grid md:grid-cols-2 gap-4 items-center max-[1350px]:px-[20px]'>
                     <div className='flex items-center gap-4 max-md:grid max-md:gap-1'>
                         <span className='text-3xl font-bold text-white'>{header.title}</span>
                     </div>

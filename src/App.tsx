@@ -4,6 +4,7 @@ import { Route, Routes, Navigate, Outlet, BrowserRouter } from 'react-router-dom
 import { Footer, Header, Nav, BackToTop } from './components';
 
 const Home = React.lazy(() => import('./view/forecast/index'));
+const DetailForecast = React.lazy(() => import('./view/forecast/detail'));
 const Page404 = React.lazy(() => import('./view/pages/page404/Page404'));
 const Page500 = React.lazy(() => import('./view/pages/page500/Page500'));
 
@@ -31,8 +32,9 @@ const App: React.FC = () => {
           <Route path="/404" element={<Page404 />} />
           <Route path="/500" element={<Page500 />} />
           <Route path="/" element={<ProtectedRoute />}>
-            <Route index element={<Navigate to="/home" replace />} />
-            <Route path="/home" element={<Home />} />
+            <Route index element={<Navigate to="/trang-chu" replace />} />
+            <Route path="/trang-chu" element={<Home />} />
+            <Route path="/chi-tiet-theo-ngay" element={<DetailForecast />} />
           </Route>
         </Routes>
       </Suspense>

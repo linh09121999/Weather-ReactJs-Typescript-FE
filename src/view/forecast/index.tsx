@@ -4,8 +4,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios";
 import { MenuItem, Menu } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
+import { useNavigate } from 'react-router-dom';
 
 const Home: React.FC = () => {
+    const navigate = useNavigate();
+
     const PaperProps: SxProps<Theme> = {
         sx: {
             borderRadius: '10px',
@@ -32,7 +35,7 @@ const Home: React.FC = () => {
         zIndex: 100,
         '&:hover': {
             backgroundColor: 'rgba(255, 255, 255, 0.2) !important',
-            color: 'var(--color-blue-800) !important',
+            color: 'var(--color-cyan-300) !important',
             fontWeight: 600
         },
     }
@@ -69,7 +72,9 @@ const Home: React.FC = () => {
         // setSelectQ,
         selectTypeCF,
         // setSelectTypeCF,
-        icons
+        icons,
+        setSelectDetailDay,
+        listSrecip, listWind, listPressure, listVis
     } = useGlobal();
 
     const Api_findForecast = async (q: string, days: number, aqi: string, alerts: string, lang: string) => {
@@ -273,43 +278,69 @@ const Home: React.FC = () => {
     };
 
     const [showDetailForecast, setShowDetailForecast] = useState<boolean>(false)
-
-    const listSrecip = ["mm", "in"]
     const [selectSrecip, setSelectSrecip] = useState<string>("mm")
-
-    const listWind = ["km/h", "mph"]
     const [selectWind, setSelectWind] = useState<string>("km/h")
-
-    const listPressure = ["mb", "in"]
     const [selectPressure, setSelectPressure] = useState<string>("mb")
-
-    const listVis = ["km", "dặm"]
     const [selectVis, setSelectVis] = useState<string>("km")
+
+    const windDirectionVN = (dir: string | undefined) => {
+        if (!dir) return undefined;
+        const map: Record<string, string> = {
+            N: "B",
+            S: "N",
+            E: "Đ",
+            W: "T",
+        };
+
+        return dir
+            .split("")          // tách chuỗi thành từng ký tự
+            .map((c) => map[c] || c) // đổi sang tiếng Việt
+            .join("");
+    }
+
+
+    const convertTo24 = (time12h: string | undefined) => {
+        if (!time12h) return undefined;
+        const [time, modifier] = time12h.trim().split(" ");
+        let [hours, minutes] = time.split(":").map(Number);
+
+        if (modifier.toUpperCase() === "PM" && hours < 12) {
+            hours += 12;
+        }
+        if (modifier.toUpperCase() === "AM" && hours === 12) {
+            hours = 0;
+        }
+
+        return `${hours.toString().padStart(2, "0")}:${minutes
+            .toString()
+            .padStart(2, "0")}`;
+    };
 
     return (
         <>
-            <main className="min-h-[69vh] my-[30px] p-[20px]">
-                <section className="max-w-[1350px] mx-auto grid  items-center gap-4 bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] p-[25px] shadow-lg rounded-[20px]">
-                    <div className="border-b-[2px] border-b-white/50 pb-[10px]">
-                        <div className="grid grid-col-1 md:grid-cols-2 pb-[20px]">
+            <main className="min-h-[80vh] p-[20px]">
+                <section className="max-w-[1350px] mx-auto grid  items-center gap-4  ">
+                    <div className="border-b-[2px] border-b-white/50 pb-[10px] grid gap-4">
+                        <div className="flex text-white items-center gap-5 max-md:justify-center">
+                            <p className="text-white text-4xl max-md:2xl font-bold relative after:absolute after:w-[4px] after:h-full after:bg-white after:right-[-10px]">{resForecast?.location.name} </p>
+                            <p className="text-xl">{resForecast?.location.country}</p>
+                        </div>
+                        <div className="flex md:justify-between max-md:justify-center pb-[20px]">
                             {/* loaction */}
                             <div className="grid gap-2">
-                                <div className="flex text-white items-center gap-5">
-                                    <p className="text-white text-4xl font-bold md:relative md:after:absolute md:after:w-[4px] md:after:h-full md:after:bg-white md:after:right-[-10px]">{resForecast?.location.name} </p>
-                                    <p className="text-xl">{resForecast?.location.country}</p>
+                                <p className="text-white max-md:text-center">{resForecast?.current.last_updated}</p>
+                                <div className="flex items-center gap-3 max-lg:grid">
+                                    <p className="text-white text-8xl font-bold max-md:text-6xl max-md:text-center">{selectTypeCF === 0 ? resForecast?.current.temp_f + "°" : resForecast?.current.temp_c + "°"}</p>
+                                    <img className="size-35 max-md:justify-self-center max-lg:justify-self-start max-md:hidden" alt={resForecast?.current.condition.text} src={resForecast?.current.condition.icon} />
+                                    <p className="text-white text-center md:hidden">{resForecast?.current.condition.text}</p>
                                 </div>
-                                <p className="text-white">{resForecast?.current.last_updated}</p>
-                                <div className="flex items-center gap-2">
-                                    <p className="text-white text-8xl font-bold">{selectTypeCF === 0 ? resForecast?.current.temp_f + "°" : resForecast?.current.temp_c + "°"}</p>
-                                    <img className="size-35 justify-self-center" alt={resForecast?.current.condition.text} src={resForecast?.current.condition.icon} />
-                                </div>
-                                <p className="text-white/70 text-xl ">Cảm giác như {selectTypeCF === 0 ? resForecast?.current.feelslike_f + "°" : resForecast?.current.feelslike_c + "°"}</p>
+                                <p className="text-white/70 max-md:text-sm max-md:text-center">Cảm giác như {selectTypeCF === 0 ? resForecast?.current.feelslike_f + "°" : resForecast?.current.feelslike_c + "°"}</p>
                             </div>
 
                             {/* img */}
-                            <div className="justify-self-end max-md:hidden">
+                            <div className="self-end max-md:hidden">
                                 <div className="grid justify-center gap-2">
-                                    <p className="text-white text-xl md:text-end">{resForecast?.current.condition.text}</p>
+                                    <p className="text-white max-md:text-sm md:text-end">{resForecast?.current.condition.text}</p>
                                     <div className="text-white grid gap-1 max-md:hidden">
                                         <p className="text-end">Gió: {resForecast?.current.wind_kph} km/h</p>
                                         <p className="text-end">Mây: {resForecast?.current.cloud} %</p>
@@ -328,11 +359,11 @@ const Home: React.FC = () => {
                             <span className="justify-self-center">{icons.iconDown}</span>
                         </button>
                         <div className={`${showDetailForecast === true ? "" : "hidden"} transition-all duration-300 ease grid gap-5`}>
-                            <div className="grid md:grid-cols-2 max-md:grid-cols-1 gap-3">
-                                <div className="rounded-[10px] justify-center bg-white/10 text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                            <div className="grid lg:grid-cols-2 gap-3">
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
                                     <div className="flex gap-2 items-center">
-                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center text-xl">{icons.iconThermometer}</span>
-                                        <p className="text-white/70 text-xl">Nhiệt Độ</p>
+                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconThermometer}</span>
+                                        <p className="text-white/70 text-lg md:text-xl">Nhiệt Độ</p>
                                     </div>
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
                                         <p className="w-[calc(100%-50px)]">Nhiệt độ cảm nhận</p>
@@ -346,13 +377,14 @@ const Home: React.FC = () => {
                                         <p className="w-[calc(100%-50px)]">Chỉ số nhiệt</p>
                                         <p>{selectTypeCF === 0 ? resForecast?.current.heatindex_f + "°" : resForecast?.current.heatindex_c + "°"}</p>
                                     </div>
+                                    {/* thêm minh họa ở bên phải:  */}
                                 </div>
 
-                                <div className="rounded-[10px] justify-center bg-white/10 text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
                                     <div className="flex gap-2 items-center justify-between">
                                         <div className="flex gap-2 items-center">
-                                            <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center text-xl">{icons.iconWind}</span>
-                                            <p className="text-white/70 text-xl">Gió</p>
+                                            <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconWind}</span>
+                                            <p className="text-white/70 text-lg md:text-xl">Gió</p>
                                         </div>
                                         <div className='flex bg-blue-600/10 rounded-[15px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[2px] py-[2px] shadow-lg'>
                                             {listWind.map((wind, index) => (
@@ -367,53 +399,59 @@ const Home: React.FC = () => {
                                     </div>
 
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
-                                        <p className="w-[calc(100%-75px)]">Gió</p>
+                                        <p className="w-[calc(100%-78px)]">Gió</p>
                                         <p>{selectWind === "km/h" ? resForecast?.current.wind_kph + " km/h" : resForecast?.current.wind_mph + " mph"}</p>
                                     </div>
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
-                                        <p className="w-[calc(100%-75px)]">Gió giật</p>
+                                        <p className="w-[calc(100%-78px)]">Gió giật</p>
                                         <p>{selectWind === "km/h" ? resForecast?.current.gust_kph + " km/h" : resForecast?.current.gust_mph + " mph"}</p>
                                     </div>
                                     <div className="flex pt-[15px] pb-[5px]">
-                                        <p className="w-[calc(100%-75px)]">Hướng gió</p>
-                                        <p>{resForecast?.current.wind_degree}° {resForecast?.current.wind_dir}</p>
+                                        <p className="w-[calc(100%-78px)]">Hướng gió</p>
+                                        <p>{resForecast?.current.wind_degree}° {windDirectionVN(resForecast?.current.wind_dir)}</p>
                                     </div>
+                                    {/* thêm minh họa ở bên phải: la bàn có mũi tên hướng gió và hiện tốc độ gió */}
                                 </div>
                             </div>
-                            <div className="grid lg:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 gap-3 ">
-                                <div className="rounded-[10px] justify-center bg-white/10 text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                            <div className="grid lg:grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-3 ">
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
                                     <div className="flex gap-2 items-center">
-                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center text-xl">{icons.iconCloud}</span>
-                                        <p className="text-white/70 text-xl">Mây</p>
+                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconSun}</span>
+                                        <p className="text-white/70 text-lg md:text-xl">Chỉ Số UV</p>
                                     </div>
-                                    <p className="text-3xl my-[15px] font-[600]">{resForecast?.current.cloud}</p>
-                                </div>
+                                    <p className="text-3xl my-[15px] font-[600]">{resForecast?.current.uv}</p>
+                                    {/* thêm minh họa ở giữa  */}
 
-                                <div className="rounded-[10px] justify-center bg-white/10 text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                                </div>
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+
+                                    {resForecast?.current.is_day === 1 ?
+                                        <>
+                                            <div className="flex gap-2 items-center">
+                                                <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconSunset}</span>
+                                                <p className="text-white/70 text-lg md:text-xl">Mặt trời lặn</p>
+                                            </div>
+                                            <p className="text-3xl my-[15px] font-[600]">{convertTo24(resForecast?.forecast.forecastday[0].astro.sunset)}</p>
+                                            <p className="text-lg">Mặt trời mọc: {convertTo24(resForecast?.forecast.forecastday[0].astro.sunrise)} </p>
+                                        </>
+                                        :
+                                        <>
+                                            <div className="flex gap-2 items-center">
+                                                <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconSunrise}</span>
+                                                <p className="text-white/70 text-lg md:text-xl">Mặt trăng lặn</p>
+                                            </div>
+                                            <p className="text-3xl my-[15px] font-[600]">{convertTo24(resForecast?.forecast.forecastday[0].astro.moonset)}</p>
+                                            <p className="text-lg">Mặt trăng mọc: {convertTo24(resForecast?.forecast.forecastday[0].astro.moonrise)} </p>
+                                        </>
+                                    }
+                                    {/* thêm minh họa */}
+
+                                </div>
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
                                     <div className="flex gap-2 items-center justify-between">
                                         <div className="flex gap-2 items-center">
-                                            <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center text-xl">{icons.iconTachometer}</span>
-                                            <p className="text-white/70 text-xl">Áp Suất</p>
-                                        </div>
-                                        <div className='flex bg-blue-600/10 rounded-[15px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[2px] py-[2px] shadow-lg'>
-                                            {listPressure.map((pressure, index) => (
-                                                <button key={index}
-                                                    className={`px-[8px] py-[1px] rounded-[15px] transition-all duration-300 ease text-white ${selectPressure === pressure ? "bg-white/30" : ""}`}
-                                                    onClick={() => {
-                                                        setSelectPressure(pressure)
-                                                    }}
-                                                >{pressure}</button>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <p className="text-3xl my-[15px] font-[600]">{selectPressure === "mb" ? resForecast?.current.pressure_mb + " mb" : resForecast?.current.pressure_in + " in"}</p>
-                                </div>
-
-                                <div className="rounded-[10px] justify-center bg-white/10 text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
-                                    <div className="flex gap-2 items-center justify-between">
-                                        <div className="flex gap-2 items-center">
-                                            <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center text-xl">{icons.iconCloudRain}</span>
-                                            <p className="text-white/70 text-xl">Lượng Mưa</p>
+                                            <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconCloudRain}</span>
+                                            <p className="text-white/70 text-lg md:text-xl">Lượng Mưa</p>
                                         </div>
 
                                         <div className='flex bg-blue-600/10 rounded-[15px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[2px] py-[2px] shadow-lg'>
@@ -426,23 +464,15 @@ const Home: React.FC = () => {
                                                 >{srecip}</button>
                                             ))}
                                         </div>
+                                        {/* them minh hoa */}
                                     </div>
                                     <p className="text-3xl my-[15px] font-[600]">{selectSrecip === "mm" ? resForecast?.current.precip_mm + " mm" : resForecast?.current.precip_in + " in"}</p>
                                 </div>
-
-                                <div className="rounded-[10px] justify-center bg-white/10 text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
-                                    <div className="flex gap-2 items-center">
-                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center text-xl">{icons.iconTint}</span>
-                                        <p className="text-white/70 text-xl">Độ Ẩm</p>
-                                    </div>
-                                    <p className="text-3xl my-[15px] font-[600]">{resForecast?.current.humidity}%</p>
-                                    <p className="text-xl">Điểm sương là {selectTypeCF === 0 ? resForecast?.current.dewpoint_f + "°" : resForecast?.current.dewpoint_c + "°"} ngay lúc này</p>
-                                </div>
-                                <div className="rounded-[10px] justify-center bg-white/10 text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
                                     <div className="flex gap-2 items-center justify-between">
                                         <div className="flex gap-2 items-center">
-                                            <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center text-xl">{icons.iconEye}</span>
-                                            <p className="text-white/70 text-xl">Tầm Nhìn</p>
+                                            <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconEye}</span>
+                                            <p className="text-white/70 text-lg md:text-xl">Tầm Nhìn</p>
                                         </div>
                                         <div className='flex bg-blue-600/10 rounded-[15px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[2px] py-[2px] shadow-lg'>
                                             {listVis.map((vis, index) => (
@@ -456,21 +486,44 @@ const Home: React.FC = () => {
                                         </div>
                                     </div>
                                     <p className="text-3xl my-[15px] font-[600]">{selectVis === "km" ? resForecast?.current.vis_km + " km" : resForecast?.current.vis_miles + " dặm"}</p>
+                                    {/* them minh hoa */}
+                                </div>
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                                    <div className="flex gap-2 items-center">
+                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconTint}</span>
+                                        <p className="text-white/70 text-lg md:text-xl">Độ Ẩm</p>
+                                    </div>
+                                    <p className="text-3xl my-[15px] font-[600]">{resForecast?.current.humidity}%</p>
+                                    <p className="text-lg">Điểm sương là {selectTypeCF === 0 ? resForecast?.current.dewpoint_f + "°" : resForecast?.current.dewpoint_c + "°"} ngay lúc này</p>
+                                    {/* thhem mih hoa */}
+                                </div>
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                                    <div className="flex gap-2 items-center justify-between">
+                                        <div className="flex gap-2 items-center">
+                                            <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconTachometer}</span>
+                                            <p className="text-white/70 text-lg md:text-xl">Áp Suất</p>
+                                        </div>
+                                        <div className='flex bg-blue-600/10 rounded-[15px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[2px] py-[2px] shadow-lg'>
+                                            {listPressure.map((pressure, index) => (
+                                                <button key={index}
+                                                    className={`px-[8px] py-[1px] rounded-[15px] transition-all duration-300 ease text-white ${selectPressure === pressure ? "bg-white/30" : ""}`}
+                                                    onClick={() => {
+                                                        setSelectPressure(pressure)
+                                                    }}
+                                                >{pressure}</button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <p className="text-3xl my-[15px] font-[600]">{selectPressure === "mb" ? resForecast?.current.pressure_mb + " mb" : resForecast?.current.pressure_in + " in"}</p>
+                                    {/* them minh hoa */}
                                 </div>
 
-                                <div className="rounded-[10px] justify-center bg-white/10 text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
-                                    <div className="flex gap-2 items-center">
-                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center text-xl">{icons.iconSun}</span>
-                                        <p className="text-white/70 text-xl">Chỉ Số UV</p>
-                                    </div>
-                                    <p className="text-3xl my-[15px] font-[600]">{resForecast?.current.uv}</p>
-                                </div>
                             </div>
-                            <div className="grid md:grid-cols-2 max-md:grid-cols-1 gap-3">
-                                <div className="rounded-[10px] justify-center bg-white/10 text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                            <div className="grid md:grid-cols-2 max-lg:grid-cols-1 gap-3">
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
                                     <div className="flex gap-2 items-center">
-                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center text-xl">{icons.iconSolarPanel}</span>
-                                        <p className="text-white/70 text-xl">Bức Xạ Mặt Trời</p>
+                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconSolarPanel}</span>
+                                        <p className="text-white/70 text-lg md:text-xl md:text-xl">Bức Xạ Mặt Trời</p>
                                     </div>
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
                                         <p className="w-[calc(100%-110px)]">Bức xạ sóng ngắn</p>
@@ -488,11 +541,12 @@ const Home: React.FC = () => {
                                         <p className="w-[calc(100%-110px)]">Bức xạ nghiêng</p>
                                         <p>{resForecast?.current.gti} W/m²</p>
                                     </div>
+                                    {/* them minh hoa */}
                                 </div>
-                                <div className="rounded-[10px] justify-center bg-white/10 text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
                                     <div className="flex gap-2 items-center">
-                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center text-xl">{icons.iconSmog}</span>
-                                        <p className="text-white/70 text-xl">Chất Lượng Không Khí</p>
+                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconSmog}</span>
+                                        <p className="text-white/70 text-lg md:text-xl">Chất Lượng Không Khí</p>
                                     </div>
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
                                         <p className="w-[calc(100%-110px)]">Carbon Monoxide (CO)</p>
@@ -519,6 +573,7 @@ const Home: React.FC = () => {
                                         <p>{resForecast?.current.air_quality?.pm10} μg/m³</p>
                                     </div>
                                 </div>
+                                {/* them minh hoa va Chỉ số EPA Hoa Kỳ & Chỉ số Defra Anh */}
                             </div>
                             <button className="grid justify-center w-full text-white items-center css-icon"
                                 onClick={() => { setShowDetailForecast(false) }}
@@ -528,25 +583,34 @@ const Home: React.FC = () => {
                             </button>
                         </div>
                     </div>
-                    <div className="flex overflow-x-auto gap-3">
+                    <div className="flex overflow-x-auto gap-3 bg-white/10 text-white border-[1px] border-white/5 backdrop-blur-[10px] p-[25px] shadow-lg rounded-[10px]">
                         {resForecast?.forecast.forecastday[0].hour.map((hour, index) => (
                             <div key={index}
                                 className="grid justify-center p-[10px] gap-2"
                             >
                                 <p className="text-white text-center"> {index}:00</p>
-                                <img className="h-[50px] w-[55px]" alt={hour.condition.text} src={hour.condition.icon} />
-                                <p className="text-white text-xl font-bold text-center">{selectTypeCF === 0 ? hour.temp_f + "°" : hour.temp_c + "°"}</p>
+                                <div>
+                                    <img className="h-[50px] w-[55px]" alt={hour.condition.text} src={hour.condition.icon} />
+                                    {hour.will_it_rain == 1 && (
+                                        <p className="text-center text-sm text-cyan-300">{hour.chance_of_rain}%</p>
+                                    )}
+                                    {hour.will_it_snow == 1 && (
+                                        <p className="text-center text-sm text-cyan-300">{hour.chance_of_snow}%</p>
+                                    )}
+                                </div>
+
+                                <p className="text-white max-md:text-sm font-bold text-center self-end">{selectTypeCF === 0 ? hour.temp_f + "°" : hour.temp_c + "°"}</p>
                             </div>
                         ))}
                     </div>
 
                 </section>
-                <section className="max-w-[1350px] mt-[30px] mx-auto grid p-[25px] items-center gap-4 bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px]  shadow-lg rounded-[20px]">
-                    <div className="flex items-center grid grid-col-1 md:grid-cols-2 border-b-[2px] border-b-white/50">
-                        <p className=" text-white/70 flex gap-2 items-center pb-[10px] text-xl">Dự báo {selectDays} ngày tới</p>
+                <section className="max-w-[1350px] mt-[30px] mx-auto grid p-[25px] items-center gap-4 bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px]  shadow-lg rounded-[10px]">
+                    <div className="flex items-center flex justify-between border-b-[2px] border-b-white/20">
+                        <p className=" text-white/70 flex gap-2 items-center pb-[10px] text-lg md:text-xl">Dự báo {selectDays} ngày tới</p>
                         <div className="justify-self-end flex gap-2 items-center pb-[10px]">
-                            <p className="text-white text-xl">Chọn</p>
-                            <button className="text-white"
+                            <p className="text-white/70 text-lg md:text-xl">Chọn</p>
+                            <button className="text-white/70"
                                 onClick={handleClickCalendar}
                             >{icons.iconCalendar}</button>
                             <Menu
@@ -555,14 +619,6 @@ const Home: React.FC = () => {
                                 onClose={handleCloseCalendar}
                                 PaperProps={PaperProps}
                                 MenuListProps={MenuListProps}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'left',
-                                }}
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'left',
-                                }}
                             >
                                 {days.map((day, index) => (
                                     <MenuItem key={index}
@@ -578,17 +634,30 @@ const Home: React.FC = () => {
                             </Menu>
                         </div>
                     </div>
-                    <div className="flex gap-3 w-full">
+                    <div className="flex gap-3 w-full overflow-x-auto">
                         {resForecast?.forecast.forecastday.map((forecast, index) => (
-                            <div key={index} className="rounded-[10px] justify-center grid gap-2 bg-white/10 text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                            <button key={index} className="rounded-[10px] justify-center grid gap-2 bg-white/10 text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full"
+                                onClick={() => {
+                                    setSelectDetailDay(index)
+                                    navigate("/chi-tiet-theo-ngay")
+                                }}
+                            >
                                 <p className="text-white text-center"> {formatDate(forecast.date)}</p>
                                 <img className="h-[50px] w-[55px] justify-self-center" alt={forecast.day.condition.text} src={forecast.day.condition.icon} />
-                                <div className="flex gap-2">
-                                    <p className="text-white text-xl font-bold">{selectTypeCF === 0 ? forecast.day.maxtemp_f + "°" : forecast.day.maxtemp_c + "°"}</p>
-                                    /
-                                    <p className="text-white text-xl">{selectTypeCF === 0 ? forecast.day.mintemp_f + "°" : forecast.day.mintemp_c + "°"}</p>
+                                <div>
+                                    {forecast.day.daily_will_it_rain == 1 && (
+                                        <p className="text-center text-cyan-300">{forecast.day.daily_chance_of_rain}%</p>
+                                    )}
+                                    {forecast.day.daily_will_it_snow == 1 && (
+                                        <p className="text-center text-cyan-300">{forecast.day.daily_chance_of_snow}%</p>
+                                    )}
                                 </div>
-                            </div>
+                                <div className="flex gap-2 self-end">
+                                    <p className="text-white max-md:text-sm font-bold">{selectTypeCF === 0 ? forecast.day.maxtemp_f + "°" : forecast.day.maxtemp_c + "°"}</p>
+                                    /
+                                    <p className="text-white max-md:text-sm">{selectTypeCF === 0 ? forecast.day.mintemp_f + "°" : forecast.day.mintemp_c + "°"}</p>
+                                </div>
+                            </button>
                         ))}
                     </div>
                 </section>

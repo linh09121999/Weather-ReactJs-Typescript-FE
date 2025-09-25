@@ -3,6 +3,7 @@ import type { JSX, ReactNode } from "react";
 import { useMediaQuery } from "@mui/material"
 
 import {
+    FaHome,
     FaUser,
     FaMapMarkerAlt,
     FaAngleDoubleUp,
@@ -17,7 +18,8 @@ import {
     FaSun,
     FaSolarPanel,
     FaSmog,
-    FaCloud
+    FaCloud,
+    FaRegSnowflake
 } from "react-icons/fa";
 import { FaCalendarDays } from "react-icons/fa6";
 import { CgMenu } from "react-icons/cg";
@@ -28,6 +30,7 @@ import {
     MdNavigateNext,
 } from "react-icons/md";
 import { IoMdSearch } from "react-icons/io";
+import { BsFillSunsetFill, BsFillSunriseFill } from "react-icons/bs"
 
 // Định nghĩa interface cho cấu trúc dữ liệu vị trí
 export interface Location {
@@ -55,8 +58,8 @@ export interface AirQuality {
     so2: number;
     pm2_5: number;
     pm10: number;
-    us_epa_index: number;
-    gb_defra_index: number;
+    "us-epa-index": number;
+    "gb-defra-index": number;
 }
 
 export interface Current {
@@ -560,6 +563,10 @@ export interface Icons {
     iconSolarPanel: JSX.Element;
     iconSmog: JSX.Element;
     iconCloud: JSX.Element;
+    iconSunset: JSX.Element;
+    iconHome: JSX.Element;
+    iconSunrise: JSX.Element;
+    iconSnow: JSX.Element;
 }
 
 const defaultIcons: Icons = {
@@ -582,6 +589,10 @@ const defaultIcons: Icons = {
     iconSolarPanel: <FaSolarPanel className="justify-self-center" />,
     iconSmog: <FaSmog className="justify-self-center" />,
     iconCloud: <FaCloud className="justify-self-center" />,
+    iconSunset: <BsFillSunsetFill className="justify-self-center" />,
+    iconSunrise: <BsFillSunriseFill className="justify-self-center" />,
+    iconSnow: <FaRegSnowflake className="justify-self-center" />,
+    iconHome: <FaHome />
 }
 
 export interface Header {
@@ -661,6 +672,55 @@ const defaultSelectDays: SelectDays[] = [
     },
 ]
 
+export interface ListSelectShowDetail {
+    id: number;
+    icon: JSX.Element;
+    title: string;
+}
+
+const defaultListSelectShowDetail: ListSelectShowDetail[] = [
+    {
+        id: 0,
+        icon: defaultIcons.iconThermometer,
+        title: "Điều kiện thời tiết"
+    },
+    {
+        id: 1,
+        icon: defaultIcons.iconWind,
+        title: "Gió"
+    },
+    {
+        id: 2,
+        icon: defaultIcons.iconSun,
+        title: "Chỉ Số UV"
+    },
+    {
+        id: 3,
+        icon: defaultIcons.iconCloudRain,
+        title: "Lượng Mưa"
+    },
+    {
+        id: 4,
+        icon: defaultIcons.iconSnow,
+        title: "Lượng tuyết"
+    },
+    {
+        id: 5,
+        icon: defaultIcons.iconEye,
+        title: "Tầm Nhìn"
+    },
+    {
+        id: 6,
+        icon: defaultIcons.iconTint,
+        title: "Độ Ẩm"
+    },
+    {
+        id: 7,
+        icon: defaultIcons.iconSmog,
+        title: "Chất Lượng Không Khí"
+    },
+]
+
 export interface GlobalState {
     resCurrent: ResCurrent | undefined;
     setResCurrent: React.Dispatch<React.SetStateAction<ResCurrent | undefined>>;
@@ -716,6 +776,15 @@ export interface GlobalState {
 
     footerContent: Footer;
 
+    selectDetailDay: number; //mếu = 0: resForecast?.forecast.forecastday[0]
+    setSelectDetailDay: (selectDetailDay: number) => void;
+
+    listSelectShowDetail: ListSelectShowDetail[];
+    listSrecip: string[];
+    listWind: string[];
+    listPressure: string[];
+    listVis: string[];
+    listAir: string[]
 }
 
 
@@ -750,6 +819,14 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     const [dt, setDt] = useState<string>("2025-09-23")
     const [selectTypeCF, setSelectTypeCF] = useState<number>(1)
 
+    const [selectDetailDay, setSelectDetailDay] = useState<number>(-1)
+
+    const listSrecip = ["mm", "in"]
+    const listWind = ["km/h", "mph"]
+    const listPressure = ["mb", "in"]
+    const listVis = ["km", "dặm"]
+    const listAir = ["US-EPA", "GB-DEFRA"]
+
     const value = {
         resCurrent, setResCurrent,
         resForecast, setResForecast,
@@ -776,6 +853,9 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         typeCF: defaultTypeCF,
         selectTypeCF, setSelectTypeCF,
         footerContent: defaultFooter,
+        selectDetailDay, setSelectDetailDay,
+        listSelectShowDetail: defaultListSelectShowDetail,
+        listSrecip, listWind, listPressure, listVis, listAir
     }
 
     return (
