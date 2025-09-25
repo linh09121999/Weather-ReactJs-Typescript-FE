@@ -364,8 +364,8 @@ const Home: React.FC = () => {
                             <span className="justify-self-center">{icons.iconDown}</span>
                         </button>
                         <div className={`${showDetailForecast === true ? "" : "hidden"} transition-all duration-300 ease grid gap-5`}>
-                            <div className="grid lg:grid-cols-2 gap-3">
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                            <div className="grid lg:grid-cols-2 gap-5">
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconThermometer}</span>
                                         <p className="text-white/70 text-lg md:text-xl">Nhiệt Độ</p>
@@ -385,7 +385,7 @@ const Home: React.FC = () => {
                                     {/* thêm minh họa ở bên phải:  */}
                                 </div>
 
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
                                     <div className="flex gap-2 items-center justify-between">
                                         <div className="flex gap-2 items-center">
                                             <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconWind}</span>
@@ -418,8 +418,8 @@ const Home: React.FC = () => {
                                     {/* thêm minh họa ở bên phải: la bàn có mũi tên hướng gió và hiện tốc độ gió */}
                                 </div>
                             </div>
-                            <div className="grid lg:grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-3 ">
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                            <div className="grid lg:grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-5 ">
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconSun}</span>
                                         <p className="text-white/70 text-lg md:text-xl">Chỉ Số UV</p>
@@ -428,7 +428,7 @@ const Home: React.FC = () => {
                                     {/* thêm minh họa ở giữa  */}
 
                                 </div>
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
 
                                     {resForecast?.current.is_day === 1 ?
                                         <>
@@ -452,7 +452,7 @@ const Home: React.FC = () => {
                                     {/* thêm minh họa */}
 
                                 </div>
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
                                     <div className="flex gap-2 items-center justify-between">
                                         <div className="flex gap-2 items-center">
                                             <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconCloudRain}</span>
@@ -473,7 +473,7 @@ const Home: React.FC = () => {
                                     </div>
                                     <p className="text-3xl my-[15px] font-[600]">{selectSrecip === "mm" ? resForecast?.current.precip_mm + " mm" : resForecast?.current.precip_in + " in"}</p>
                                 </div>
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
                                     <div className="flex gap-2 items-center justify-between">
                                         <div className="flex gap-2 items-center">
                                             <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconEye}</span>
@@ -493,7 +493,7 @@ const Home: React.FC = () => {
                                     <p className="text-3xl my-[15px] font-[600]">{selectVis === "km" ? resForecast?.current.vis_km + " km" : resForecast?.current.vis_miles + " dặm"}</p>
                                     {/* them minh hoa */}
                                 </div>
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconTint}</span>
                                         <p className="text-white/70 text-lg md:text-xl">Độ Ẩm</p>
@@ -502,7 +502,7 @@ const Home: React.FC = () => {
                                     <p className="text-lg">Điểm sương là {selectTypeCF === 0 ? resForecast?.current.dewpoint_f + "°" : resForecast?.current.dewpoint_c + "°"} ngay lúc này</p>
                                     {/* thhem mih hoa */}
                                 </div>
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
                                     <div className="flex gap-2 items-center justify-between">
                                         <div className="flex gap-2 items-center">
                                             <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconTachometer}</span>
@@ -524,8 +524,8 @@ const Home: React.FC = () => {
                                 </div>
 
                             </div>
-                            <div className="grid md:grid-cols-2 max-lg:grid-cols-1 gap-3">
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                            <div className="grid md:grid-cols-2 max-lg:grid-cols-1 gap-5">
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconSolarPanel}</span>
                                         <p className="text-white/70 text-lg md:text-xl md:text-xl">Bức Xạ Mặt Trời</p>
@@ -548,7 +548,7 @@ const Home: React.FC = () => {
                                     </div>
                                     {/* them minh hoa */}
                                 </div>
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[10px] w-full">
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconSmog}</span>
                                         <p className="text-white/70 text-lg md:text-xl">Chất Lượng Không Khí</p>
@@ -588,7 +588,12 @@ const Home: React.FC = () => {
                             </button>
                         </div>
                     </div>
-                    <div className="flex overflow-x-auto bg-white/10 text-white border-[1px] border-white/5 backdrop-blur-[10px]  shadow-lg rounded-[10px]">
+                    <button className="flex overflow-x-auto bg-white/10 text-white border-[1px] border-white/5 backdrop-blur-[10px] mt-[30px] shadow-lg rounded-[10px]"
+                        onClick={() => {
+                            setSelectDetailDay(0)
+                            navigate("/chi-tiet-theo-ngay")
+                        }}
+                    >
                         <div className="flex m-[25px] gap-3 scroll-x overflow-x-auto">
                             {resForecast?.forecast.forecastday[0].hour.map((hour, index) => (
                                 <div key={index}
@@ -609,7 +614,7 @@ const Home: React.FC = () => {
                                 </div>
                             ))}
                         </div>
-                    </div>
+                    </button>
 
                 </section>
                 <section className="max-w-[1350px] mt-[30px] mx-auto grid p-[25px] items-center gap-2 bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px]  shadow-lg rounded-[10px]">
