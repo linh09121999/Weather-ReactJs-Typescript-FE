@@ -750,6 +750,7 @@ export interface GlobalState {
     setResSports: React.Dispatch<React.SetStateAction<ResSports | undefined>>;
 
     isMobile: boolean;
+    is920px: boolean;
     keyApi: string;
     lang: Lang[];
     selectLang: string;
@@ -792,6 +793,7 @@ const GlobalContext = createContext<GlobalState | undefined>(undefined);
 
 export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     const isMobile = useMediaQuery("(max-width:768px)");
+    const is920px = useMediaQuery("(max-width:920px)");
 
     const keyApi = "230f3011bf6d47bd997172046252009";
 
@@ -837,7 +839,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         resAstronomy, setResAstronomy,
         resTimeZone, setResTimeZone,
         resSports, setResSports,
-        isMobile,
+        isMobile, is920px,
         keyApi,
         lang: defaultLang,
         selectLang, selectSetLang,
