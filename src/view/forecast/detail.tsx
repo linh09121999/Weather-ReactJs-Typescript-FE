@@ -195,21 +195,21 @@ const DetailForecast: React.FC = () => {
 
                 <div className='mt-[30px] grid p-[25px] items-center gap-4 bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
                     <div className='max-sm:hidden max-lg:grid max-lg:grid-cols-8 lg:flex lg:justify-between'>
-                        {listSelectShowDetail.map((list, index) => (
+                        {listSelectShowDetail.map((list) => (
                             <>
-                                <button key={index} className='px-[5px] text-lg text-white/50 max-lg:hidden'
+                                <button key={list.id} className='px-[5px] text-lg text-white/50 max-lg:hidden'
                                     onClick={() => {
                                         setIsSelectDetail(list.id)
                                     }}
                                 >
-                                    <p className={`${isSelectDetail === index ? "text-white after:scale-x-100" : ""} relative transiton-all duration-300 after:absolute after:transistion-all after:duration-300 after:w-full after:h-[2px] after:bg-white after:left-0 after:bottom-[-10px] after:visible after:scale-x-0 hover:after:w-full hover:after:scale-x-100 hover:text-white`}>{list.title}</p>
+                                    <p className={`${isSelectDetail === list.id ? "text-white after:scale-x-100" : ""} relative transiton-all duration-300 after:absolute after:transistion-all after:duration-300 after:w-full after:h-[2px] after:bg-white after:left-0 after:bottom-[-10px] after:visible after:scale-x-0 hover:after:w-full hover:after:scale-x-100 hover:text-white`}>{list.title}</p>
                                 </button>
-                                <button key={index} className='px-[5px] text-lg text-white/50 lg:hidden'
+                                <button key={list.id} className='px-[5px] text-lg text-white/50 lg:hidden'
                                     onClick={() => {
                                         setIsSelectDetail(list.id)
                                     }}
                                 >
-                                    <p className={`${isSelectDetail === index ? "text-white after:scale-x-100" : ""} relative transiton-all duration-300 after:absolute after:transistion-all after:duration-300 after:w-full after:h-[2px] after:bg-white after:left-0 after:bottom-[-10px] after:visible after:scale-x-0 hover:after:w-full hover:after:scale-x-100 hover:text-white`}>{list.icon}</p>
+                                    <p className={`${isSelectDetail === list.id ? "text-white after:scale-x-100" : ""} relative transiton-all duration-300 after:absolute after:transistion-all after:duration-300 after:w-full after:h-[2px] after:bg-white after:left-0 after:bottom-[-10px] after:visible after:scale-x-0 hover:after:w-full hover:after:scale-x-100 hover:text-white`}>{list.icon}</p>
                                 </button>
                             </>
                         ))}

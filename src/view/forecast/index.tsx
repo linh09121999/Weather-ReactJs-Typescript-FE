@@ -640,7 +640,7 @@ const Home: React.FC = () => {
                         {resForecast?.forecast.forecastday.map((forecast, index) => (
                             <>
                                 {is920px ?
-                                    <button className="flex justify-between items-center border-t-[1px] border-t-white/20"
+                                    <button key={index} className="flex justify-between items-center border-t-[1px] border-t-white/20"
                                         onClick={() => {
                                             setSelectDetailDay(index)
                                             navigate("/chi-tiet-theo-ngay")
