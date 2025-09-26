@@ -724,6 +724,26 @@ const defaultListSelectShowDetail: ListSelectShowDetail[] = [
     },
 ]
 
+export interface TypeTemp_Fellslike {
+    id: number;
+    title: string;
+    desc: string;
+}
+
+const defaultTypeTemp_Fellslike: TypeTemp_Fellslike[] = [
+    {
+        id: 0,
+        title: "Thực tế",
+        desc: "Nhiệt độ thực tế"
+    },
+    {
+        id: 1,
+        title: "Cảm nhận",
+        desc: "Cảm nhận về nhiệt độ, do độ ẩm, ánh nắng hoặc gió gây ra"
+    }
+]
+
+
 export interface GlobalState {
     resCurrent: ResCurrent | undefined;
     setResCurrent: React.Dispatch<React.SetStateAction<ResCurrent | undefined>>;
@@ -800,6 +820,7 @@ export interface GlobalState {
     setSelectVis: (selectVis: string) => void;
     selectAir: string;
     setSelectAir: (selectAir: string) => void;
+    typeTemp_Fellslike: TypeTemp_Fellslike[]
 }
 
 
@@ -883,7 +904,8 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         selectWind, setSelectWind,
         selectPressure, setSelectPressure,
         selectVis, setSelectVis,
-        selectAir, setSelectAir
+        selectAir, setSelectAir,
+        typeTemp_Fellslike: defaultTypeTemp_Fellslike
     }
 
     return (

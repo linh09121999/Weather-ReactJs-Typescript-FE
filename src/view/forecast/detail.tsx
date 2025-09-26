@@ -45,7 +45,8 @@ const DetailForecast: React.FC = () => {
         selectWind, setSelectWind,
         selectPressure, setSelectPressure,
         selectVis, setSelectVis,
-        selectAir, setSelectAir
+        selectAir, setSelectAir,
+        typeTemp_Fellslike
     } = useGlobal()
 
     const [isSelectDetail, setIsSelectDetail] = useState<number>(0)
@@ -144,6 +145,23 @@ const DetailForecast: React.FC = () => {
         return isMobile === true ? weekdays[inputDate.getDay()] : weekdaysFull[inputDate.getDay()]
     }
 
+    const [selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike] = useState<number>(0)
+
+    const windDirectionVN = (dir: string | undefined) => {
+        if (!dir) return undefined;
+        const map: Record<string, string> = {
+            N: "B",
+            S: "N",
+            E: "Đ",
+            W: "T",
+        };
+
+        return dir
+            .split("")       // tách chuỗi thành từng ký tự
+            .map((c) => map[c] || c) // đổi sang tiếng Việt
+            .join("");
+    }
+
     return (
         <main className="min-h-[80vh] mx-[20px]">
             <div className='flex gap-2 max-w-[1350px] mx-auto items-center text-white py-[10px] text-xl max-md:text-lg'>
@@ -197,7 +215,7 @@ const DetailForecast: React.FC = () => {
                         ))}
                     </div>
                     <div className='flex justify-between items-center'>
-                        <div className='grid gap-2 '>
+                        <div className='grid gap-2 w-full'>
                             {isSelectDetail === 0 && (//thoi tiet
                                 <>
                                     <div className='flex gap-2 items-center'>
@@ -208,7 +226,32 @@ const DetailForecast: React.FC = () => {
                                         <p>C: {selectTypeCF === 0 ? resForecast?.forecast.forecastday[selectDetailDay].day.maxtemp_f + '°' : resForecast?.forecast.forecastday[selectDetailDay].day.maxtemp_c + '°'}</p>
                                         <p>T: {selectTypeCF === 0 ? resForecast?.forecast.forecastday[selectDetailDay].day.mintemp_f + '°' : resForecast?.forecast.forecastday[selectDetailDay].day.mintemp_c + '°'}</p>
                                     </div>
+                                    <div className='grid grid-cols-2 gap-2 max-lg:hidden'>
+                                        {typeTemp_Fellslike.map((type, id) => (
+                                            <div key={id} className='grid gap-2'>
+                                                {/* bieu do line theo type.id */}
+                                                <p className='text-lg text-white'>{type.title}</p>
+                                                <p className='text-sm text-white/70'>{type.desc}</p>
+                                            </div>
+                                        ))}
 
+                                    </div>
+                                    <div className='grid gap-2 lg:hidden'>
+                                        {/* bieu do theo selectTypeTemp_Fellslike */}
+                                        <div className='flex bg-white/5 rounded-[50px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[5px] py-[5px] shadow-lg'>
+                                            {typeTemp_Fellslike.map((type) => (
+                                                <>
+                                                    <button key={type.id}
+                                                        className={`px-[12px] w-1/2 py-[2px] rounded-[15px] transition-all duration-300 ease text-white ${selectTypeTemp_Fellslike === type.id ? "bg-white/30" : ""}`}
+                                                        onClick={() => {
+                                                            setSelectTypeTemp_Fellslike(type.id)
+                                                        }}
+                                                    >{type.title}</button>
+                                                </>
+                                            ))}
+                                        </div>
+                                        <p className='text-sm text-white/70'>{typeTemp_Fellslike[selectTypeTemp_Fellslike].desc}</p>
+                                    </div>
                                 </>
                             )}
                             {isSelectDetail === 1 && (//gio
@@ -261,7 +304,7 @@ const DetailForecast: React.FC = () => {
                             {isSelectDetail === 7 && (//chat luong khong khi
                                 <>
                                     <p className='text-3xl text-white flex gap-2'>
-                                        {selectAir === "us-epa" ? "US-EPA: " + resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['us-epa-index'] : "GB-DEFRA: "+ resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['gb-defra-index']}
+                                        {selectAir === "us-epa" ? "US-EPA: " + resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['us-epa-index'] : "GB-DEFRA: " + resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['gb-defra-index']}
                                     </p>
                                     <p className='text-xl text-white/70'>
                                         {selectAir === "us-epa" ?
