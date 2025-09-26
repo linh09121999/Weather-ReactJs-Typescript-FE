@@ -743,6 +743,93 @@ const defaultTypeTemp_Fellslike: TypeTemp_Fellslike[] = [
     }
 ]
 
+export interface ListBeaufore {
+    bft: number;
+    desc: string;
+    angel: string;
+    color: string;
+}
+
+const defaultListBeaufore: ListBeaufore[] = [
+    {
+        bft: 0,
+        desc: "Lặng gió",
+        angel: "< 2",
+        color: "bg-sky-600"
+    },
+    {
+        bft: 1,
+        desc: "Gió rất nhẹ",
+        angel: "2 - 5",
+        color: "bg-cyan-600"
+    },
+    {
+        bft: 2,
+        desc: "Gió yếu",
+        angel: "6 - 11",
+        color: "bg-teal-600"
+    },
+    {
+        bft: 3,
+        desc: "Gió nhẹ",
+        angel: "12 - 19",
+        color: "bg-emerald-500"
+    },
+    {
+        bft: 4,
+        desc: "Gió vừa phải",
+        angel: "20 - 28",
+        color: "bg-green-400"
+    },
+    {
+        bft: 5,
+        desc: "Gió mạnh vừa phải",
+        angel: "29 - 38",
+        color: "bg-lime-300"
+    },
+    {
+        bft: 6,
+        desc: "Gió khá mạnh",
+        angel: "39 - 49",
+        color: "bg-yellow-200"
+    },
+    {
+        bft: 7,
+        desc: "Gió mạnh",
+        angel: "50 - 61",
+        color: "bg-yellow-300"
+    },
+    {
+        bft: 8,
+        desc: "Gió lốc",
+        angel: "62 - 74",
+        color: "bg-amber-400"
+    },
+    {
+        bft: 9,
+        desc: "Gió lốc mạnh",
+        angel: "75 - 87",
+        color: "bg-orange-400"
+    },
+    {
+        bft: 10,
+        desc: "Bão",
+        angel: "88 - 102",
+        color: "bg-amber-600"
+    },
+    {
+        bft: 11,
+        desc: "Bão rất mạnh",
+        angel: "103 - 117",
+        color: "bg-orange-600"
+    },
+    {
+        bft: 12,
+        desc: "Siêu bão",
+        angel: "> 118",
+        color: "bg-red-600"
+    },
+]
 
 export interface GlobalState {
     resCurrent: ResCurrent | undefined;
@@ -821,6 +908,7 @@ export interface GlobalState {
     selectAir: string;
     setSelectAir: (selectAir: string) => void;
     typeTemp_Fellslike: TypeTemp_Fellslike[]
+    listBeaufore: ListBeaufore[]
 }
 
 
@@ -905,7 +993,8 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         selectPressure, setSelectPressure,
         selectVis, setSelectVis,
         selectAir, setSelectAir,
-        typeTemp_Fellslike: defaultTypeTemp_Fellslike
+        typeTemp_Fellslike: defaultTypeTemp_Fellslike,
+        listBeaufore: defaultListBeaufore
     }
 
     return (

@@ -565,6 +565,9 @@ const Home: React.FC = () => {
                                 return next24Hours.map((hour, index) => {
                                     const forecastHour = new Date(hour.time).getHours();
 
+                                    const isCurrentHour =
+                                        hour.dayIndex === 0 && forecastHour === currentHour;
+
                                     return (
                                         <button
                                             key={index}
@@ -574,8 +577,8 @@ const Home: React.FC = () => {
                                             }}
                                             className="grid justify-center px-[10px] gap-2"
                                         >
-                                            <p className="text-white text-center">
-                                                {forecastHour}:00
+                                            <p className="text-white text-center w-max">
+                                                {isCurrentHour ? "Hiện tại" : `${forecastHour}:00`}
                                             </p>
                                             <div>
                                                 <img
