@@ -547,24 +547,42 @@ const Home: React.FC = () => {
                         }}
                     >
                         <div className="flex m-[25px] gap-3 scroll-x overflow-x-auto">
-                            {resForecast?.forecast.forecastday[0].hour.map((hour, index) => (
-                                <div key={index}
-                                    className="grid justify-center p-[10px] gap-2"
-                                >
-                                    <p className="text-white text-center"> {index}:00</p>
-                                    <div>
-                                        <img className="h-[50px] w-[55px]" alt={hour.condition.text} src={hour.condition.icon} />
-                                        {hour.will_it_rain == 1 && (
-                                            <p className="text-center text-sm text-cyan-300">{hour.chance_of_rain}%</p>
-                                        )}
-                                        {hour.will_it_snow == 1 && (
-                                            <p className="text-center text-sm text-cyan-300">{hour.chance_of_snow}%</p>
-                                        )}
-                                    </div>
+                            {resForecast?.forecast.forecastday[0].hour
+                                // lọc chỉ những giờ >= giờ hiện tại
+                                .filter((hour) => {
+                                    const currentHour = new Date().getHours();
+                                    const forecastHour = new Date(hour.time).getHours();
+                                    return forecastHour >= currentHour;
+                                })
+                                .map((hour, index) => {
+                                    const forecastHour = new Date(hour.time).getHours();
 
-                                    <p className="text-white max-md:text-sm font-bold text-center self-end">{selectTypeCF === 0 ? hour.temp_f + "°" : hour.temp_c + "°"}</p>
-                                </div>
-                            ))}
+                                    return (
+                                        <div
+                                            key={index}
+                                            className="grid justify-center p-[10px] gap-2"
+                                        >
+                                            <p className="text-white text-center">{forecastHour}:00</p>
+                                            <div>
+                                                <img
+                                                    className="h-[50px] w-[55px]"
+                                                    alt={hour.condition.text}
+                                                    src={hour.condition.icon}
+                                                />
+                                                {hour.will_it_rain == 1 && (
+                                                    <p className="text-center text-sm text-cyan-300">{hour.chance_of_rain}%</p>
+                                                )}
+                                                {hour.will_it_snow == 1 && (
+                                                    <p className="text-center text-sm text-cyan-300">{hour.chance_of_snow}%</p>
+                                                )}
+                                            </div>
+
+                                            <p className="text-white max-md:text-sm font-bold text-center self-end">
+                                                {selectTypeCF === 0 ? hour.temp_f + "°" : hour.temp_c + "°"}
+                                            </p>
+                                        </div>
+                                    );
+                                })}
                         </div>
                     </button>
 
