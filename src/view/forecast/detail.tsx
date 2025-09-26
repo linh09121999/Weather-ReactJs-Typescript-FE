@@ -40,7 +40,13 @@ const DetailForecast: React.FC = () => {
         selectDetailDay, setSelectDetailDay,
         listSelectShowDetail,
         resForecast,
-        selectTypeCF, isMobile } = useGlobal()
+        selectTypeCF, isMobile,
+        selectSrecip, setSelectSrecip,
+        selectWind, setSelectWind,
+        selectPressure, setSelectPressure,
+        selectVis, setSelectVis,
+        selectAir, setSelectAir
+    } = useGlobal()
 
     const [isSelectDetail, setIsSelectDetail] = useState<number>(0)
 
@@ -138,30 +144,6 @@ const DetailForecast: React.FC = () => {
         return isMobile === true ? weekdays[inputDate.getDay()] : weekdaysFull[inputDate.getDay()]
     }
 
-    const [selectSrecip, setSelectSrecip] = useState<string>("mm")
-    const [selectWind, setSelectWind] = useState<string>("km/h")
-    const [selectPressure, setSelectPressure] = useState<string>("mb")
-    const [selectVis, setSelectVis] = useState<string>("km")
-    const [selectAir, setSelectAir] = useState<string>("US-EPA")
-
-    const handleClickVis = () => {
-        setSelectVis(selectVis === "km" ? "dặm" : "km")
-    }
-
-    const handleClickSrecip = () => {
-        setSelectSrecip(selectSrecip === "mm" ? "in" : "mm")
-    }
-
-    const handleClickWind = () => {
-        setSelectWind(selectWind === "km/h" ? "mph" : "km/h")
-    }
-
-    const handleClickAir = () => {
-        setSelectAir(selectAir === "US-EPA" ? "GB-DEFRA" : "US-EPA")
-    }
-
-    const today = new Date().getDay || undefined;
-
     return (
         <main className="min-h-[80vh] mx-[20px]">
             <div className='flex gap-2 max-w-[1350px] mx-auto items-center text-white py-[10px] text-xl max-md:text-lg'>
@@ -232,13 +214,8 @@ const DetailForecast: React.FC = () => {
                             {isSelectDetail === 1 && (//gio
                                 <>
                                     <div className='flex gap-2 items-center text-3xl'>
-                                        <p className='text-3xl text-white flex gap-2'>{selectWind === "km/h" ? resForecast?.forecast.forecastday[selectDetailDay].day.maxwind_kph : resForecast?.forecast.forecastday[selectDetailDay].day.maxwind_mph}
-                                            <button
-                                                className='border-b-[2px] border-dotted border-b-white/30 css-icon'
-                                                onClick={handleClickWind}
-                                            >
-                                                {selectWind}
-                                            </button>
+                                        <p className='text-3xl text-white flex gap-2'>
+                                            {selectWind === "km/h" ? resForecast?.forecast.forecastday[selectDetailDay].day.maxwind_kph + " km/h" : resForecast?.forecast.forecastday[selectDetailDay].day.maxwind_mph + " mph"}
                                         </p>
                                         <p className='text-white/70'></p>
                                     </div>
@@ -255,13 +232,8 @@ const DetailForecast: React.FC = () => {
                             )}
                             {isSelectDetail === 3 && (//luong mua
                                 <>
-                                    <p className='text-3xl text-white flex gap-2'>{selectSrecip === "mm" ? resForecast?.forecast.forecastday[selectDetailDay].day.totalprecip_mm : resForecast?.forecast.forecastday[selectDetailDay].day.totalprecip_in}
-                                        <button
-                                            className='border-b-[2px] border-dotted border-b-white/30 css-icon'
-                                            onClick={handleClickSrecip}
-                                        >
-                                            {selectSrecip}
-                                        </button>
+                                    <p className='text-3xl text-white flex gap-2'>
+                                        {selectSrecip === "mm" ? resForecast?.forecast.forecastday[selectDetailDay].day.totalprecip_mm + " mm" : resForecast?.forecast.forecastday[selectDetailDay].day.totalprecip_in + " in"}
                                     </p>
                                     <p className='text-xl text-white/70'>Tổng trong 24 giờ</p>
                                 </>
@@ -274,13 +246,8 @@ const DetailForecast: React.FC = () => {
                             )}
                             {isSelectDetail === 5 && (//tam nhịn
                                 <>
-                                    <p className='text-3xl text-white flex gap-2'>{selectVis === "km" ? resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_km : resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_miles}
-                                        <button
-                                            className='border-b-[2px] border-dotted border-b-white/30 css-icon'
-                                            onClick={handleClickVis}
-                                        >
-                                            {selectVis}
-                                        </button>
+                                    <p className='text-3xl text-white flex gap-2'>
+                                        {selectVis === "km" ? resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_km + " km" : resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_miles + " dặm"}
                                     </p>
                                     <p className='text-xl text-white/70'>{getVisibilityLevel(resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_km)}</p>
                                 </>
@@ -294,16 +261,10 @@ const DetailForecast: React.FC = () => {
                             {isSelectDetail === 7 && (//chat luong khong khi
                                 <>
                                     <p className='text-3xl text-white flex gap-2'>
-                                        <button
-                                            className='border-b-[2px] border-dotted border-b-white/30 css-icon'
-                                            onClick={handleClickAir}
-                                        >
-                                            {selectAir}:
-                                        </button>
-                                        {selectAir === "US-EPA" ? resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['us-epa-index'] : resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['gb-defra-index']}
+                                        {selectAir === "us-epa" ? "US-EPA: " + resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['us-epa-index'] : "GB-DEFRA: "+ resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['gb-defra-index']}
                                     </p>
                                     <p className='text-xl text-white/70'>
-                                        {selectAir === "US-EPA" ?
+                                        {selectAir === "us-epa" ?
                                             getUsEpaLever(resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['us-epa-index'])
                                             :
                                             getgetGbDefraLevel(resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['gb-defra-index'])

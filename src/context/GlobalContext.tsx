@@ -31,6 +31,7 @@ import {
 } from "react-icons/md";
 import { IoMdSearch } from "react-icons/io";
 import { BsFillSunsetFill, BsFillSunriseFill } from "react-icons/bs"
+import { LuSettings2 } from "react-icons/lu";
 
 // Định nghĩa interface cho cấu trúc dữ liệu vị trí
 export interface Location {
@@ -567,11 +568,12 @@ export interface Icons {
     iconHome: JSX.Element;
     iconSunrise: JSX.Element;
     iconSnow: JSX.Element;
+    iconSetting: JSX.Element;
 }
 
 const defaultIcons: Icons = {
     iconMenu: <CgMenu />,
-    iconClose: <IoClose />,
+    iconClose: <IoClose className="justify-self-center" />,
     iconBackToTop: <FaAngleDoubleUp />,
     iconMap: <FaMapMarkerAlt size={30} />,
     iconNext: <MdNavigateNext size={24} />,
@@ -592,7 +594,8 @@ const defaultIcons: Icons = {
     iconSunset: <BsFillSunsetFill className="justify-self-center" />,
     iconSunrise: <BsFillSunriseFill className="justify-self-center" />,
     iconSnow: <FaRegSnowflake className="justify-self-center" />,
-    iconHome: <FaHome />
+    iconHome: <FaHome />,
+    iconSetting: <LuSettings2 className="justify-self-center" />,
 }
 
 export interface Header {
@@ -785,7 +788,18 @@ export interface GlobalState {
     listWind: string[];
     listPressure: string[];
     listVis: string[];
-    listAir: string[]
+    listAir: string[];
+
+    selectSrecip: string;
+    setSelectSrecip: (selectSrecip: string) => void;
+    selectWind: string;
+    setSelectWind: (selectWind: string) => void;
+    selectPressure: string;
+    setSelectPressure: (selectPressure: string) => void;
+    selectVis: string;
+    setSelectVis: (selectVis: string) => void;
+    selectAir: string;
+    setSelectAir: (selectAir: string) => void;
 }
 
 
@@ -827,7 +841,14 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     const listWind = ["km/h", "mph"]
     const listPressure = ["mb", "in"]
     const listVis = ["km", "dặm"]
-    const listAir = ["US-EPA", "GB-DEFRA"]
+    const listAir = ["us-epa", "gb-defra"]
+
+    const [selectSrecip, setSelectSrecip] = useState<string>("mm")
+    const [selectWind, setSelectWind] = useState<string>("km/h")
+    const [selectPressure, setSelectPressure] = useState<string>("mb")
+    const [selectVis, setSelectVis] = useState<string>("km")
+    const [selectAir, setSelectAir] = useState<string>("us-epa")
+
 
     const value = {
         resCurrent, setResCurrent,
@@ -857,7 +878,12 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         footerContent: defaultFooter,
         selectDetailDay, setSelectDetailDay,
         listSelectShowDetail: defaultListSelectShowDetail,
-        listSrecip, listWind, listPressure, listVis, listAir
+        listSrecip, listWind, listPressure, listVis, listAir,
+        selectSrecip, setSelectSrecip,
+        selectWind, setSelectWind,
+        selectPressure, setSelectPressure,
+        selectVis, setSelectVis,
+        selectAir, setSelectAir
     }
 
     return (

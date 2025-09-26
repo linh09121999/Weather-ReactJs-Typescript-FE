@@ -43,7 +43,7 @@ const Home: React.FC = () => {
     const formatCityName = (city: string) => {
         return city
             .replace(/^Thành phố\s*/i, '') // bỏ "Thành phố" ở đầu
-            .normalize('NFD')              // tách ký tự gốc và dấu
+            .normalize('NFD')          // tách ký tự gốc và dấu
             .replace(/[\u0300-\u036f]/g, '') // xoá dấu
             .replace(/đ/g, 'd')
             .replace(/Đ/g, 'D')
@@ -75,7 +75,11 @@ const Home: React.FC = () => {
         icons,
         setSelectDetailDay,
         listSrecip, listWind, listPressure, listVis,
-        is920px, isMobile
+        is920px, isMobile,
+        selectSrecip, setSelectSrecip,
+        selectWind, setSelectWind,
+        selectPressure, setSelectPressure,
+        selectVis, setSelectVis
     } = useGlobal();
 
     const Api_findForecast = async (q: string, days: number, aqi: string, alerts: string, lang: string) => {
@@ -107,131 +111,131 @@ const Home: React.FC = () => {
     }
 
     // const Api_findFuture = async (q: string, dt: string, lang: string) => {
-    //     try {
-    //         const response = await axios.get("http://api.weatherapi.com/v1/future.json", { //https://weather-be-hhcd.onrender.com/api/future
-    //             params: {
-    //                 key: keyApi,
-    //                 q: q,
-    //                 dt: dt,
-    //                 lang: lang
-    //             },
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Accept': 'application/json'
-    //             }
-    //         })
-    //         setResFuture(response.data)
-    //     }
-    //     catch (err) {
-    //         if (axios.isAxiosError(err)) {
-    //             console.error("Axios error:", err.message);
-    //             toast.error(err.message);
-    //         } else {
-    //             console.error("Unexpected error:", err);
+    //    try {
+    //      const response = await axios.get("http://api.weatherapi.com/v1/future.json", { //https://weather-be-hhcd.onrender.com/api/future
+    //         params: {
+    //            key: keyApi,
+    //            q: q,
+    //            dt: dt,
+    //            lang: lang
+    //         },
+    //         headers: {
+    //            'Content-Type': 'application/json',
+    //            'Accept': 'application/json'
     //         }
-    //     }
+    //      })
+    //      setResFuture(response.data)
+    //    }
+    //    catch (err) {
+    //      if (axios.isAxiosError(err)) {
+    //         console.error("Axios error:", err.message);
+    //         toast.error(err.message);
+    //      } else {
+    //         console.error("Unexpected error:", err);
+    //      }
+    //    }
     // }
 
     // const Api_findMarine = async (q: string, days: number, lang: string) => {
-    //     try {
-    //         const response = await axios.get("http://api.weatherapi.com/v1/marine.json", { //https://weather-be-hhcd.onrender.com/api/marine
-    //             params: {
-    //                 key: keyApi,
-    //                 q: q,
-    //                 days: days,
-    //                 lang: lang
-    //             },
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Accept': 'application/json'
-    //             }
-    //         })
-    //         setResMarine(response.data)
-    //     }
-    //     catch (err) {
-    //         if (axios.isAxiosError(err)) {
-    //             console.error("Axios error:", err.message);
-    //             toast.error(err.message);
-    //         } else {
-    //             console.error("Unexpected error:", err);
+    //    try {
+    //      const response = await axios.get("http://api.weatherapi.com/v1/marine.json", { //https://weather-be-hhcd.onrender.com/api/marine
+    //         params: {
+    //            key: keyApi,
+    //            q: q,
+    //            days: days,
+    //            lang: lang
+    //         },
+    //         headers: {
+    //            'Content-Type': 'application/json',
+    //            'Accept': 'application/json'
     //         }
-    //     }
+    //      })
+    //      setResMarine(response.data)
+    //    }
+    //    catch (err) {
+    //      if (axios.isAxiosError(err)) {
+    //         console.error("Axios error:", err.message);
+    //         toast.error(err.message);
+    //      } else {
+    //         console.error("Unexpected error:", err);
+    //      }
+    //    }
     // }
 
     // const Api_findAstronomy = async (q: string, dt: string, lang: string) => {
-    //     try {
-    //         const response = await axios.get("http://api.weatherapi.com/v1/astronomy.json", { //https://weather-be-hhcd.onrender.com/api/astronomy
-    //             params: {
-    //                 key: keyApi,
-    //                 q: q,
-    //                 dt: dt,
-    //                 lang: lang
-    //             },
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Accept': 'application/json'
-    //             }
-    //         })
-    //         setResAstronomy(response.data)
-    //     }
-    //     catch (err) {
-    //         if (axios.isAxiosError(err)) {
-    //             console.error("Axios error:", err.message);
-    //             toast.error(err.message);
-    //         } else {
-    //             console.error("Unexpected error:", err);
+    //    try {
+    //      const response = await axios.get("http://api.weatherapi.com/v1/astronomy.json", { //https://weather-be-hhcd.onrender.com/api/astronomy
+    //         params: {
+    //            key: keyApi,
+    //            q: q,
+    //            dt: dt,
+    //            lang: lang
+    //         },
+    //         headers: {
+    //            'Content-Type': 'application/json',
+    //            'Accept': 'application/json'
     //         }
-    //     }
+    //      })
+    //      setResAstronomy(response.data)
+    //    }
+    //    catch (err) {
+    //      if (axios.isAxiosError(err)) {
+    //         console.error("Axios error:", err.message);
+    //         toast.error(err.message);
+    //      } else {
+    //         console.error("Unexpected error:", err);
+    //      }
+    //    }
     // }
 
     // const Api_findTimezone = async (q: string, lang: string) => {
-    //     try {
-    //         const response = await axios.get("http://api.weatherapi.com/v1/timezone.json", { //https://weather-be-hhcd.onrender.com/api/timezone
-    //             params: {
-    //                 key: keyApi,
-    //                 q: q,
-    //                 lang: lang
-    //             },
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Accept': 'application/json'
-    //             }
-    //         })
-    //         setResTimeZone(response.data)
-    //     }
-    //     catch (err) {
-    //         if (axios.isAxiosError(err)) {
-    //             console.error("Axios error:", err.message);
-    //             toast.error(err.message);
-    //         } else {
-    //             console.error("Unexpected error:", err);
+    //    try {
+    //      const response = await axios.get("http://api.weatherapi.com/v1/timezone.json", { //https://weather-be-hhcd.onrender.com/api/timezone
+    //         params: {
+    //            key: keyApi,
+    //            q: q,
+    //            lang: lang
+    //         },
+    //         headers: {
+    //            'Content-Type': 'application/json',
+    //            'Accept': 'application/json'
     //         }
-    //     }
+    //      })
+    //      setResTimeZone(response.data)
+    //    }
+    //    catch (err) {
+    //      if (axios.isAxiosError(err)) {
+    //         console.error("Axios error:", err.message);
+    //         toast.error(err.message);
+    //      } else {
+    //         console.error("Unexpected error:", err);
+    //      }
+    //    }
     // }
 
     // const Api_findSports = async (q: string, lang: string) => {
-    //     try {
-    //         const response = await axios.get("http://api.weatherapi.com/v1/sports.json", { //https://weather-be-hhcd.onrender.com/api/sports
-    //             params: {
-    //                 key: keyApi,
-    //                 q: q,
-    //                 lang: lang
-    //             },
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Accept': 'application/json'
-    //             }
-    //         })
-    //         setResSports(response.data)
-    //     }
-    //     catch (err) {
-    //         if (axios.isAxiosError(err)) {
-    //             console.error("Axios error:", err.message);
-    //             toast.error(err.message);
-    //         } else {
-    //             console.error("Unexpected error:", err);
+    //    try {
+    //      const response = await axios.get("http://api.weatherapi.com/v1/sports.json", { //https://weather-be-hhcd.onrender.com/api/sports
+    //         params: {
+    //            key: keyApi,
+    //            q: q,
+    //            lang: lang
+    //         },
+    //         headers: {
+    //            'Content-Type': 'application/json',
+    //            'Accept': 'application/json'
     //         }
-    //     }
+    //      })
+    //      setResSports(response.data)
+    //    }
+    //    catch (err) {
+    //      if (axios.isAxiosError(err)) {
+    //         console.error("Axios error:", err.message);
+    //         toast.error(err.message);
+    //      } else {
+    //         console.error("Unexpected error:", err);
+    //      }
+    //    }
     // }
 
     useEffect(() => {
@@ -283,10 +287,6 @@ const Home: React.FC = () => {
     };
 
     const [showDetailForecast, setShowDetailForecast] = useState<boolean>(false)
-    const [selectSrecip, setSelectSrecip] = useState<string>("mm")
-    const [selectWind, setSelectWind] = useState<string>("km/h")
-    const [selectPressure, setSelectPressure] = useState<string>("mb")
-    const [selectVis, setSelectVis] = useState<string>("km")
 
     const windDirectionVN = (dir: string | undefined) => {
         if (!dir) return undefined;
@@ -298,7 +298,7 @@ const Home: React.FC = () => {
         };
 
         return dir
-            .split("")          // tách chuỗi thành từng ký tự
+            .split("")       // tách chuỗi thành từng ký tự
             .map((c) => map[c] || c) // đổi sang tiếng Việt
             .join("");
     }
@@ -367,7 +367,7 @@ const Home: React.FC = () => {
                             <div className="grid lg:grid-cols-2 gap-5">
                                 <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
                                     <div className="flex gap-2 items-center">
-                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconThermometer}</span>
+                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconThermometer}</span>
                                         <p className="text-white/70 text-lg md:text-xl">Nhiệt Độ</p>
                                     </div>
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
@@ -386,21 +386,9 @@ const Home: React.FC = () => {
                                 </div>
 
                                 <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
-                                    <div className="flex gap-2 items-center justify-between">
-                                        <div className="flex gap-2 items-center">
-                                            <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconWind}</span>
-                                            <p className="text-white/70 text-lg md:text-xl">Gió</p>
-                                        </div>
-                                        <div className='flex bg-blue-600/10 rounded-[15px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[2px] py-[2px] shadow-lg'>
-                                            {listWind.map((wind, index) => (
-                                                <button key={index}
-                                                    className={`px-[8px] py-[1px] rounded-[15px] transition-all duration-300 ease text-white ${selectWind === wind ? "bg-white/30" : ""}`}
-                                                    onClick={() => {
-                                                        setSelectWind(wind)
-                                                    }}
-                                                >{wind}</button>
-                                            ))}
-                                        </div>
+                                    <div className="flex gap-2 items-center">
+                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconWind}</span>
+                                        <p className="text-white/70 text-lg md:text-xl">Gió</p>
                                     </div>
 
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
@@ -421,7 +409,7 @@ const Home: React.FC = () => {
                             <div className="grid lg:grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-5 ">
                                 <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
                                     <div className="flex gap-2 items-center">
-                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconSun}</span>
+                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconSun}</span>
                                         <p className="text-white/70 text-lg md:text-xl">Chỉ Số UV</p>
                                     </div>
                                     <p className="text-3xl my-[15px] font-[600]">{resForecast?.current.uv}</p>
@@ -433,7 +421,7 @@ const Home: React.FC = () => {
                                     {resForecast?.current.is_day === 1 ?
                                         <>
                                             <div className="flex gap-2 items-center">
-                                                <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconSunset}</span>
+                                                <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconSunset}</span>
                                                 <p className="text-white/70 text-lg md:text-xl">Mặt trời lặn</p>
                                             </div>
                                             <p className="text-3xl my-[15px] font-[600]">{convertTo24(resForecast?.forecast.forecastday[0].astro.sunset)}</p>
@@ -442,7 +430,7 @@ const Home: React.FC = () => {
                                         :
                                         <>
                                             <div className="flex gap-2 items-center">
-                                                <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconSunrise}</span>
+                                                <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconSunrise}</span>
                                                 <p className="text-white/70 text-lg md:text-xl">Mặt trăng lặn</p>
                                             </div>
                                             <p className="text-3xl my-[15px] font-[600]">{convertTo24(resForecast?.forecast.forecastday[0].astro.moonset)}</p>
@@ -453,49 +441,25 @@ const Home: React.FC = () => {
 
                                 </div>
                                 <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
-                                    <div className="flex gap-2 items-center justify-between">
-                                        <div className="flex gap-2 items-center">
-                                            <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconCloudRain}</span>
-                                            <p className="text-white/70 text-lg md:text-xl">Lượng Mưa</p>
-                                        </div>
-
-                                        <div className='flex bg-blue-600/10 rounded-[15px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[2px] py-[2px] shadow-lg'>
-                                            {listSrecip.map((srecip, index) => (
-                                                <button key={index}
-                                                    className={`px-[8px] py-[1px] rounded-[15px] transition-all duration-300 ease text-white ${selectSrecip === srecip ? "bg-white/30" : ""}`}
-                                                    onClick={() => {
-                                                        setSelectSrecip(srecip)
-                                                    }}
-                                                >{srecip}</button>
-                                            ))}
-                                        </div>
-                                        {/* them minh hoa */}
+                                    <div className="flex gap-2 items-center">
+                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconCloudRain}</span>
+                                        <p className="text-white/70 text-lg md:text-xl">Lượng Mưa</p>
                                     </div>
+
+                                    {/* them minh hoa */}
                                     <p className="text-3xl my-[15px] font-[600]">{selectSrecip === "mm" ? resForecast?.current.precip_mm + " mm" : resForecast?.current.precip_in + " in"}</p>
                                 </div>
                                 <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
-                                    <div className="flex gap-2 items-center justify-between">
-                                        <div className="flex gap-2 items-center">
-                                            <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconEye}</span>
-                                            <p className="text-white/70 text-lg md:text-xl">Tầm Nhìn</p>
-                                        </div>
-                                        <div className='flex bg-blue-600/10 rounded-[15px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[2px] py-[2px] shadow-lg'>
-                                            {listVis.map((vis, index) => (
-                                                <button key={index}
-                                                    className={`px-[8px] py-[1px] rounded-[15px] transition-all duration-300 ease text-white ${selectVis === vis ? "bg-white/30" : ""}`}
-                                                    onClick={() => {
-                                                        setSelectVis(vis)
-                                                    }}
-                                                >{vis}</button>
-                                            ))}
-                                        </div>
+                                    <div className="flex gap-2 items-center">
+                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconEye}</span>
+                                        <p className="text-white/70 text-lg md:text-xl">Tầm Nhìn</p>
                                     </div>
                                     <p className="text-3xl my-[15px] font-[600]">{selectVis === "km" ? resForecast?.current.vis_km + " km" : resForecast?.current.vis_miles + " dặm"}</p>
                                     {/* them minh hoa */}
                                 </div>
                                 <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
                                     <div className="flex gap-2 items-center">
-                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconTint}</span>
+                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconTint}</span>
                                         <p className="text-white/70 text-lg md:text-xl">Độ Ẩm</p>
                                     </div>
                                     <p className="text-3xl my-[15px] font-[600]">{resForecast?.current.humidity}%</p>
@@ -503,21 +467,9 @@ const Home: React.FC = () => {
                                     {/* thhem mih hoa */}
                                 </div>
                                 <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
-                                    <div className="flex gap-2 items-center justify-between">
-                                        <div className="flex gap-2 items-center">
-                                            <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconTachometer}</span>
-                                            <p className="text-white/70 text-lg md:text-xl">Áp Suất</p>
-                                        </div>
-                                        <div className='flex bg-blue-600/10 rounded-[15px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[2px] py-[2px] shadow-lg'>
-                                            {listPressure.map((pressure, index) => (
-                                                <button key={index}
-                                                    className={`px-[8px] py-[1px] rounded-[15px] transition-all duration-300 ease text-white ${selectPressure === pressure ? "bg-white/30" : ""}`}
-                                                    onClick={() => {
-                                                        setSelectPressure(pressure)
-                                                    }}
-                                                >{pressure}</button>
-                                            ))}
-                                        </div>
+                                    <div className="flex gap-2 items-center">
+                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconTachometer}</span>
+                                        <p className="text-white/70 text-lg md:text-xl">Áp Suất</p>
                                     </div>
                                     <p className="text-3xl my-[15px] font-[600]">{selectPressure === "mb" ? resForecast?.current.pressure_mb + " mb" : resForecast?.current.pressure_in + " in"}</p>
                                     {/* them minh hoa */}
@@ -527,7 +479,7 @@ const Home: React.FC = () => {
                             <div className="grid md:grid-cols-2 max-lg:grid-cols-1 gap-5">
                                 <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
                                     <div className="flex gap-2 items-center">
-                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconSolarPanel}</span>
+                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconSolarPanel}</span>
                                         <p className="text-white/70 text-lg md:text-xl md:text-xl">Bức Xạ Mặt Trời</p>
                                     </div>
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
@@ -550,7 +502,7 @@ const Home: React.FC = () => {
                                 </div>
                                 <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
                                     <div className="flex gap-2 items-center">
-                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full text-blur-800 content-center max-md:text-sm">{icons.iconSmog}</span>
+                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconSmog}</span>
                                         <p className="text-white/70 text-lg md:text-xl">Chất Lượng Không Khí</p>
                                     </div>
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
