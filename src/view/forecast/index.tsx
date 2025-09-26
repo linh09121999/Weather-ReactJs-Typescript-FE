@@ -540,29 +540,43 @@ const Home: React.FC = () => {
                             </button>
                         </div>
                     </div>
-                    <button className="flex overflow-x-auto bg-white/10 text-white border-[1px] border-white/5 backdrop-blur-[10px] mt-[30px] shadow-lg rounded-[10px]"
-                        onClick={() => {
-                            setSelectDetailDay(0)
-                            navigate("/chi-tiet-theo-ngay")
-                        }}
-                    >
+                    <div className="flex overflow-x-auto bg-white/10 text-white border-[1px] border-white/5 backdrop-blur-[10px] mt-[30px] shadow-lg rounded-[10px]">
                         <div className="flex m-[25px] gap-3 scroll-x overflow-x-auto">
-                            {resForecast?.forecast.forecastday[0].hour
-                                // lọc chỉ những giờ >= giờ hiện tại
-                                .filter((hour) => {
-                                    const currentHour = new Date().getHours();
-                                    const forecastHour = new Date(hour.time).getHours();
-                                    return forecastHour >= currentHour;
-                                })
-                                .map((hour, index) => {
+                            {(() => {
+                                const currentHour = new Date().getHours();
+
+                                // Giờ hôm nay (>= giờ hiện tại)
+                                const todayHours =
+                                    resForecast?.forecast.forecastday[0].hour
+                                        .filter((hour) => {
+                                            const forecastHour = new Date(hour.time).getHours();
+                                            return forecastHour >= currentHour;
+                                        })
+                                        .map((hour) => ({ ...hour, dayIndex: 0 })) ?? [];
+
+                                // Giờ ngày mai
+                                const tomorrowHours =
+                                    resForecast?.forecast.forecastday[1].hour
+                                        .map((hour) => ({ ...hour, dayIndex: 1 })) ?? [];
+
+                                // Gộp hôm nay + ngày mai
+                                const next24Hours = [...todayHours, ...tomorrowHours].slice(0, 24);
+
+                                return next24Hours.map((hour, index) => {
                                     const forecastHour = new Date(hour.time).getHours();
 
                                     return (
-                                        <div
+                                        <button
                                             key={index}
-                                            className="grid justify-center p-[10px] gap-2"
+                                            onClick={() => {
+                                                setSelectDetailDay(hour.dayIndex);
+                                                navigate("/chi-tiet-theo-ngay");
+                                            }}
+                                            className="grid justify-center px-[10px] gap-2"
                                         >
-                                            <p className="text-white text-center">{forecastHour}:00</p>
+                                            <p className="text-white text-center">
+                                                {forecastHour}:00
+                                            </p>
                                             <div>
                                                 <img
                                                     className="h-[50px] w-[55px]"
@@ -570,21 +584,27 @@ const Home: React.FC = () => {
                                                     src={hour.condition.icon}
                                                 />
                                                 {hour.will_it_rain == 1 && (
-                                                    <p className="text-center text-sm text-cyan-300">{hour.chance_of_rain}%</p>
+                                                    <p className="text-center text-sm text-cyan-300">
+                                                        {hour.chance_of_rain}%
+                                                    </p>
                                                 )}
                                                 {hour.will_it_snow == 1 && (
-                                                    <p className="text-center text-sm text-cyan-300">{hour.chance_of_snow}%</p>
+                                                    <p className="text-center text-sm text-cyan-300">
+                                                        {hour.chance_of_snow}%
+                                                    </p>
                                                 )}
                                             </div>
 
                                             <p className="text-white max-md:text-sm font-bold text-center self-end">
                                                 {selectTypeCF === 0 ? hour.temp_f + "°" : hour.temp_c + "°"}
                                             </p>
-                                        </div>
+                                        </button>
                                     );
-                                })}
+                                });
+                            })()}
+
                         </div>
-                    </button>
+                    </div>
 
                 </section>
                 <section className="max-w-[1350px] mt-[30px] mx-auto grid p-[25px] items-center gap-2 bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px]  shadow-lg rounded-[10px]">
