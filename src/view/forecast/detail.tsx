@@ -358,6 +358,13 @@ const DetailForecast: React.FC = () => {
                                 <p className='text-sm text-white/70'>{typeTemp_Fellslike[selectTypeTemp_Fellslike].desc}</p>
                             </div>
                             <div className='grid gap-4'>
+                                <p className='text-white text-xl font-bold'>Khả năng có mưa</p>
+                                <p className='text-sm text-white/70'>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
+                                {/* bieu do */}
+                                <p className='text-sm text-white/70'>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>
+
+                            </div>
+                            <div className='grid gap-4'>
                                 <p className='text-white text-xl font-bold'>Giới thiệu về nhiệt độ cảm nhận</p>
                                 <div className='p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
                                     <p className='text-white text-lg'>Nhiệt độ cảm nhận biểu thị độ ấm hoặc độ lạnh mà bạn cảm nhận thấy và có thể khác với nhiệt độ thực tế. Nhiệt độ cảm nhận bị ảnh hưởng bởi độ ẩm, ánh nắng và gió.</p>
@@ -401,6 +408,13 @@ const DetailForecast: React.FC = () => {
                     }
                     {isSelectDetail === 3 &&
                         <div className='grid gap-6'>
+                            <div className='grid gap-4'>
+                                <p className='text-white text-xl font-bold'>Khả năng có mưa</p>
+                                <p className='text-sm text-white/70'>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
+                                {/* bieu do */}
+                                <p className='text-sm text-white/70'>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>
+
+                            </div>
                             <div className='grid gap-4'>
                                 <p className='text-white text-xl font-bold'>Cường độ mưa</p>
                                 <div className='p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
