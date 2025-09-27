@@ -1,6 +1,6 @@
 import React from "react";
 import { useGlobal } from '../../context/GlobalContext';
-import ChartLineBase from '../../Props/chartLineBase';
+import ChartLineBase from '../../props/chartLineBase';
 
 const DetailVis: React.FC = () => {
     const { icons,
@@ -37,7 +37,13 @@ const DetailVis: React.FC = () => {
     return (
         <div className='grid gap-6'>
             <div className='w-full'>
-                <ChartLineBase hours={hours} dataDetail={vis} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" />
+                <ChartLineBase
+                    hours={hours}
+                    dataDetail={vis}
+                    borderColor="white"
+                    backgroundColor="rgb(255,255,255,0.5)"
+                    donvi={selectVis === "km" ? "km": "dặm"}
+                />
             </div>
             <div className='grid gap-4'>
                 <p className='text-white text-xl font-bold'>Giới thiệu về tầm nhìn</p>

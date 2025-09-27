@@ -21,20 +21,40 @@ type BarChartProps = {
     title?: string;
     borderColor: string;
     backgroundColor: string;
-    borderWidth: number
+    borderWidth: number,
+    donvi: string;
 };
 
-const ChartBarBase: React.FC<BarChartProps> = ({ labels, values, title, borderWidth, borderColor, backgroundColor }) => {
+const ChartBarBase: React.FC<BarChartProps> = ({ labels, values, title, borderWidth, borderColor, backgroundColor, donvi }) => {
     const options: ChartOptions<"bar"> = {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-            legend: { position: "top" },
+            legend: { display: false, position: "top" },
             title: { display: !!title, text: title ?? "" },
         },
         scales: {
-            x: { beginAtZero: true },
-            y: { beginAtZero: true },
+            x: {
+                beginAtZero: true,
+                ticks: {
+                    color: "rgba(255,255,255,0.7)", // số % trắng
+                    font: { size: 16 }
+                },
+                grid: {
+                    color: "rgba(255,255,255,0.2)", // lưới nhạt để nhìn rõ
+                },
+            },
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    color: "rgba(255,255,255,0.7)", // 👈 label giờ màu trắng
+                    font: { size: 16 },
+                    callback: (value) => `${value} ${donvi}`,
+                },
+                grid: {
+                    color: "rgba(255,255,255,0.2)",
+                },
+            },
         },
     };
 

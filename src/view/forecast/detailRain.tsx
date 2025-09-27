@@ -1,5 +1,6 @@
 import React from "react";
-import ChartLineBase from "../../Props/chartLineBase";
+import ChartLineBase from "../../props/chartLineBase";
+import ChartBarBase from "../../props/chartBarBase";
 import { useGlobal } from '../../context/GlobalContext';
 
 const DetailRain: React.FC = () => {
@@ -26,6 +27,15 @@ const DetailRain: React.FC = () => {
         }
     ) ?? [];
 
+    // lay luong mua
+    const rain = selectSrecip === "mm" ?
+        (resForecast?.forecast.forecastday[selectDetailDay].hour.map(
+            (h) => h.precip_mm ?? 0 // hoặc h.daily_chance_of_rain
+        ) ?? []) :
+        resForecast?.forecast.forecastday[selectDetailDay].hour.map(
+            (h) => h.precip_in ?? 0 // hoặc h.daily_chance_of_rain
+        ) ?? [];
+
     // lấy % mưa tương ứng
     const rainChance =
         resForecast?.forecast.forecastday[selectDetailDay].hour.map(
@@ -36,6 +46,7 @@ const DetailRain: React.FC = () => {
         <div className='grid gap-6'>
             <div className='w-full'>
                 {/* bieu do mmua */}
+                <ChartBarBase labels={hours} values={rain} borderWidth={0} borderColor="white" backgroundColor="white" donvi={selectSrecip === "mm" ? "mm" : "in"} />
             </div>
 
             <div className='grid gap-4'>
@@ -43,7 +54,7 @@ const DetailRain: React.FC = () => {
                 <p className='text-sm text-white/70'>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
                 {/* bieu do */}
                 <div className='w-full'>
-                    <ChartLineBase hours={hours} dataDetail={rainChance} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" />
+                    <ChartLineBase hours={hours} dataDetail={rainChance} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="%" />
                 </div>
                 <p className='text-sm text-white/70'>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>
 

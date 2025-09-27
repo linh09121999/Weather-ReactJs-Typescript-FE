@@ -1,6 +1,6 @@
 import React from "react";
 import { useGlobal } from '../../context/GlobalContext';
-import ChartLineBase from '../../Props/chartLineBase';
+import ChartLineBase from '../../props/chartLineBase';
 
 const DetailHumidity: React.FC = () => {
     const { icons,
@@ -34,7 +34,7 @@ const DetailHumidity: React.FC = () => {
     return (
         <div className='grid gap-6'>
             <div className='w-full'>
-                <ChartLineBase hours={hours} dataDetail={humidity} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" />
+                <ChartLineBase hours={hours} dataDetail={humidity} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="%"/>
             </div>
             <div className='grid gap-4'>
                 <p className='text-white text-xl font-bold'>Giới thiệu về độ ẩm tương đối</p>

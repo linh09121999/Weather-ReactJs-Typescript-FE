@@ -28,9 +28,10 @@ type LineChartProps = {
     title?: string;
     borderColor: string;
     backgroundColor: string;
+    donvi: string
 };
 
-const ChartLineBase: React.FC<LineChartProps> = ({ hours, dataDetail, title, borderColor, backgroundColor }) => {
+const ChartLineBase: React.FC<LineChartProps> = ({ hours, dataDetail, title, borderColor, backgroundColor, donvi }) => {
     // 👇 type ChartData<"line"> cho data
     const data: ChartData<"line"> = {
         labels: hours,
@@ -60,7 +61,8 @@ const ChartLineBase: React.FC<LineChartProps> = ({ hours, dataDetail, title, bor
                 // max: 100,
                 ticks: {
                     color: "rgba(255,255,255,0.7)", // số % trắng
-                    font: { size: 16 }
+                    font: { size: 16 },
+                    callback: (value) => `${value} ${donvi}`,
                 },
                 grid: {
                     color: "rgba(255,255,255,0.2)", // lưới nhạt để nhìn rõ

@@ -1,5 +1,5 @@
 import React from "react";
-import ChartLineBase from '../../Props/chartLineBase';
+import ChartLineBase from '../../props/chartLineBase';
 import { useGlobal } from '../../context/GlobalContext';
 
 const DetailPressure: React.FC = () => {
@@ -38,7 +38,7 @@ const DetailPressure: React.FC = () => {
     return (
         <div className='grid gap-6'>
             <div className='w-full'>
-                <ChartLineBase hours={hours} dataDetail={pressure} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" />
+                <ChartLineBase hours={hours} dataDetail={pressure} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="hPa" />
             </div>
             <div className='grid gap-4'>
                 <p className='text-white text-xl font-bold'>Giới thiệu về Áp suất</p>
