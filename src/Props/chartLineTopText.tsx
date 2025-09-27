@@ -60,6 +60,7 @@ const ChartLineBase: React.FC<LineChartProps> = ({
         // highlight point tại currentIndex
         pointRadius: dataDetail.map((_, i) => (i === currentIndex ? 4 : 0)),
         pointBackgroundColor: borderColor,
+        xAxisID: "xBottom",
         segment: {
           borderDash: (ctx: ScriptableLineSegmentContext) =>
             ctx.p0DataIndex < currentIndex ? [6, 6] : [], // Past = gạch đứt, Future = liền
