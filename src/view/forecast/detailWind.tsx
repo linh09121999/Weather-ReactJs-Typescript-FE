@@ -1,5 +1,6 @@
 import React from "react";
 import { useGlobal } from '../../context/GlobalContext';
+import ChartLineBase from "../../props/chartLineBase";
 
 const DetailWind: React.FC = () => {
     const {
@@ -8,10 +9,33 @@ const DetailWind: React.FC = () => {
         resForecast,
         selectWind
     } = useGlobal()
+
+    const hours = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
+        (h) => {
+            const date = new Date(h.time);
+            return `${date.getHours()}:00`; // hiển thị 0h, 1h, 2h...
+        }
+    ) ?? [];
+
+    const wind = selectWind === "km/h" ?
+        (
+            resForecast?.forecast.forecastday[selectDetailDay].hour.map(
+                (h) => h.wind_kph ?? 0
+            ) ?? []
+        ) :
+        (
+            resForecast?.forecast.forecastday[selectDetailDay].hour.map(
+                (h) => h.wind_mph ?? 0
+            ) ?? []
+        )
+
+    const donvi = selectWind === "km/h" ? "km/h" : "mph"
+
     return (
         <div className='grid gap-6'>
-            <div>
+            <div className="w-full grid gap-4">
                 {/* bieu do */}
+                <ChartLineBase hours={hours} dataDetail={wind} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={donvi}/>
                 <p className='text-white/70 text-lg'>Tốc độ gió lớn nhất đạt {selectWind === "km/h" ? resForecast?.forecast.forecastday[selectDetailDay].day.maxwind_kph + " km/h" : resForecast?.forecast.forecastday[selectDetailDay].day.maxwind_mph + " mph"}</p>
             </div>
             <div className='grid gap-4'>
