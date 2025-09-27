@@ -704,8 +704,8 @@ const defaultListSelectShowDetail: ListSelectShowDetail[] = [
     },
     {
         id: 4,
-        icon: defaultIcons.iconSnow,
-        title: "Lượng tuyết"
+        icon: defaultIcons.iconTachometer,
+        title: "Áp suất"
     },
     {
         id: 5,
@@ -907,8 +907,12 @@ export interface GlobalState {
     setSelectVis: (selectVis: string) => void;
     selectAir: string;
     setSelectAir: (selectAir: string) => void;
-    typeTemp_Fellslike: TypeTemp_Fellslike[]
-    listBeaufore: ListBeaufore[]
+    typeTemp_Fellslike: TypeTemp_Fellslike[];
+    listBeaufore: ListBeaufore[];
+    isSelectDetail: number;
+    setIsSelectDetail: (isSelectDetail: number) => void;
+    selectTypeTemp_Fellslike: number;
+    setSelectTypeTemp_Fellslike: (selectTypeTemp_Fellslike: number) => void;
 }
 
 
@@ -957,6 +961,8 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     const [selectPressure, setSelectPressure] = useState<string>("mb")
     const [selectVis, setSelectVis] = useState<string>("km")
     const [selectAir, setSelectAir] = useState<string>("us-epa")
+    const [isSelectDetail, setIsSelectDetail] = useState<number>(0)
+    const [selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike] = useState<number>(0)
 
 
     const value = {
@@ -994,7 +1000,9 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         selectVis, setSelectVis,
         selectAir, setSelectAir,
         typeTemp_Fellslike: defaultTypeTemp_Fellslike,
-        listBeaufore: defaultListBeaufore
+        listBeaufore: defaultListBeaufore,
+        isSelectDetail, setIsSelectDetail,
+        selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike
     }
 
     return (

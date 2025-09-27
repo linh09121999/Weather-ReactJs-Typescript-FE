@@ -22,20 +22,23 @@ ChartJS.register(
     Legend
 );
 
-type RainChartProps = {
+type LineChartProps = {
     hours: string[];
     dataDetail: number[];
+    title?: string;
+    borderColor: string;
+    backgroundColor: string;
 };
 
-const ChartLineBase: React.FC<RainChartProps> = ({ hours, dataDetail }) => {
+const ChartLineBase: React.FC<LineChartProps> = ({ hours, dataDetail, title, borderColor, backgroundColor }) => {
     // 👇 type ChartData<"line"> cho data
     const data: ChartData<"line"> = {
         labels: hours,
         datasets: [
             {
                 data: dataDetail,
-                borderColor: "white",
-                backgroundColor: "rgb(255,255,255,0.3)",
+                borderColor: borderColor,
+                backgroundColor: backgroundColor,
                 tension: 0.4,
                 fill: true,
                 pointBackgroundColor: "rgba(54,162,235,1)",
@@ -49,14 +52,14 @@ const ChartLineBase: React.FC<RainChartProps> = ({ hours, dataDetail }) => {
         responsive: true,
         plugins: {
             legend: { display: false, position: "top" },
+            title: { display: !!title, text: title ?? "" },
         },
         scales: {
             y: {
                 beginAtZero: true,
-                max: 100,
-                title: { display: false, text: "% Mưa", color: "white" }, // tiêu đề trục Y trắng
+                // max: 100,
                 ticks: {
-                    color: "white", // số % trắng
+                    color: "rgba(255,255,255,0.7)", // số % trắng
                     font: { size: 16 }
                 },
                 grid: {
@@ -64,9 +67,8 @@ const ChartLineBase: React.FC<RainChartProps> = ({ hours, dataDetail }) => {
                 },
             },
             x: {
-                title: { display: false, text: "Giờ trong ngày", color: "white" }, // tiêu đề trục X trắng
                 ticks: {
-                    color: "white", // 👈 label giờ màu trắng
+                    color: "rgba(255,255,255,0.7)", // 👈 label giờ màu trắng
                     font: { size: 16 }
                 },
                 grid: {

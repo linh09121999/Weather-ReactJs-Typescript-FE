@@ -2,8 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useGlobal } from '../../context/GlobalContext';
 import { Menu, MenuItem } from "@mui/material"
 import type { SxProps, Theme } from "@mui/material/styles";
-import ChartLineBase from './chartLineBase';
-// import ChartLineTopText from './ChartLineTopText'
+
+import DetailThermometer from './detailThermometer';
+import DetailWind from './detailWind';
+import DetailUV from './detailUV';
+import DetailRain from './detailRain';
+import DetailPressure from './detailPressure';
+import DetailVis from './detailVis';
+import DetailHumidity from './detailHumidity';
+import DetailAir from './detailAir';
 
 const DetailForecast: React.FC = () => {
 
@@ -43,16 +50,14 @@ const DetailForecast: React.FC = () => {
         listSelectShowDetail,
         resForecast,
         selectTypeCF, isMobile,
-        selectSrecip, setSelectSrecip,
-        selectWind, setSelectWind,
-        selectPressure, setSelectPressure,
-        selectVis, setSelectVis,
-        selectAir, setSelectAir,
-        typeTemp_Fellslike,
-        listBeaufore
+        selectSrecip,
+        selectWind,
+        selectPressure,
+        selectVis,
+        selectAir,
+        isSelectDetail, setIsSelectDetail,
     } = useGlobal()
 
-    const [isSelectDetail, setIsSelectDetail] = useState<number>(0)
 
     const [anchorElSelect, setAnchorElSelect] = useState<null | HTMLElement>(null);
     const openSelect = Boolean(anchorElSelect);
@@ -88,6 +93,8 @@ const DetailForecast: React.FC = () => {
         const [year, month, day] = dateStr.split("-").map(Number);
         return day
     }
+
+    const currentHour = new Date().getHours();
 
     const getVisibilityLevel = (km: number | undefined) => {
         if (!km) return undefined;
@@ -148,7 +155,6 @@ const DetailForecast: React.FC = () => {
         return isMobile === true ? weekdays[inputDate.getDay()] : weekdaysFull[inputDate.getDay()]
     }
 
-    const [selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike] = useState<number>(0)
 
     const windDirectionVN = (dir: string | undefined) => {
         if (!dir) return undefined;
@@ -164,41 +170,6 @@ const DetailForecast: React.FC = () => {
             .map((c) => map[c] || c) // đổi sang tiếng Việt
             .join("");
     }
-
-    // lấy danh sách 24 giờ của ngày được chọn
-    const hours = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
-        (h) => {
-            const date = new Date(h.time);
-            return `${date.getHours()}:00`; // hiển thị 0h, 1h, 2h...
-        }
-    ) ?? [];
-
-    // lấy % mưa tương ứng
-    const rainChance =
-        resForecast?.forecast.forecastday[selectDetailDay].hour.map(
-            (h) => h.chance_of_rain ?? 0 // hoặc h.daily_chance_of_rain
-        ) ?? [];
-
-    const temp =
-        selectTypeCF === 0 ?
-            (resForecast?.forecast.forecastday[selectDetailDay].hour.map(
-                (h) => h.temp_f ?? 0
-            ) ?? []) :
-            (resForecast?.forecast.forecastday[selectDetailDay].hour.map(
-                (h) => h.temp_c ?? 0
-            ) ?? [])
-
-    const imgCondition = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
-        (h) => h.condition.icon ?? 0
-    ) ?? []
-
-    const feelslike = selectTypeCF === 0 ?
-        (resForecast?.forecast.forecastday[selectDetailDay].hour.map(
-            (h) => h.feelslike_f ?? 0
-        ) ?? []) :
-        (resForecast?.forecast.forecastday[selectDetailDay].hour.map(
-            (h) => h.feelslike_c ?? 0
-        ) ?? [])
 
     return (
         <main className="min-h-[80vh] mx-[20px]">
@@ -293,10 +264,10 @@ const DetailForecast: React.FC = () => {
                                     <p className='text-xl text-white/70'>Tổng trong 24 giờ</p>
                                 </>
                             )}
-                            {isSelectDetail === 4 && (//luonf tuyet
+                            {isSelectDetail === 4 && (//ap suat
                                 <>
-                                    <p className='text-3xl text-white font-bold'>{resForecast?.forecast.forecastday[selectDetailDay].day.totalsnow_cm} cm</p>
-                                    <p className='text-xl text-white/70'>Tổng trong 24 giờ</p>
+                                    <p className='text-3xl text-white font-bold'>{selectPressure === "in" ? resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].pressure_in + " in" : resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].pressure_mb + " mb"}</p>
+                                    <p className='text-xl text-white/70'>Ngay bây giờ</p>
                                 </>
                             )}
                             {isSelectDetail === 5 && (//tam nhịn
@@ -310,7 +281,7 @@ const DetailForecast: React.FC = () => {
                             {isSelectDetail === 6 && (//do am
                                 <>
                                     <p className='text-3xl text-white font-bold'>{resForecast?.forecast.forecastday[selectDetailDay].day.avghumidity}%</p>
-                                    <p className='text-xl text-white/70'>Tổng trung bình</p>
+                                    <p className='text-xl text-white/70'>Điểm sương hiện tại: {selectTypeCF === 0 ? resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].dewpoint_f + '°' : resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].dewpoint_c + '°'}</p>
                                 </>
                             )}
                             {isSelectDetail === 7 && (//chat luong khong khi
@@ -365,163 +336,28 @@ const DetailForecast: React.FC = () => {
                     </div>
 
                     {isSelectDetail === 0 &&
-                        <div className='grid gap-6'>
-                            <div className='grid grid-cols-2 gap-2 max-lg:hidden'>
-                                {typeTemp_Fellslike.map((type, id) => (
-                                    <div key={id} className='grid gap-2'>
-                                        {/* bieu do line theo type.id */}
-                                        {selectTypeTemp_Fellslike === 0 ?
-                                            //thuc te
-                                            // hours, temp, imgCondition
-                                            <>
-                                            </>
-                                            :
-                                            //cam nhan
-                                            // hours, feelslike, imgCondition
-                                            <></>
-                                        }
-                                        <p className='text-lg text-white'>{type.title}</p>
-                                        <p className='text-sm text-white/70'>{type.desc}</p>
-                                    </div>
-                                ))}
-
-                            </div>
-                            <div className='grid gap-2 lg:hidden'>
-                                {/* bieu do theo selectTypeTemp_Fellslike */}
-                                {selectTypeTemp_Fellslike === 0 ?
-                                    //thuc te
-                                    <>
-                                    </>
-                                    :
-                                    //cam nhan
-                                    <></>
-                                }
-
-                                <div className='flex bg-white/5 rounded-[15px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[5px] py-[5px] shadow-lg'>
-                                    {typeTemp_Fellslike.map((type) => (
-                                        <>
-                                            <button key={type.id}
-                                                className={`px-[12px] w-1/2 py-[2px] rounded-[10px] transition-all duration-300 ease text-white ${selectTypeTemp_Fellslike === type.id ? "bg-white/30" : ""}`}
-                                                onClick={() => {
-                                                    setSelectTypeTemp_Fellslike(type.id)
-                                                }}
-                                            >{type.title}</button>
-                                        </>
-                                    ))}
-                                </div>
-                                <p className='text-sm text-white/70'>{typeTemp_Fellslike[selectTypeTemp_Fellslike].desc}</p>
-                            </div>
-                            <div className='grid gap-4'>
-                                <p className='text-white text-xl font-bold'>Khả năng có mưa</p>
-                                <p className='text-sm text-white/70'>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
-                                {/* bieu do */}
-                                <div className='w-full'>
-                                    <ChartLineBase hours={hours} dataDetail={rainChance} />
-                                </div>
-                                <p className='text-sm text-white/70'>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>
-
-                            </div>
-                            <div className='grid gap-4'>
-                                <p className='text-white text-xl font-bold'>Giới thiệu về nhiệt độ cảm nhận</p>
-                                <div className='p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
-                                    <p className='text-white text-lg'>Nhiệt độ cảm nhận biểu thị độ ấm hoặc độ lạnh mà bạn cảm nhận thấy và có thể khác với nhiệt độ thực tế. Nhiệt độ cảm nhận bị ảnh hưởng bởi độ ẩm, ánh nắng và gió.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <DetailThermometer />
                     }
                     {isSelectDetail === 1 &&
-                        <div className='grid gap-6'>
-                            <div className='grid gap-4'>
-                                <p className='text-white text-xl font-bold'>Giới thiệu về tốc độ gió và gió giật</p>
-                                <div className='p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
-                                    <p className='text-white text-lg'>Tốc độ gió được tính toán bằng giá trị trung bình trong một khoảng thời gian ngắn. Gió giật là sự gia tăng đột ngột ngắn của gió ở trên giá trị trung bình này. Một cơn gió giật thường kéo dài dưới 20 giây.</p>
-                                </div>
-                            </div>
-
-                            <div className='grid gap-4'>
-                                <p className='text-white text-xl font-bold'>Thang Beaufort</p>
-                                <div className='p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
-
-                                </div>
-                            </div>
-                            <div className='grid gap-4'>
-                                <p className='text-white text-xl font-bold'>Giới thiệu về Thang Beaufort</p>
-                                <div className='p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
-                                    <p className='text-white text-lg'>Thang sức gió Beaufore biểu thị cường độ hoặc sức gió tại một mốc nhất định. Thang Beaufore có thể giúp việc tìm hiểu cảm nhận về sức gió và mức độ tác động mà gió có thể gây ra trở nên dễ dàng hơn. Mỗi giá trị trên thang tương ứng với một phạm vi tốc độ</p>
-                                </div>
-                            </div>
-                        </div>
+                        <DetailWind />
                     }
                     {isSelectDetail === 2 &&
-                        <div className='grid gap-6'>
-                            <div className='grid gap-4'>
-                                <p className='text-white text-xl font-bold'>Giới thiệu về chỉ số UV</p>
-                                <div className='p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
-                                    <p className='text-white text-lg'>
-                                        Chỉ số UV (UVI) của Tổ chức Y tế Thế giới đo mức độ bức xạ cực tím. UVI càng cao thì khả năng gây hại càng lớn và tốc độ xảy ra tổn thương có thể càng nhanh. UVI có thể giúp bạn quyết định khi nào cần tự bảo vệ khỏi ánh nắng mặt trời và khi nào cần tránh ra ngoài trời. WHO khuyến cáo sử dụng vật che chắng, kem chống nắng, nón và quần áo bảo vệ ở mực 3 (Trung bình) trở nên.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                        <DetailUV />
                     }
                     {isSelectDetail === 3 &&
-                        <div className='grid gap-6'>
-                            <div className='grid gap-4'>
-                                <p className='text-white text-xl font-bold'>Khả năng có mưa</p>
-                                <p className='text-sm text-white/70'>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
-                                {/* bieu do */}
-                                <div className='w-full'>
-                                    <ChartLineBase hours={hours} dataDetail={rainChance} />
-                                </div>
-                                <p className='text-sm text-white/70'>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>
-
-                            </div>
-                            <div className='grid gap-4'>
-                                <p className='text-white text-xl font-bold'>Cường độ mưa</p>
-                                <div className='p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
-                                    <p className='text-white text-lg'>
-                                        Cường độ được tính toán dựa trên lượng mưa hoặc tuyết rơi mỗi giờ và nhằm cho biết mức độ mưa hoặc tuyết cảm nhận được. Cường độ cũng được sử dụng cho các loại mưa khác, ví dụ như mưa tuyết cũng như mưa và tuyết hỗn hợp. Một trận mưa như trút nước hoặc bão tuyết dày đặc có thể có cường độ "cao", trong khi lượng mưa trung bình hoặc mưa phùn nhẹ hơn có thể có cường độ "trung bình" hoặc "thấp".
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                        <DetailRain />
                     }
                     {isSelectDetail === 4 &&
-                        <></>
+                        <DetailPressure />
                     }
                     {isSelectDetail === 5 &&
-                        <div className='grid gap-6'>
-                            <div className='grid gap-4'>
-                                <p className='text-white text-xl font-bold'>Giới thiệu về tầm nhìn</p>
-                                <div className='p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
-                                    <p className='text-white text-lg'>
-                                        Tầm nhìn cho biết khoảng cách mà bạn có thể nhìn rõ các vật thể như tòa nhà và đồi núi. Đó là một số đo về độ trong suốt của không khí và không tính đến lượng ánh sáng mặt trời hoặc sự hiện diện của các vật cản. Tầm nhìn bằng hoặc trên 10 km được coi là rõ.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                        <DetailVis />
                     }
                     {isSelectDetail === 6 &&
-                        <div className='grid gap-6'>
-                            <div className='grid gap-4'>
-                                <p className='text-white text-xl font-bold'>Giới thiệu về độ ẩm tương đối</p>
-                                <div className='p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
-                                    <p className='text-white text-lg'>
-                                        Độ ẩm tương đối, thường được gọi đơn giản là độ ẩm, là lượng hi ẩm có trong không khí so với lượng hơi ẩm mà không khí có thể lưu giữ. Không khí có thể lưu giữ nhiều hơi ẩm hơn ở nhiệt độ cao hơn. Độ ẩm tương đối gần 100% nghĩa là có thể có sương hoặc sương mù.
-                                    </p>
-                                </div>
-                            </div>
-                            <div className='grid gap-4'>
-                                <p className='text-white text-xl font-bold'>Giới thiệu về điểm sương</p>
-                                <div className='p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
-                                    <p className='text-white text-lg'>
-                                        Điểm sương là ngưỡng mà nhiệt độ cần giảm xuống để hình thành sương. Đó có thể là một cách hữu ích để cho biết cảm giác về độ ẩm không khí - điểm sương càng cao thì cảm giác độ ẩm càng lớn. Điểm sương khớp với nhiệt độ hiện tại nghĩa là độ ẩm tương đối bằng 100% và có thể có sương hoặc sương mù.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <DetailHumidity />
                     }
                     {isSelectDetail === 7 &&
-                        <></>
+                        <DetailAir />
                     }
                 </div>
 
