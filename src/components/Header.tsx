@@ -31,13 +31,13 @@ const Header: React.FC = () => {
                     color: 'rgba(255, 255, 255, 0.7)',
                 },
                 '& .MuiAutocomplete-option:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.2) !important',
-                    color: 'var(--color-cyan-300) !important',
+                    backgroundColor: 'rgba(255, 255, 255, 0.7) !important',
+                    color: '#2B32B2 !important',
                     fontWeight: 600
                 },
                 '& .MuiAutocomplete-option[aria-selected="true"]': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.2) !important',
-                    color: 'var(--color-cyan-300) !important',
+                    backgroundColor: 'rgba(255, 255, 255, 0.7) !important',
+                    color: '#2B32B2 !important',
                     fontWeight: 600
                 }
             }
