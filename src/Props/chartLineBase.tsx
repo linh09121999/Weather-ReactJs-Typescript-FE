@@ -75,7 +75,6 @@ const ChartLineBase: React.FC<LineChartProps> = ({
                 fill: true,
                 pointBackgroundColor: "rgba(255, 255, 255, 1)",
                 pointRadius: 3,
-                xAxisID: "xBottom",
             },
         ],
     };
