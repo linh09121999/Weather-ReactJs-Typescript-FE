@@ -9,7 +9,7 @@ import {
     Tooltip,
     Legend,
 } from "chart.js";
-import type { ChartOptions, ChartData } from "chart.js";
+import type { ChartOptions, ChartData, ScriptableLineSegmentContext } from "chart.js";
 import { Line } from "react-chartjs-2";
 
 ChartJS.register(
@@ -45,36 +45,23 @@ const ChartLineBase: React.FC<LineChartProps> = ({
         labels: hours,
         datasets: [
             {
-                label: "Past",
-                data: dataDetail.map((v, i) => (i <= currentIndex ? v : null)), // giữ null sau current
-                borderColor: "rgba(255,255,255,0.4)", // nhạt hơn
-                backgroundColor: "rgba(255,255,255,0.2)",
-                borderDash: [6, 6], // 👈 gạch đứt
-                tension: 0.4,
-                fill: false,
-                pointBackgroundColor: "rgba(200,200,200,1)",
-                pointRadius: 0,
-            },
-            {
-                label: "Future",
-                data: dataDetail.map((v, i) => (i >= currentIndex ? v : null)), // giữ null trước current
-                borderColor: borderColor, // màu chính
-                backgroundColor: backgroundColor,
-                borderDash: [], // đường liền
+                label: "Line",
+                data: dataDetail,
+                borderColor: dataDetail.map((_, i) =>
+                    i < currentIndex ? "rgba(255,255,255,0.4)" : borderColor
+                ),
+                backgroundColor: dataDetail.map((_, i) =>
+                    i < currentIndex ? "rgba(255,255,255,0.4)" : backgroundColor
+                ),
                 tension: 0.4,
                 fill: true,
-                pointBackgroundColor: "rgba(54,162,235,1)",
-                pointRadius: 1,
-            },
-            {
-                label: "Current",
-                data: dataDetail.map((v, i) => (i == currentIndex ? v : null)),
-                borderColor,
-                backgroundColor,
-                tension: 0.4,
-                fill: true,
-                pointBackgroundColor: "rgba(255, 255, 255, 1)",
-                pointRadius: 3,
+                // highlight point tại currentIndex
+                pointRadius: dataDetail.map((_, i) => (i === currentIndex ? 4 : 0)),
+                pointBackgroundColor: borderColor,
+                segment: {
+                    borderDash: (ctx: ScriptableLineSegmentContext) =>
+                        ctx.p0DataIndex < currentIndex ? [6, 6] : [], // Past = gạch đứt, Future = liền
+                },
             },
         ],
     };

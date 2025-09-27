@@ -72,7 +72,7 @@ const DetailThermometer: React.FC = () => {
                 {typeTemp_Fellslike.map((type, id) => (
                     <div key={id} className='grid gap-2'>
                         <p className='text-lg text-white'>{type.title}</p>
-                        <p className='text-sm text-white/70'>{type.desc}</p>
+                        <p className='text-lg text-white/70'>{type.desc}</p>
                     </div>
                 ))}
 
@@ -95,7 +95,7 @@ const DetailThermometer: React.FC = () => {
                     {typeTemp_Fellslike.map((type) => (
                         <>
                             <button key={type.id}
-                                className={`px-[12px] w-1/2 py-[2px] rounded-[10px] transition-all duration-300 ease text-white ${selectTypeTemp_Fellslike === type.id ? "bg-white/30" : ""}`}
+                                className={`px-[12px] w-1/2 py-[2px] rounded-[10px] transition-all duration-300 ease text-white text-lg ${selectTypeTemp_Fellslike === type.id ? "bg-white/30" : ""}`}
                                 onClick={() => {
                                     setSelectTypeTemp_Fellslike(type.id)
                                 }}
@@ -107,12 +107,12 @@ const DetailThermometer: React.FC = () => {
             </div>
             <div className='grid gap-4'>
                 <p className='text-white text-xl font-bold'>Khả năng có mưa</p>
-                <p className='text-sm text-white/70'>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
+                <p className='text-lg text-white/70'>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
                 {/* bieu do */}
                 <div className='w-full'>
                     <ChartLineBase currentIndex={currentHour} hours={hours} dataDetail={rainChance} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="%" />
                 </div>
-                <p className='text-sm text-white/70'>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>
+                <p className='text-lg text-white/70'>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>
 
             </div>
             <div className='grid gap-4'>

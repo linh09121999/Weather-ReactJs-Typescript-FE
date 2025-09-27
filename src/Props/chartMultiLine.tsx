@@ -1,0 +1,112 @@
+import React from "react";
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+    // 👈 import type
+} from "chart.js";
+import type { ChartOptions, ChartData, ScriptableLineSegmentContext } from "chart.js";
+import { Line } from "react-chartjs-2";
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+);
+
+type LineChartProps = {
+    label: string[];
+    hours: string[];
+    dataDetail: number[][]; // mỗi phần tử = 1 line
+    title?: string;
+    border: string[]; // màu line
+    background: string[]; // màu fill
+    donvi: string;
+    currentIndex: number;
+};
+
+const ChartMultiLine: React.FC<LineChartProps> = ({
+    label,
+    hours,
+    dataDetail,
+    title,
+    border,
+    background,
+    donvi,
+    currentIndex,
+}) => {
+    const datasets = dataDetail.map((arr, idx) => ({
+        label: label[idx],
+        data: arr,
+        borderColor: border[idx],
+        backgroundColor: background[idx],
+        tension: 0.4,
+        fill: true,
+        // chỉ chấm tại currentIndex
+        pointRadius: arr.map((_, i) => (i === currentIndex ? 5 : 0)),
+        pointBackgroundColor: arr.map((_, i) =>
+            i === currentIndex ? "#fff" : border[idx]
+        ),
+        segment: {
+            borderDash: (ctx: ScriptableLineSegmentContext) =>
+                ctx.p0DataIndex < currentIndex ? [6, 6] : [], // Past = gạch đứt, Future = liền
+        },
+    }));
+
+    const data: ChartData<"line"> = {
+        labels: hours,
+        datasets,
+    };
+
+    const options: ChartOptions<"line"> = {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: true,
+                position: "bottom",
+                labels: {
+                    color: "white",
+                    font: { size: 14 }
+                },
+            },
+            title: { display: !!title, text: title ?? "" },
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    color: "rgba(255,255,255,0.7)",
+                    font: { size: 14 },
+                    callback: (value) => `${value} ${donvi}`,
+                },
+                grid: { color: "rgba(255,255,255,0.2)" },
+            },
+            x: {
+                ticks: {
+                    color: "rgba(255,255,255,0.7)",
+                    font: { size: 14 },
+                },
+                grid: { color: "rgba(255,255,255,0.2)" },
+            },
+        },
+    };
+
+    return (
+        <Line
+            className="w-full min-x-[340px]"
+            data={data}
+            options={options}
+        />
+    );
+};
+
+export default ChartMultiLine;

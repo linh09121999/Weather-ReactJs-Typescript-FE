@@ -51,13 +51,13 @@ const DetailRain: React.FC = () => {
             </div>
 
             <div className='grid gap-4'>
-                <p className='text-white text-xl font-bold'>Khả năng có mưa</p>
-                <p className='text-sm text-white/70'>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
+                <p className='text-white text-lg font-bold'>Khả năng có mưa</p>
+                <p className='text-lg text-white/70'>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
                 {/* bieu do */}
                 <div className='w-full'>
                     <ChartLineBase currentIndex={currentHour} hours={hours} dataDetail={rainChance} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="%" />
                 </div>
-                <p className='text-sm text-white/70'>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>
+                <p className='text-lg text-white/70'>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>
 
             </div>
             <div className='grid gap-4'>
