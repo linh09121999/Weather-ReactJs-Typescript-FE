@@ -59,6 +59,10 @@ const ChartMultiLine: React.FC<LineChartProps> = ({
         segment: {
             borderDash: (ctx: ScriptableLineSegmentContext) =>
                 ctx.p0DataIndex < currentIndex ? [6, 6] : [], // Past = gạch đứt, Future = liền
+            borderColor: (ctx: ScriptableLineSegmentContext) =>
+                ctx.p0DataIndex < currentIndex ? "rgba(255,255,255,0.4)" : border[idx],
+            backgroundColor: (ctx: ScriptableLineSegmentContext) =>
+                ctx.p0DataIndex < currentIndex ? "rgba(255,255,255,0.4)" : background[idx],
         },
     }));
 

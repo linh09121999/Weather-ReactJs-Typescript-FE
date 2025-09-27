@@ -47,12 +47,8 @@ const ChartLineBase: React.FC<LineChartProps> = ({
             {
                 label: "Line",
                 data: dataDetail,
-                borderColor: dataDetail.map((_, i) =>
-                    i < currentIndex ? "rgba(255,255,255,0.4)" : borderColor
-                ),
-                backgroundColor: dataDetail.map((_, i) =>
-                    i < currentIndex ? "rgba(255,255,255,0.4)" : backgroundColor
-                ),
+                borderColor: borderColor, // default
+                backgroundColor: backgroundColor,
                 tension: 0.4,
                 fill: true,
                 // highlight point tại currentIndex
@@ -61,6 +57,10 @@ const ChartLineBase: React.FC<LineChartProps> = ({
                 segment: {
                     borderDash: (ctx: ScriptableLineSegmentContext) =>
                         ctx.p0DataIndex < currentIndex ? [6, 6] : [], // Past = gạch đứt, Future = liền
+                    borderColor: (ctx: ScriptableLineSegmentContext) =>
+                        ctx.p0DataIndex < currentIndex ? "rgba(255,255,255,0.4)" : borderColor,
+                    backgroundColor: (ctx: ScriptableLineSegmentContext) =>
+                        ctx.p0DataIndex < currentIndex ? "rgba(255,255,255,0.4)" : backgroundColor,
                 },
             },
         ],
