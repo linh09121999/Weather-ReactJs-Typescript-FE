@@ -171,13 +171,16 @@ const DetailForecast: React.FC = () => {
     }
 
     return (
-        <main className="min-h-[80vh] mx-[20px]">
-            <div className='flex gap-2 max-w-[1350px] mx-auto items-center text-white py-[10px] text-xl max-md:text-lg '>
-                <a href='/' className='transition duration-300 ease css-icon'>{icons.iconHome}</a>
-                <span>{icons.iconNext}</span>
-                <a href='#' className='transition duration-300 ease css-icon'>Chi tiết {listSelectShowDetail[isSelectDetail].title.toLowerCase()}</a>
+        <main className="min-h-[80vh]">
+            <div className='w-full backdrop-blur-[10px] px-[20px] sticky z-[99] md:top-[77px] max-md:top-[135px]'>
+                <div className='flex gap-2 max-w-[1350px] mx-auto items-center text-white py-[10px] text-xl max-md:text-lg '>
+                    <a href='/' className='transition duration-300 ease css-icon'>{icons.iconHome}</a>
+                    <span>{icons.iconNext}</span>
+                    <a href='#' className='transition duration-300 ease css-icon'>Chi tiết {listSelectShowDetail[isSelectDetail].title.toLowerCase()}</a>
+                </div>
             </div>
-            <section className='max-w-[1350px] mt-[30px] mx-auto'>
+
+            <section className='max-w-[1350px] mt-[30px] mx-auto  px-[20px]'>
                 <div className='grid gap-4'>
                     {/* list lich 7 ngay toi có [thứ, ngày] */}
                     <div className='flex justify-between'>
