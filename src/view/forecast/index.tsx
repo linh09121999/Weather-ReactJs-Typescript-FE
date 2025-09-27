@@ -79,7 +79,8 @@ const Home: React.FC = () => {
         selectSrecip, setSelectSrecip,
         selectWind, setSelectWind,
         selectPressure, setSelectPressure,
-        selectVis, setSelectVis
+        selectVis, setSelectVis,
+        setIsSelectDetail
     } = useGlobal();
 
     const Api_findForecast = async (q: string, days: number, aqi: string, alerts: string, lang: string) => {
@@ -365,57 +366,75 @@ const Home: React.FC = () => {
                         </button>
                         <div className={`${showDetailForecast === true ? "" : "hidden"} transition-all duration-300 ease grid gap-5`}>
                             <div className="grid lg:grid-cols-2 gap-5">
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
+                                <button className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                    onClick={() => {
+                                        setSelectDetailDay(0);
+                                        setIsSelectDetail(0)
+                                        navigate("/chi-tiet-theo-ngay");
+                                    }}
+                                >
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconThermometer}</span>
                                         <p className="text-white/70 text-lg md:text-xl">Nhiệt Độ</p>
                                     </div>
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
-                                        <p className="w-[calc(100%-50px)]">Nhiệt độ cảm nhận</p>
+                                        <p className="w-[calc(100%-50px)] text-start">Nhiệt độ cảm nhận</p>
                                         <p>{selectTypeCF === 0 ? resForecast?.current.feelslike_f + "°" : resForecast?.current.feelslike_c + "°"}</p>
                                     </div>
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
-                                        <p className="w-[calc(100%-50px)]">Nhiệt độ gió lạnh</p>
+                                        <p className="w-[calc(100%-50px)] text-start">Nhiệt độ gió lạnh</p>
                                         <p>{selectTypeCF === 0 ? resForecast?.current.windchill_f + "°" : resForecast?.current.windchill_c + "°"}</p>
                                     </div>
                                     <div className="flex pt-[15px] pb-[5px]">
-                                        <p className="w-[calc(100%-50px)]">Chỉ số nhiệt</p>
+                                        <p className="w-[calc(100%-50px)] text-start">Chỉ số nhiệt</p>
                                         <p>{selectTypeCF === 0 ? resForecast?.current.heatindex_f + "°" : resForecast?.current.heatindex_c + "°"}</p>
                                     </div>
                                     {/* thêm minh họa ở bên phải:  */}
-                                </div>
+                                </button>
 
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
+                                <button className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                    onClick={() => {
+                                        setSelectDetailDay(0);
+                                        setIsSelectDetail(1)
+                                        navigate("/chi-tiet-theo-ngay");
+                                    }}
+                                >
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconWind}</span>
                                         <p className="text-white/70 text-lg md:text-xl">Gió</p>
                                     </div>
 
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
-                                        <p className="w-[calc(100%-78px)]">Gió</p>
+                                        <p className="w-[calc(100%-78px)] text-start">Gió</p>
                                         <p>{selectWind === "km/h" ? resForecast?.current.wind_kph + " km/h" : resForecast?.current.wind_mph + " mph"}</p>
                                     </div>
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
-                                        <p className="w-[calc(100%-78px)]">Gió giật</p>
+                                        <p className="w-[calc(100%-78px)] text-start">Gió giật</p>
                                         <p>{selectWind === "km/h" ? resForecast?.current.gust_kph + " km/h" : resForecast?.current.gust_mph + " mph"}</p>
                                     </div>
                                     <div className="flex pt-[15px] pb-[5px]">
-                                        <p className="w-[calc(100%-78px)]">Hướng gió</p>
+                                        <p className="w-[calc(100%-78px)] text-start">Hướng gió</p>
                                         <p>{resForecast?.current.wind_degree}° {windDirectionVN(resForecast?.current.wind_dir)}</p>
                                     </div>
                                     {/* thêm minh họa ở bên phải: la bàn có mũi tên hướng gió và hiện tốc độ gió */}
-                                </div>
+                                </button>
                             </div>
                             <div className="grid lg:grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-5 ">
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
+                                <button className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                    onClick={() => {
+                                        setSelectDetailDay(0);
+                                        setIsSelectDetail(2)
+                                        navigate("/chi-tiet-theo-ngay");
+                                    }}
+                                >
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconSun}</span>
-                                        <p className="text-white/70 text-lg md:text-xl">Chỉ Số UV</p>
+                                        <p className="text-white/70 text-lg md:text-xl ">Chỉ Số UV</p>
                                     </div>
-                                    <p className="text-3xl my-[15px] font-[600]">{resForecast?.current.uv}</p>
+                                    <p className="text-3xl my-[15px] font-[600] text-start">{resForecast?.current.uv}</p>
                                     {/* thêm minh họa ở giữa  */}
 
-                                </div>
+                                </button>
                                 <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
 
                                     {resForecast?.current.is_day === 1 ?
@@ -440,40 +459,64 @@ const Home: React.FC = () => {
                                     {/* thêm minh họa */}
 
                                 </div>
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
+                                <button className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                    onClick={() => {
+                                        setSelectDetailDay(0);
+                                        setIsSelectDetail(3)
+                                        navigate("/chi-tiet-theo-ngay");
+                                    }}
+                                >
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconCloudRain}</span>
-                                        <p className="text-white/70 text-lg md:text-xl">Lượng Mưa</p>
+                                        <p className="text-white/70 text-lg md:text-xl ">Lượng Mưa</p>
                                     </div>
 
                                     {/* them minh hoa */}
-                                    <p className="text-3xl my-[15px] font-[600]">{selectSrecip === "mm" ? resForecast?.current.precip_mm + " mm" : resForecast?.current.precip_in + " in"}</p>
-                                </div>
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
+                                    <p className="text-3xl my-[15px] font-[600] text-start">{selectSrecip === "mm" ? resForecast?.current.precip_mm + " mm" : resForecast?.current.precip_in + " in"}</p>
+                                </button>
+                                <button className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                    onClick={() => {
+                                        setSelectDetailDay(0);
+                                        setIsSelectDetail(5)
+                                        navigate("/chi-tiet-theo-ngay");
+                                    }}
+                                >
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconEye}</span>
                                         <p className="text-white/70 text-lg md:text-xl">Tầm Nhìn</p>
                                     </div>
-                                    <p className="text-3xl my-[15px] font-[600]">{selectVis === "km" ? resForecast?.current.vis_km + " km" : resForecast?.current.vis_miles + " dặm"}</p>
+                                    <p className="text-3xl my-[15px] font-[600] text-start">{selectVis === "km" ? resForecast?.current.vis_km + " km" : resForecast?.current.vis_miles + " dặm"}</p>
                                     {/* them minh hoa */}
-                                </div>
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
+                                </button>
+                                <button className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                    onClick={() => {
+                                        setSelectDetailDay(0);
+                                        setIsSelectDetail(6)
+                                        navigate("/chi-tiet-theo-ngay");
+                                    }}
+                                >
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconTint}</span>
                                         <p className="text-white/70 text-lg md:text-xl">Độ Ẩm</p>
                                     </div>
-                                    <p className="text-3xl my-[15px] font-[600]">{resForecast?.current.humidity}%</p>
-                                    <p className="text-lg">Điểm sương là {selectTypeCF === 0 ? resForecast?.current.dewpoint_f + "°" : resForecast?.current.dewpoint_c + "°"} ngay lúc này</p>
+                                    <p className="text-3xl my-[15px] font-[600] text-start">{resForecast?.current.humidity}%</p>
+                                    <p className="text-lg text-start">Điểm sương là {selectTypeCF === 0 ? resForecast?.current.dewpoint_f + "°" : resForecast?.current.dewpoint_c + "°"} ngay lúc này</p>
                                     {/* thhem mih hoa */}
-                                </div>
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
+                                </button>
+                                <button className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                    onClick={() => {
+                                        setSelectDetailDay(0);
+                                        setIsSelectDetail(4)
+                                        navigate("/chi-tiet-theo-ngay");
+                                    }}
+                                >
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconTachometer}</span>
                                         <p className="text-white/70 text-lg md:text-xl">Áp Suất</p>
                                     </div>
-                                    <p className="text-3xl my-[15px] font-[600]">{selectPressure === "mb" ? resForecast?.current.pressure_mb + " mb" : resForecast?.current.pressure_in + " in"}</p>
+                                    <p className="text-3xl my-[15px] font-[600] text-start">{selectPressure === "mb" ? resForecast?.current.pressure_mb + " mb" : resForecast?.current.pressure_in + " in"}</p>
                                     {/* them minh hoa */}
-                                </div>
+                                </button>
 
                             </div>
                             <div className="grid md:grid-cols-2 max-lg:grid-cols-1 gap-5">
@@ -500,36 +543,42 @@ const Home: React.FC = () => {
                                     </div>
                                     {/* them minh hoa */}
                                 </div>
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
+                                <button className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                    onClick={() => {
+                                        setSelectDetailDay(0);
+                                        setIsSelectDetail(7)
+                                        navigate("/chi-tiet-theo-ngay");
+                                    }}
+                                >
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconSmog}</span>
                                         <p className="text-white/70 text-lg md:text-xl">Chất Lượng Không Khí</p>
                                     </div>
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
-                                        <p className="w-[calc(100%-110px)]">Carbon Monoxide (CO)</p>
+                                        <p className="w-[calc(100%-110px)] text-start">Carbon Monoxide (CO)</p>
                                         <p>{resForecast?.current.air_quality?.co} μg/m³</p>
                                     </div>
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
-                                        <p className="w-[calc(100%-110px)]">Nitrogen Dioxide (NO₂)</p>
+                                        <p className="w-[calc(100%-110px)] text-start">Nitrogen Dioxide (NO₂)</p>
                                         <p>{resForecast?.current.air_quality?.no2} μg/m³</p>
                                     </div>
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
-                                        <p className="w-[calc(100%-110px)]">Ozone (O₃)</p>
+                                        <p className="w-[calc(100%-110px)] text-start">Ozone (O₃)</p>
                                         <p>{resForecast?.current.air_quality?.o3} μg/m³</p>
                                     </div>
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
-                                        <p className="w-[calc(100%-110px)]">Sulfur Dioxide (SO₂)</p>
+                                        <p className="w-[calc(100%-110px)] text-start">Sulfur Dioxide (SO₂)</p>
                                         <p>{resForecast?.current.air_quality?.so2} μg/m³</p>
                                     </div>
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
-                                        <p className="w-[calc(100%-110px)]">Bụi mịn PM2.5</p>
+                                        <p className="w-[calc(100%-110px)] text-start">Bụi mịn PM2.5</p>
                                         <p>{resForecast?.current.air_quality?.pm2_5} μg/m³</p>
                                     </div>
                                     <div className="flex pt-[15px] pb-[5px]">
-                                        <p className="w-[calc(100%-110px)]">Bụi mịn PM10</p>
+                                        <p className="w-[calc(100%-110px)] text-start">Bụi mịn PM10</p>
                                         <p>{resForecast?.current.air_quality?.pm10} μg/m³</p>
                                     </div>
-                                </div>
+                                </button>
                                 {/* them minh hoa va Chỉ số EPA Hoa Kỳ & Chỉ số Defra Anh */}
                             </div>
                             <button className="grid justify-center w-full text-white items-center css-icon"
