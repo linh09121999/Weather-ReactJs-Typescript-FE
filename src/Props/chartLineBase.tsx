@@ -53,7 +53,7 @@ const ChartLineBase: React.FC<LineChartProps> = ({
                 tension: 0.4,
                 fill: false,
                 pointBackgroundColor: "rgba(200,200,200,1)",
-                pointRadius: 4,
+                pointRadius: 0,
             },
             {
                 label: "Future",
@@ -64,7 +64,18 @@ const ChartLineBase: React.FC<LineChartProps> = ({
                 tension: 0.4,
                 fill: true,
                 pointBackgroundColor: "rgba(54,162,235,1)",
-                pointRadius: 5,
+                pointRadius: 1,
+            },
+            {
+                label: "Current",
+                data: dataDetail.map((v, i) => (i == currentIndex ? v : null)),
+                borderColor,
+                backgroundColor,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: "rgba(255, 255, 255, 1)",
+                pointRadius: 3,
+                xAxisID: "xBottom",
             },
         ],
     };
