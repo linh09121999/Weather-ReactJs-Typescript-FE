@@ -1,5 +1,6 @@
 import React from "react";
 import ChartLineBase from '../../props/chartLineBase';
+import ChartLineTopText from "../../props/chartLineTopText";
 import { useGlobal } from '../../context/GlobalContext';
 
 const DetailThermometer: React.FC = () => {
@@ -57,22 +58,19 @@ const DetailThermometer: React.FC = () => {
             (h) => h.chance_of_rain ?? 0 // hoặc h.daily_chance_of_rain
         ) ?? [];
 
+    const dvCF = selectTypeCF === 0 ? '°F' : '°C'
+
     return (
         <div className='grid gap-6'>
             <div className='grid grid-cols-2 gap-2 max-lg:hidden'>
+                <div className="w-full">
+                    <ChartLineTopText currentIndex={currentHour} itemTop={imgCondition} hours={hours} dataDetail={temp} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvCF} />
+                </div>
+                <div className="w-full">
+                    <ChartLineTopText currentIndex={currentHour} itemTop={imgCondition} hours={hours} dataDetail={feelslike} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvCF} />
+                </div>
                 {typeTemp_Fellslike.map((type, id) => (
                     <div key={id} className='grid gap-2'>
-                        {/* bieu do line theo type.id */}
-                        {selectTypeTemp_Fellslike === 0 ?
-                            //thuc te
-                            // hours, temp, imgCondition
-                            <>
-                            </>
-                            :
-                            //cam nhan
-                            // hours, feelslike, imgCondition
-                            <></>
-                        }
                         <p className='text-lg text-white'>{type.title}</p>
                         <p className='text-sm text-white/70'>{type.desc}</p>
                     </div>
@@ -83,11 +81,14 @@ const DetailThermometer: React.FC = () => {
                 {/* bieu do theo selectTypeTemp_Fellslike */}
                 {selectTypeTemp_Fellslike === 0 ?
                     //thuc te
-                    <>
-                    </>
+                    <div className="w-full">
+                        <ChartLineTopText currentIndex={currentHour} itemTop={imgCondition} hours={hours} dataDetail={temp} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvCF} />
+                    </div>
                     :
                     //cam nhan
-                    <></>
+                    <div className="w-full">
+                        <ChartLineTopText currentIndex={currentHour} itemTop={imgCondition} hours={hours} dataDetail={feelslike} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvCF} />
+                    </div>
                 }
 
                 <div className='flex bg-white/5 rounded-[15px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[5px] py-[5px] shadow-lg'>
@@ -109,7 +110,7 @@ const DetailThermometer: React.FC = () => {
                 <p className='text-sm text-white/70'>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
                 {/* bieu do */}
                 <div className='w-full'>
-                    <ChartLineBase currentIndex={currentHour} hours={hours} dataDetail={rainChance} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="%"/>
+                    <ChartLineBase currentIndex={currentHour} hours={hours} dataDetail={rainChance} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="%" />
                 </div>
                 <p className='text-sm text-white/70'>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>
 
