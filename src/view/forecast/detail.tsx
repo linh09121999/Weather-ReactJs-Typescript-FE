@@ -56,6 +56,7 @@ const DetailForecast: React.FC = () => {
         selectVis,
         selectAir,
         isSelectDetail, setIsSelectDetail,
+        currentHour
     } = useGlobal()
 
 
@@ -93,8 +94,6 @@ const DetailForecast: React.FC = () => {
         const [year, month, day] = dateStr.split("-").map(Number);
         return day
     }
-
-    const currentHour = new Date().getHours();
 
     const getVisibilityLevel = (km: number | undefined) => {
         if (!km) return undefined;

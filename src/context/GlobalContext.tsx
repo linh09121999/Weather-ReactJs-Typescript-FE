@@ -913,6 +913,7 @@ export interface GlobalState {
     setIsSelectDetail: (isSelectDetail: number) => void;
     selectTypeTemp_Fellslike: number;
     setSelectTypeTemp_Fellslike: (selectTypeTemp_Fellslike: number) => void;
+    currentHour: number
 }
 
 
@@ -949,6 +950,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     const [selectTypeCF, setSelectTypeCF] = useState<number>(1)
 
     const [selectDetailDay, setSelectDetailDay] = useState<number>(-1)
+    const currentHour = new Date().getHours();
 
     const listSrecip = ["mm", "in"]
     const listWind = ["km/h", "mph"]
@@ -1002,7 +1004,8 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         typeTemp_Fellslike: defaultTypeTemp_Fellslike,
         listBeaufore: defaultListBeaufore,
         isSelectDetail, setIsSelectDetail,
-        selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike
+        selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike,
+        currentHour
     }
 
     return (

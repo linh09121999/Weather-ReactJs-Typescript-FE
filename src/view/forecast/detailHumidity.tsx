@@ -16,7 +16,8 @@ const DetailHumidity: React.FC = () => {
         typeTemp_Fellslike,
         listBeaufore,
         isSelectDetail, setIsSelectDetail,
-        selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike
+        selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike,
+        currentHour
     } = useGlobal()
 
     // lấy danh sách 24 giờ của ngày được chọn
@@ -34,7 +35,7 @@ const DetailHumidity: React.FC = () => {
     return (
         <div className='grid gap-6'>
             <div className='w-full'>
-                <ChartLineBase hours={hours} dataDetail={humidity} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="%"/>
+                <ChartLineBase currentIndex={currentHour} hours={hours} dataDetail={humidity} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="%"/>
             </div>
             <div className='grid gap-4'>
                 <p className='text-white text-xl font-bold'>Giới thiệu về độ ẩm tương đối</p>

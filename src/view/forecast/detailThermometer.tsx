@@ -16,7 +16,8 @@ const DetailThermometer: React.FC = () => {
         typeTemp_Fellslike,
         listBeaufore,
         isSelectDetail, setIsSelectDetail,
-        selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike
+        selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike,
+        currentHour
     } = useGlobal()
 
     // lấy danh sách 24 giờ của ngày được chọn
@@ -108,7 +109,7 @@ const DetailThermometer: React.FC = () => {
                 <p className='text-sm text-white/70'>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
                 {/* bieu do */}
                 <div className='w-full'>
-                    <ChartLineBase hours={hours} dataDetail={rainChance} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="%"/>
+                    <ChartLineBase currentIndex={currentHour} hours={hours} dataDetail={rainChance} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="%"/>
                 </div>
                 <p className='text-sm text-white/70'>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>
 

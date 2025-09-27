@@ -16,7 +16,8 @@ const DetailVis: React.FC = () => {
         typeTemp_Fellslike,
         listBeaufore,
         isSelectDetail, setIsSelectDetail,
-        selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike
+        selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike,
+        currentHour
     } = useGlobal()
 
     const hours = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
@@ -38,11 +39,12 @@ const DetailVis: React.FC = () => {
         <div className='grid gap-6'>
             <div className='w-full'>
                 <ChartLineBase
+                    currentIndex={currentHour}
                     hours={hours}
                     dataDetail={vis}
                     borderColor="white"
                     backgroundColor="rgb(255,255,255,0.5)"
-                    donvi={selectVis === "km" ? "km": "dặm"}
+                    donvi={selectVis === "km" ? "km" : "dặm"}
                 />
             </div>
             <div className='grid gap-4'>
