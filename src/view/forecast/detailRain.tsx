@@ -47,7 +47,7 @@ const DetailRain: React.FC = () => {
         <div className='grid gap-6'>
             <div className='w-full'>
                 {/* bieu do mmua */}
-                <ChartBarBase labels={hours} values={rain} borderWidth={0} borderColor="white" backgroundColor="white" donvi={selectSrecip === "mm" ? "mm" : "in"} />
+                <ChartBarBase currentIndex={currentHour} labels={hours} values={rain} borderWidth={0} borderColor="white" backgroundColor="white" donvi={selectSrecip === "mm" ? "mm" : "in"} />
             </div>
 
             <div className='grid gap-4'>
