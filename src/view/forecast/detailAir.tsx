@@ -8,7 +8,8 @@ const DetailAir: React.FC = () => {
     listBeaufore,
     selectDetailDay,
     resForecast,
-    currentHour
+    currentHour,
+    isBorderDash
   } = useGlobal()
 
   const hours = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
@@ -57,7 +58,7 @@ const DetailAir: React.FC = () => {
             "rgba(128,0,128,0.2)",
             "rgba(0,255,255,0.2)",
           ]}
-          currentIndex={currentHour} donvi="μg/m³" />
+          currentIndex={isBorderDash} donvi="μg/m³" />
       </div>
     </div>
   )

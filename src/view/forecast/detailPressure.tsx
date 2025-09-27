@@ -17,7 +17,8 @@ const DetailPressure: React.FC = () => {
         listBeaufore,
         isSelectDetail, setIsSelectDetail,
         selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike,
-        currentHour
+        currentHour,
+        isBorderDash
     } = useGlobal()
 
     // lấy danh sách 24 giờ của ngày được chọn
@@ -39,7 +40,7 @@ const DetailPressure: React.FC = () => {
     return (
         <div className='grid gap-6'>
             <div className='w-full'>
-                <ChartLineBase currentIndex={currentHour} hours={hours} dataDetail={pressure} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="hPa" />
+                <ChartLineBase currentIndex={isBorderDash} hours={hours} dataDetail={pressure} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="hPa" />
             </div>
             <div className='grid gap-4'>
                 <p className='text-white text-xl font-bold'>Giới thiệu về Áp suất</p>

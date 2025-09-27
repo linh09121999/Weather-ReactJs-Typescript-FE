@@ -8,7 +8,8 @@ const DetailWind: React.FC = () => {
         selectDetailDay,
         resForecast,
         selectWind,
-        currentHour
+        currentHour,
+        isBorderDash
     } = useGlobal()
 
     const hours = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
@@ -36,7 +37,7 @@ const DetailWind: React.FC = () => {
         <div className='grid gap-6'>
             <div className="w-full grid gap-4">
                 {/* bieu do */}
-                <ChartLineBase currentIndex={currentHour} hours={hours} dataDetail={wind} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={donvi} />
+                <ChartLineBase currentIndex={isBorderDash} hours={hours} dataDetail={wind} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={donvi} />
                 <p className='text-white/70 text-lg'>Tốc độ gió lớn nhất đạt {selectWind === "km/h" ? resForecast?.forecast.forecastday[selectDetailDay].day.maxwind_kph + " km/h" : resForecast?.forecast.forecastday[selectDetailDay].day.maxwind_mph + " mph"}</p>
             </div>
             <div className='grid gap-4'>

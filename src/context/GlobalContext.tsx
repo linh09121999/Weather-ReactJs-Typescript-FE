@@ -913,7 +913,8 @@ export interface GlobalState {
     setIsSelectDetail: (isSelectDetail: number) => void;
     selectTypeTemp_Fellslike: number;
     setSelectTypeTemp_Fellslike: (selectTypeTemp_Fellslike: number) => void;
-    currentHour: number
+    currentHour: number,
+    isBorderDash: number
 }
 
 
@@ -966,6 +967,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     const [isSelectDetail, setIsSelectDetail] = useState<number>(0)
     const [selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike] = useState<number>(0)
 
+  const isBorderDash = selectDetailDay === 0 ? currentHour : 0
 
     const value = {
         resCurrent, setResCurrent,
@@ -1005,7 +1007,8 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         listBeaufore: defaultListBeaufore,
         isSelectDetail, setIsSelectDetail,
         selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike,
-        currentHour
+        currentHour,
+        isBorderDash
     }
 
     return (

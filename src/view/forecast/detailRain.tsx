@@ -18,7 +18,8 @@ const DetailRain: React.FC = () => {
         listBeaufore,
         isSelectDetail, setIsSelectDetail,
         selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike,
-        currentHour
+        currentHour,
+        isBorderDash
     } = useGlobal()
 
     const hours = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
@@ -47,7 +48,7 @@ const DetailRain: React.FC = () => {
         <div className='grid gap-6'>
             <div className='w-full'>
                 {/* bieu do mmua */}
-                <ChartBarBase currentIndex={currentHour} labels={hours} values={rain} borderWidth={0} borderColor="white" backgroundColor="white" donvi={selectSrecip === "mm" ? "mm" : "in"} />
+                <ChartBarBase currentIndex={isBorderDash} labels={hours} values={rain} borderWidth={0} borderColor="white" backgroundColor="white" donvi={selectSrecip === "mm" ? "mm" : "in"} />
             </div>
 
             <div className='grid gap-4'>
@@ -55,7 +56,7 @@ const DetailRain: React.FC = () => {
                 <p className='text-lg text-white/70'>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
                 {/* bieu do */}
                 <div className='w-full'>
-                    <ChartLineBase currentIndex={currentHour} hours={hours} dataDetail={rainChance} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="%" />
+                    <ChartLineBase currentIndex={isBorderDash} hours={hours} dataDetail={rainChance} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="%" />
                 </div>
                 <p className='text-lg text-white/70'>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>
 

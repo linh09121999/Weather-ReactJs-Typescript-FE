@@ -17,7 +17,8 @@ const DetailUV: React.FC = () => {
         listBeaufore,
         isSelectDetail, setIsSelectDetail,
         selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike,
-        currentHour
+        currentHour,
+        isBorderDash
     } = useGlobal()
 
     // lấy danh sách 24 giờ của ngày được chọn
@@ -35,7 +36,7 @@ const DetailUV: React.FC = () => {
     return (
         <div className='grid gap-6'>
             <div className="w-full">
-                <ChartLineBase currentIndex={currentHour} hours={hours} dataDetail={uv} borderColor="white" backgroundColor="rgb(255,255,255,0.5)"  donvi=""/>
+                <ChartLineBase currentIndex={isBorderDash} hours={hours} dataDetail={uv} borderColor="white" backgroundColor="rgb(255,255,255,0.5)"  donvi=""/>
             </div>
             <div className='grid gap-4'>
                 <p className='text-white text-xl font-bold'>Giới thiệu về chỉ số UV</p>
