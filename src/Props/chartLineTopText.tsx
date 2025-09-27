@@ -128,19 +128,30 @@ const ChartLineBase: React.FC<LineChartProps> = ({
     id: "imagePlugin",
     afterDraw: (chart: any) => {
       const ctx = chart.ctx;
-      const xAxis = chart.scales.xTop;
+      const xBottom = chart.scales.xBottom;
+      const xTop = chart.scales.xTop;
 
-      itemTop.forEach((src, i) => {
-        const x = xAxis.getPixelForTick(i);
-        const y = xAxis.top; // vị trí trên cùng của xTop
+      // clear vùng trước để tránh đè nhiều lần
+      ctx.save();
+
+      // Duyệt theo tick hiển thị thực sự của xBottom
+      xBottom.ticks.forEach((tick: any, i: number) => {
+        if (tick.label === undefined) return;
+
+        const x = xBottom.getPixelForTick(i);
+        const y = xTop.top;
+
+        const src = itemTop[i];
+        if (!src) return;
 
         const img = new Image();
         img.src = src;
-
         img.onload = () => {
-          ctx.drawImage(img, x - 12, y - 24, 24, 24); // căn giữa và scale nhỏ
+          ctx.drawImage(img, x - 12, y - 24, 24, 24);
         };
       });
+
+      ctx.restore();
     },
   };
 
