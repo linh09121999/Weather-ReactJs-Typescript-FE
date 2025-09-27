@@ -189,7 +189,7 @@ const DetailForecast: React.FC = () => {
                             >
                                 <p className="text-white text-center">{formatDate(forecast.date)}</p>
                                 <div className='flex gap-2 items-center justify-center'>
-                                    <span className={` ${index === selectDetailDay ? "bg-white text-[#2B32B2] w-[35px] h-[35px]  justify-self-center content-center rounded-full" : "text-white"}`}>{getDay(forecast.date)}
+                                    <span className={` ${index === selectDetailDay ? "bg-white font-bold text-[#2B32B2] w-[35px] h-[35px]  justify-self-center content-center rounded-full" : "text-white"}`}>{getDay(forecast.date)}
                                     </span>
                                     <img className={`h-[50px] w-[55px] justify-self-center max-md:hidden ${index === selectDetailDay ? "hidden" : ""}`} alt={forecast.day.condition.text} src={forecast.day.condition.icon} />
                                 </div>
@@ -202,22 +202,22 @@ const DetailForecast: React.FC = () => {
                 </div>
 
                 <div className='mt-[30px] grid items-center gap-6 '>
-                    <div className='max-sm:hidden max-lg:grid max-lg:grid-cols-8 lg:flex lg:justify-between'>
+                    <div className='max-sm:hidden max-lg:grid max-lg:grid-cols-8 max-lg:gap-2 lg:flex lg:justify-between '>
                         {listSelectShowDetail.map((list) => (
                             <>
-                                <button key={list.id} className=' text-lg text-white/50 max-lg:hidden'
+                                <button key={list.id} className={`${isSelectDetail === list.id ? "font-bold before:left-0 before:w-full before:opacity-100 text-[#2B32B2] border-b-[3px] border-white" : " before:left-1/2 before:w-0  before:opacity-0  text-white/50"} text-lg bg-white/10 px-[15px] py-[5px] rounded-[10px_10px_0_0]  backdrop-blur-[10px] max-lg:hidden group transiton-all duration-300 relative before:content-[""] before:absolute before:bg-white/50 before:rounded-[10px_10px_0_0] before:transition-all before:duration-300 before:top-0 before:h-full before:z-[-1] hover:before:left-0 hover:before:w-full hover:before:opacity-100 hover:text-[#2B32B2]`}
                                     onClick={() => {
                                         setIsSelectDetail(list.id)
                                     }}
                                 >
-                                    <p className={`${isSelectDetail === list.id ? "text-white after:scale-x-100" : ""} relative transiton-all duration-300 after:absolute after:transistion-all after:duration-300 after:w-full after:h-[2px] after:bg-white after:left-0 after:bottom-[-10px] after:visible after:scale-x-0 hover:after:w-full hover:after:scale-x-100 hover:text-white`}>{list.title}</p>
+                                    {list.title}
                                 </button>
-                                <button key={list.id} className=' text-lg text-white/50 lg:hidden'
+                                <button key={list.id} className={`${isSelectDetail === list.id ? "font-bold before:left-0 before:w-full before:opacity-100 text-[#2B32B2] border-b-[3px] border-white" : " before:left-1/2 before:w-0  before:opacity-0  text-white/50"} text-lg bg-white/10 px-[15px] py-[10px] rounded-[10px_10px_0_0]  backdrop-blur-[10px] lg:hidden group transiton-all duration-300 relative before:content-[""] before:absolute before:bg-white/50 before:rounded-[10px_10px_0_0] before:transition-all before:duration-300 before:top-0 before:h-full before:z-[-1] hover:before:left-0 hover:before:w-full hover:before:opacity-100 hover:text-[#2B32B2]`}
                                     onClick={() => {
                                         setIsSelectDetail(list.id)
                                     }}
                                 >
-                                    <p className={`${isSelectDetail === list.id ? "text-white after:scale-x-100" : ""} relative transiton-all duration-300 after:absolute after:transistion-all after:duration-300 after:w-full after:h-[2px] after:bg-white after:left-0 after:bottom-[-10px] after:visible after:scale-x-0 hover:after:w-full hover:after:scale-x-100 hover:text-white`}>{list.icon}</p>
+                                    {list.icon}
                                 </button>
                             </>
                         ))}
