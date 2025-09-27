@@ -96,7 +96,7 @@ const DetailThermometer: React.FC = () => {
                     {typeTemp_Fellslike.map((type) => (
                         <>
                             <button key={type.id}
-                                className={`px-[12px] w-1/2 py-[2px] rounded-[10px] transition-all duration-300 ease  text-lg ${selectTypeTemp_Fellslike === type.id ? "bg-white/50 font-bold text-[#2B32B2]" : "text-white"}`}
+                                className={`px-[12px] w-1/2 py-[2px] rounded-[10px] transition-all duration-300 ease  text-lg ${selectTypeTemp_Fellslike === type.id ? "bg-white/70 font-bold text-[#2B32B2]" : "text-white"}`}
                                 onClick={() => {
                                     setSelectTypeTemp_Fellslike(type.id)
                                 }}
