@@ -148,8 +148,8 @@ const Header: React.FC = () => {
 
     return (
         <>
-            <header className='top-0 sticky z-100 backdrop-blur-[10px] border-b-[1px] border-b-white/40'>
-                <div className='max-w-[1350px] mx-auto py-[20px] grid md:grid-cols-2 gap-4 items-center max-[1350px]:px-[20px]'>
+            <header className='top-0 sticky z-100 backdrop-blur-[10px] border-b-[1px] border-b-white/40 px-[20px]'>
+                <div className='max-w-[1350px] mx-auto py-[20px] grid md:grid-cols-2 gap-4 items-center '>
                     <div className='flex items-center gap-4 justify-between'>
                         <span className='text-3xl font-bold text-white'>{header.title}</span>
                         <button className="md:hidden w-[40px] h-[40px] bg-white/5 rounded-full text-white text-xl font-700 backdrop-blur-[10px] border-[1px] border-solid border-white/10 shadow-lg css-icon hover:shadow-2xl transition-all duration-300 ease"
