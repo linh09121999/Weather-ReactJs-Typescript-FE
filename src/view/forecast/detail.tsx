@@ -205,7 +205,25 @@ const DetailForecast: React.FC = () => {
                 </div>
 
                 <div className='mt-[30px] grid items-center gap-6 '>
-                    <div className='max-sm:hidden max-lg:grid max-lg:grid-cols-8 max-lg:gap-2 lg:flex lg:justify-between '>
+                    <div className="max-sm:hidden shadow-lg border-[1px] border-solid border-white/10 gap-1 relative lg:flex lg:justify-between max-lg:grid max-lg:grid-cols-8 max-lg:gap-2 rounded-[15px] bg-white/5 p-1 backdrop-blur-[10px]">
+                        {listSelectShowDetail.map((list, id1) => (
+                            <button key={id1}
+                                className={`flex h-[36px] text-white text-lg lg:px-[15px] lg:py-[5px] justify-center items-center gap-2 whitespace-nowrap rounded-[10px] transition-all duration-300 group hover:bg-white/70 ${isSelectDetail === list.id ? " bg-white " : ""}`}
+                                onClick={() => setIsSelectDetail(list.id)}
+                            >
+                                <svg
+                                    className={`fill-current ${isSelectDetail === list.id ? "font-bold text-[#2B32B2]" : "text-white/50"} lg:hidden group-hover:hover:text-[#2B32B2]`}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                >
+                                    {list.icon}
+                                </svg>
+                                <span className={`max-lg:hidden  ${isSelectDetail === list.id ? "font-bold text-[#2B32B2]" : "text-white/50"} group-hover:hover:text-[#2B32B2]`}>{list.title}</span>
+                            </button>
+                        ))}
+                    </div>
+                    {/* <div className='max-sm:hidden max-lg:grid max-lg:grid-cols-8 max-lg:gap-2 lg:flex lg:justify-between '>
                         {listSelectShowDetail.map((list) => (
                             <>
                                 <button key={list.id} className={`${isSelectDetail === list.id ? "font-bold before:left-0 before:w-full before:opacity-100 text-[#2B32B2] " : " before:left-1/2 before:w-0  before:opacity-0 border-[1px] border-solid border-white/10 text-white/50"} text-lg bg-white/5 backdrop-blur-[10px shadow-lg px-[15px] py-[5px] rounded-[10px_10px_0_0]  backdrop-blur-[10px] max-lg:hidden group transiton-all duration-300 relative before:content-[""] before:absolute before:bg-white before:backdrop-blur-[10px] before:shadow-lg before:rounded-[10px_10px_0_0] before:transition-all before:duration-300 before:top-0 before:h-full before:z-[-1] hover:before:left-0 hover:before:w-full hover:before:opacity-100 hover:text-[#2B32B2]`}
@@ -224,7 +242,7 @@ const DetailForecast: React.FC = () => {
                                 </button>
                             </>
                         ))}
-                    </div>
+                    </div> */}
                     <div className='flex justify-between items-center'>
                         <div className='grid gap-2 w-full'>
                             {isSelectDetail === 0 && (//thoi tiet
