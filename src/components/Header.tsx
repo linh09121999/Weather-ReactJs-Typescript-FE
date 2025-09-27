@@ -28,15 +28,15 @@ const Header: React.FC = () => {
                 zIndex: 100,
                 '& .MuiAutocomplete-option': {
                     minHeight: '30px !important',
-                    color: 'rgba(255, 255, 255, 0.7)',
+                    color: 'rgba(255, 255, 255)',
                 },
                 '& .MuiAutocomplete-option:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.7) !important',
+                    backgroundColor: 'rgba(255, 255, 255) !important',
                     color: '#2B32B2 !important',
                     fontWeight: 600
                 },
                 '& .MuiAutocomplete-option[aria-selected="true"]': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.7) !important',
+                    backgroundColor: 'rgba(255, 255, 255) !important',
                     color: '#2B32B2 !important',
                     fontWeight: 600
                 }

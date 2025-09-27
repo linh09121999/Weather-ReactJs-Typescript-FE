@@ -34,7 +34,7 @@ const Home: React.FC = () => {
         color: 'var(--color-white)',
         zIndex: 100,
         '&:hover': {
-            backgroundColor: 'rgba(255, 255, 255, 0.7) !important',
+            backgroundColor: 'rgba(255, 255, 255) !important',
             color: '#2B32B2 !important',
             fontWeight: 600
         },
