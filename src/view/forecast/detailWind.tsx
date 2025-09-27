@@ -4,9 +4,16 @@ import { useGlobal } from '../../context/GlobalContext';
 const DetailWind: React.FC = () => {
     const {
         listBeaufore,
+        selectDetailDay,
+        resForecast,
+        selectWind
     } = useGlobal()
     return (
         <div className='grid gap-6'>
+            <div>
+                {/* bieu do */}
+                <p className='text-white/70 text-lg'>Tốc độ gió lớn nhất đạt {selectWind === "km/h" ? resForecast?.forecast.forecastday[selectDetailDay].day.maxwind_kph + " km/h" : resForecast?.forecast.forecastday[selectDetailDay].day.maxwind_mph + " mph"}</p>
+            </div>
             <div className='grid gap-4'>
                 <p className='text-white text-xl font-bold'>Giới thiệu về tốc độ gió và gió giật</p>
                 <div className='p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>

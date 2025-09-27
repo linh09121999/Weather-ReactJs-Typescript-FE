@@ -241,12 +241,12 @@ const DetailForecast: React.FC = () => {
                                 <>
                                     <div className='flex gap-2 items-center text-3xl'>
                                         <p className='text-3xl text-white flex gap-2 font-bold'>
-                                            {selectWind === "km/h" ? resForecast?.forecast.forecastday[selectDetailDay].day.maxwind_kph + " km/h" : resForecast?.forecast.forecastday[selectDetailDay].day.maxwind_mph + " mph"}
+                                            {selectWind === "km/h" ? resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_kph + " km/h" : resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_mph + " mph"}
                                         </p>
-                                        <p className='text-white/70'></p>
+                                        <p className='text-white/70'>{resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_degree}°  {windDirectionVN(resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_dir)}</p>
                                     </div>
                                     <p className=' text-xl text-white/70'>
-                                        Lớn nhất trong 24 giờ
+                                        Gió giật {selectWind === "km/h" ? resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].gust_kph + " km/h" : resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].gust_mph + " mph"}
                                     </p>
                                 </>
                             )}
