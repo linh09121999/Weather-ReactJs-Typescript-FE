@@ -46,12 +46,7 @@
 }
 
 .scroll-x {
-    width: 100%;
-    display: flex;
-    gap: 16px;
-    overflow-x: auto;
     scroll-behavior: smooth;
-    padding: 10px;
 }
 
 /* custom scrollbar */

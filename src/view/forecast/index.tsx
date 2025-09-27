@@ -541,7 +541,7 @@ const Home: React.FC = () => {
                         </div>
                     </div>
                     <div className="flex overflow-x-auto bg-white/10 text-white border-[1px] border-white/5 backdrop-blur-[10px] mt-[30px] shadow-lg rounded-[10px]">
-                        <div className="flex m-[25px] gap-3 scroll-x overflow-x-auto">
+                        <div className="flex m-[25px] gap-3 scroll-x overflow-x-auto py-[10px] w-full">
                             {(() => {
                                 const currentHour = new Date().getHours();
 
@@ -650,33 +650,35 @@ const Home: React.FC = () => {
                                         }}
                                     >
                                         <table className="w-full">
-                                            <tr>
-                                                <td className="w-[85px]">
-                                                    <p className="text-white text-start text-lg w-[80px]"> {formatDate(forecast.date)}</p>
-                                                </td>
-                                                <td className="w-[50px]">
-                                                    <div className="grid w-[40px]">
-                                                        <img className="h-[40px] justify-self-center" alt={forecast.day.condition.text} src={forecast.day.condition.icon} />
+                                            <tbody >
+                                                <tr>
+                                                    <td className="w-[85px]">
+                                                        <p className="text-white text-start text-lg w-[80px]"> {formatDate(forecast.date)}</p>
+                                                    </td>
+                                                    <td className="w-[50px]">
+                                                        <div className="grid w-[40px]">
+                                                            <img className="h-[40px] justify-self-center" alt={forecast.day.condition.text} src={forecast.day.condition.icon} />
 
-                                                        {forecast.day.daily_will_it_rain == 1 && (
-                                                            <p className="text-center text-sm text-cyan-300">{forecast.day.daily_chance_of_rain}%</p>
-                                                        )}
-                                                        {forecast.day.daily_will_it_snow == 1 && (
-                                                            <p className="text-center text-sm text-cyan-300">{forecast.day.daily_chance_of_snow}%</p>
-                                                        )}
-                                                    </div>
-                                                </td>
-                                                <td className="w-[50px]">
-                                                    <p className="text-white/70 text-lg  w-[50px]">{selectTypeCF === 0 ? forecast.day.mintemp_f + "°" : forecast.day.mintemp_c + "°"}</p>
-                                                </td>
-                                                {/* them mau  */}
-                                                <td className="p-[10px]">
-                                                    <div className="min-w-[40px]  h-[5px] rounded-full bg-white/30"></div>
-                                                </td>
-                                                <td className="w-[50px]">
-                                                    <p className="text-white text-lg font-bold ">{selectTypeCF === 0 ? forecast.day.maxtemp_f + "°" : forecast.day.maxtemp_c + "°"}</p>
-                                                </td>
-                                            </tr>
+                                                            {forecast.day.daily_will_it_rain == 1 && (
+                                                                <p className="text-center text-sm text-cyan-300">{forecast.day.daily_chance_of_rain}%</p>
+                                                            )}
+                                                            {forecast.day.daily_will_it_snow == 1 && (
+                                                                <p className="text-center text-sm text-cyan-300">{forecast.day.daily_chance_of_snow}%</p>
+                                                            )}
+                                                        </div>
+                                                    </td>
+                                                    <td className="w-[50px]">
+                                                        <p className="text-white/70 text-lg  w-[50px]">{selectTypeCF === 0 ? forecast.day.mintemp_f + "°" : forecast.day.mintemp_c + "°"}</p>
+                                                    </td>
+                                                    {/* them mau  */}
+                                                    <td className="p-[10px]">
+                                                        <div className="min-w-[40px]  h-[5px] rounded-full bg-white/30"></div>
+                                                    </td>
+                                                    <td className="w-[50px]">
+                                                        <p className="text-white text-lg font-bold ">{selectTypeCF === 0 ? forecast.day.maxtemp_f + "°" : forecast.day.maxtemp_c + "°"}</p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
                                         </table>
                                     </button>
                                     :
