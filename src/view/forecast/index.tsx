@@ -519,7 +519,7 @@ const Home: React.FC = () => {
                                 </button>
 
                             </div>
-                            <div className="grid md:grid-cols-2 max-lg:grid-cols-1 gap-5">
+                            <div className="grid lg:grid-cols-2 gap-5">
                                 <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconSolarPanel}</span>
