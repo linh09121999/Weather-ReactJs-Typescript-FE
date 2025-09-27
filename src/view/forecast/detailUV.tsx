@@ -1,8 +1,41 @@
 import React from "react";
+import { useGlobal } from "../../context/GlobalContext";
+import ChartLineBase from "../../props/chartLineBase";
 
 const DetailUV: React.FC = () => {
+    const { icons,
+        selectDetailDay, setSelectDetailDay,
+        listSelectShowDetail,
+        resForecast,
+        selectTypeCF, isMobile,
+        selectSrecip, setSelectSrecip,
+        selectWind, setSelectWind,
+        selectPressure, setSelectPressure,
+        selectVis, setSelectVis,
+        selectAir, setSelectAir,
+        typeTemp_Fellslike,
+        listBeaufore,
+        isSelectDetail, setIsSelectDetail,
+        selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike
+    } = useGlobal()
+
+    // lấy danh sách 24 giờ của ngày được chọn
+    const hours = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
+        (h) => {
+            const date = new Date(h.time);
+            return `${date.getHours()}:00`; // hiển thị 0h, 1h, 2h...
+        }
+    ) ?? [];
+
+    const uv = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
+        (h) => h.uv ?? 0
+    )?? []
+
     return (
         <div className='grid gap-6'>
+            <div className="w-full">
+                <ChartLineBase hours={hours} dataDetail={uv} borderColor="white" backgroundColor="rgb(255,255,255,0.5)"  donvi=""/>
+            </div>
             <div className='grid gap-4'>
                 <p className='text-white text-xl font-bold'>Giới thiệu về chỉ số UV</p>
                 <div className='p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>

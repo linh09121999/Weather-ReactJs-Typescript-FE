@@ -253,7 +253,7 @@ const DetailForecast: React.FC = () => {
                             {isSelectDetail === 2 && (//uv
                                 <>
                                     <p className='text-3xl text-white font-bold'>{resForecast?.forecast.forecastday[selectDetailDay].day.uv}</p>
-                                    <p className='text-xl text-white/70'>UVI Tổ chức Y tế Thế giới</p>
+                                    <p className='text-xl text-white/70'>Chỉ số trung bình trong 24 giờ</p>
                                 </>
                             )}
                             {isSelectDetail === 3 && (//luong mua
