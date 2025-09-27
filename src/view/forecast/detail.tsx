@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useGlobal } from '../../context/GlobalContext';
 import { Menu, MenuItem } from "@mui/material"
 import type { SxProps, Theme } from "@mui/material/styles";
+import ChartLineBase from './chartLineBase';
+// import ChartLineTopText from './ChartLineTopText'
 
 const DetailForecast: React.FC = () => {
 
@@ -163,9 +165,44 @@ const DetailForecast: React.FC = () => {
             .join("");
     }
 
+    // lấy danh sách 24 giờ của ngày được chọn
+    const hours = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
+        (h) => {
+            const date = new Date(h.time);
+            return `${date.getHours()}:00`; // hiển thị 0h, 1h, 2h...
+        }
+    ) ?? [];
+
+    // lấy % mưa tương ứng
+    const rainChance =
+        resForecast?.forecast.forecastday[selectDetailDay].hour.map(
+            (h) => h.chance_of_rain ?? 0 // hoặc h.daily_chance_of_rain
+        ) ?? [];
+
+    const temp =
+        selectTypeCF === 0 ?
+            (resForecast?.forecast.forecastday[selectDetailDay].hour.map(
+                (h) => h.temp_f ?? 0
+            ) ?? []) :
+            (resForecast?.forecast.forecastday[selectDetailDay].hour.map(
+                (h) => h.temp_c ?? 0
+            ) ?? [])
+
+    const imgCondition = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
+        (h) => h.condition.icon ?? 0
+    ) ?? []
+
+    const feelslike = selectTypeCF === 0 ?
+        (resForecast?.forecast.forecastday[selectDetailDay].hour.map(
+            (h) => h.feelslike_f ?? 0
+        ) ?? []) :
+        (resForecast?.forecast.forecastday[selectDetailDay].hour.map(
+            (h) => h.feelslike_c ?? 0
+        ) ?? [])
+
     return (
         <main className="min-h-[80vh] mx-[20px]">
-            <div className='flex gap-2 max-w-[1350px] mx-auto items-center text-white py-[10px] text-xl max-md:text-lg'>
+            <div className='flex gap-2 max-w-[1350px] mx-auto items-center text-white py-[10px] text-xl max-md:text-lg '>
                 <a href='/' className='transition duration-300 ease css-icon'>{icons.iconHome}</a>
                 <span>{icons.iconNext}</span>
                 <a href='#' className='transition duration-300 ease css-icon'>Chi tiết {listSelectShowDetail[isSelectDetail].title.toLowerCase()}</a>
@@ -333,7 +370,16 @@ const DetailForecast: React.FC = () => {
                                 {typeTemp_Fellslike.map((type, id) => (
                                     <div key={id} className='grid gap-2'>
                                         {/* bieu do line theo type.id */}
-
+                                        {selectTypeTemp_Fellslike === 0 ?
+                                            //thuc te
+                                            // hours, temp, imgCondition
+                                            <>
+                                            </>
+                                            :
+                                            //cam nhan
+                                            // hours, feelslike, imgCondition
+                                            <></>
+                                        }
                                         <p className='text-lg text-white'>{type.title}</p>
                                         <p className='text-sm text-white/70'>{type.desc}</p>
                                     </div>
@@ -342,6 +388,14 @@ const DetailForecast: React.FC = () => {
                             </div>
                             <div className='grid gap-2 lg:hidden'>
                                 {/* bieu do theo selectTypeTemp_Fellslike */}
+                                {selectTypeTemp_Fellslike === 0 ?
+                                    //thuc te
+                                    <>
+                                    </>
+                                    :
+                                    //cam nhan
+                                    <></>
+                                }
 
                                 <div className='flex bg-white/5 rounded-[15px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[5px] py-[5px] shadow-lg'>
                                     {typeTemp_Fellslike.map((type) => (
@@ -361,6 +415,9 @@ const DetailForecast: React.FC = () => {
                                 <p className='text-white text-xl font-bold'>Khả năng có mưa</p>
                                 <p className='text-sm text-white/70'>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
                                 {/* bieu do */}
+                                <div className='w-full'>
+                                    <ChartLineBase hours={hours} dataDetail={rainChance} />
+                                </div>
                                 <p className='text-sm text-white/70'>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>
 
                             </div>
@@ -380,6 +437,7 @@ const DetailForecast: React.FC = () => {
                                     <p className='text-white text-lg'>Tốc độ gió được tính toán bằng giá trị trung bình trong một khoảng thời gian ngắn. Gió giật là sự gia tăng đột ngột ngắn của gió ở trên giá trị trung bình này. Một cơn gió giật thường kéo dài dưới 20 giây.</p>
                                 </div>
                             </div>
+
                             <div className='grid gap-4'>
                                 <p className='text-white text-xl font-bold'>Thang Beaufort</p>
                                 <div className='p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
@@ -412,6 +470,9 @@ const DetailForecast: React.FC = () => {
                                 <p className='text-white text-xl font-bold'>Khả năng có mưa</p>
                                 <p className='text-sm text-white/70'>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
                                 {/* bieu do */}
+                                <div className='w-full'>
+                                    <ChartLineBase hours={hours} dataDetail={rainChance} />
+                                </div>
                                 <p className='text-sm text-white/70'>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>
 
                             </div>
