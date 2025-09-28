@@ -180,50 +180,51 @@ const DetailForecast: React.FC = () => {
                 </div>
             </div>
 
-            <section className='max-w-[1350px] mt-[30px] mx-auto  px-[20px]'>
-                <div className='grid gap-4'>
-                    {/* list lich 7 ngay toi có [thứ, ngày] */}
-                    <div className='flex justify-between'>
-                        {resForecast?.forecast.forecastday.map((forecast, index) => (
-                            <button key={index} className="rounded-[10px] justify-center grid gap-2 "
-                                onClick={() => {
-                                    setSelectDetailDay(index)
-                                }}
-                            >
-                                <p className="text-white text-center">{formatDate(forecast.date)}</p>
-                                <div className='flex gap-2 items-center justify-center'>
-                                    <span className={` ${index === selectDetailDay ? "bg-white font-bold text-[#2B32B2] w-[35px] h-[35px]  justify-self-center content-center rounded-full" : "text-white"}`}>{getDay(forecast.date)}
-                                    </span>
-                                    <img className={`h-[50px] w-[55px] justify-self-center max-md:hidden ${index === selectDetailDay ? "hidden" : ""}`} alt={forecast.day.condition.text} src={forecast.day.condition.icon} />
-                                </div>
-                            </button>
-
-                        ))}
-                    </div>
-                    {/* ngay thang nam bang chu */}
-                    <p className='text-xl text-white max-md:text-center'>{formatDateVN(resForecast?.forecast.forecastday[selectDetailDay].date)}</p>
-                </div>
-
-                <div className='mt-[30px] grid items-center gap-6 '>
-                    <div className="max-sm:hidden shadow-lg border-[1px] border-solid border-white/10 gap-1 relative lg:flex lg:justify-between max-lg:grid max-lg:grid-cols-8 max-lg:gap-2 rounded-[15px] bg-white/5 p-1 backdrop-blur-[10px]">
-                        {listSelectShowDetail.map((list, id1) => (
-                            <button key={id1}
-                                className={`flex h-[36px] text-white text-lg lg:px-[15px] lg:py-[5px] justify-center items-center gap-2 whitespace-nowrap rounded-[10px] transition-all duration-300 group hover:bg-white/70 ${isSelectDetail === list.id ? " bg-white shadow-lg" : ""}`}
-                                onClick={() => setIsSelectDetail(list.id)}
-                            >
-                                <svg
-                                    className={`fill-current ${isSelectDetail === list.id ? "font-bold text-[#2B32B2]" : "text-white/50"} lg:hidden group-hover:text-[#2B32B2]`}
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="20"
-                                    height="20"
+            <section className=' px-[20px]'>
+                <div className='max-w-[1350px] mt-[30px] mx-auto'>
+                    <div className='grid gap-4'>
+                        {/* list lich 7 ngay toi có [thứ, ngày] */}
+                        <div className='flex justify-between'>
+                            {resForecast?.forecast.forecastday.map((forecast, index) => (
+                                <button key={index} className="rounded-[10px] justify-center grid gap-2 "
+                                    onClick={() => {
+                                        setSelectDetailDay(index)
+                                    }}
                                 >
-                                    {list.icon}
-                                </svg>
-                                <span className={`max-lg:hidden  ${isSelectDetail === list.id ? "font-bold text-[#2B32B2]" : "text-white/50"} group-hover:text-[#2B32B2]`}>{list.title}</span>
-                            </button>
-                        ))}
+                                    <p className="text-white text-center">{formatDate(forecast.date)}</p>
+                                    <div className='flex gap-2 items-center justify-center'>
+                                        <span className={` ${index === selectDetailDay ? "bg-white font-bold text-[#2B32B2] w-[35px] h-[35px]  justify-self-center content-center rounded-full" : "text-white"}`}>{getDay(forecast.date)}
+                                        </span>
+                                        <img className={`h-[50px] w-[55px] justify-self-center max-md:hidden ${index === selectDetailDay ? "hidden" : ""}`} alt={forecast.day.condition.text} src={forecast.day.condition.icon} />
+                                    </div>
+                                </button>
+
+                            ))}
+                        </div>
+                        {/* ngay thang nam bang chu */}
+                        <p className='text-xl text-white max-md:text-center'>{formatDateVN(resForecast?.forecast.forecastday[selectDetailDay].date)}</p>
                     </div>
-                    {/* <div className='max-sm:hidden max-lg:grid max-lg:grid-cols-8 max-lg:gap-2 lg:flex lg:justify-between '>
+
+                    <div className='mt-[30px] grid items-center gap-6 '>
+                        <div className="max-sm:hidden shadow-lg border-[1px] border-solid border-white/10 gap-1 relative lg:flex lg:justify-between max-lg:grid max-lg:grid-cols-8 max-lg:gap-2 rounded-[15px] bg-white/5 p-1 backdrop-blur-[10px]">
+                            {listSelectShowDetail.map((list, id1) => (
+                                <button key={id1}
+                                    className={`flex h-[36px] text-white text-lg lg:px-[15px] lg:py-[5px] justify-center items-center gap-2 whitespace-nowrap rounded-[10px] transition-all duration-300 group hover:bg-white/70 ${isSelectDetail === list.id ? " bg-white shadow-lg" : ""}`}
+                                    onClick={() => setIsSelectDetail(list.id)}
+                                >
+                                    <svg
+                                        className={`fill-current ${isSelectDetail === list.id ? "font-bold text-[#2B32B2]" : "text-white/50"} lg:hidden group-hover:text-[#2B32B2]`}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                    >
+                                        {list.icon}
+                                    </svg>
+                                    <span className={`max-lg:hidden  ${isSelectDetail === list.id ? "font-bold text-[#2B32B2]" : "text-white/50"} group-hover:text-[#2B32B2]`}>{list.title}</span>
+                                </button>
+                            ))}
+                        </div>
+                        {/* <div className='max-sm:hidden max-lg:grid max-lg:grid-cols-8 max-lg:gap-2 lg:flex lg:justify-between '>
                         {listSelectShowDetail.map((list) => (
                             <>
                                 <button key={list.id} className={`${isSelectDetail === list.id ? "font-bold before:left-0 before:w-full before:opacity-100 text-[#2B32B2] " : " before:left-1/2 before:w-0  before:opacity-0 border-[1px] border-solid border-white/10 text-white/50"} text-lg bg-white/5 backdrop-blur-[10px shadow-lg px-[15px] py-[5px] rounded-[10px_10px_0_0]  backdrop-blur-[10px] max-lg:hidden group transiton-all duration-300 relative before:content-[""] before:absolute before:bg-white before:backdrop-blur-[10px] before:shadow-lg before:rounded-[10px_10px_0_0] before:transition-all before:duration-300 before:top-0 before:h-full before:z-[-1] hover:before:left-0 hover:before:w-full hover:before:opacity-100 hover:text-[#2B32B2]`}
@@ -243,144 +244,144 @@ const DetailForecast: React.FC = () => {
                             </>
                         ))}
                     </div> */}
-                    <div className='flex justify-between items-center'>
-                        <div className='grid gap-2 w-full'>
-                            {isSelectDetail === 0 && (//thoi tiet
-                                <>
-                                    <div className='flex gap-2 items-center'>
-                                        <p className='text-3xl text-white font-bold'>{selectTypeCF === 0 ? resForecast?.forecast.forecastday[selectDetailDay].day.avgtemp_f + '°' : resForecast?.forecast.forecastday[selectDetailDay].day.avgtemp_c + '°'}</p>
-                                        <img alt='' src={resForecast?.forecast.forecastday[selectDetailDay].day.condition.icon} />
-                                    </div>
-                                    <div className='flex gap-2 items-center text-lg text-white/70'>
-                                        <p>C: {selectTypeCF === 0 ? resForecast?.forecast.forecastday[selectDetailDay].day.maxtemp_f + '°' : resForecast?.forecast.forecastday[selectDetailDay].day.maxtemp_c + '°'}</p>
-                                        <p>T: {selectTypeCF === 0 ? resForecast?.forecast.forecastday[selectDetailDay].day.mintemp_f + '°' : resForecast?.forecast.forecastday[selectDetailDay].day.mintemp_c + '°'}</p>
-                                    </div>
-                                </>
-                            )}
-                            {isSelectDetail === 1 && (//gio
-                                <>
-                                    <div className='flex gap-2 items-center text-3xl'>
-                                        <p className='text-3xl text-white flex gap-2 font-bold'>
-                                            {selectWind === "km/h" ? resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_kph + " km/h" : resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_mph + " mph"}
-                                        </p>
-                                        <p className='text-white/70'>{resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_degree}°  {windDirectionVN(resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_dir)}</p>
-                                    </div>
-                                    <p className=' text-xl text-white/70'>
-                                        Gió giật {selectWind === "km/h" ? resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].gust_kph + " km/h" : resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].gust_mph + " mph"}
-                                    </p>
-                                </>
-                            )}
-                            {isSelectDetail === 2 && (//uv
-                                <>
-                                    <p className='text-3xl text-white font-bold'>{resForecast?.forecast.forecastday[selectDetailDay].day.uv}</p>
-                                    <p className='text-xl text-white/70'>Chỉ số trung bình trong 24 giờ</p>
-                                </>
-                            )}
-                            {isSelectDetail === 3 && (//luong mua
-                                <>
-                                    <p className='text-3xl text-white flex gap-2 font-bold'>
-                                        {selectSrecip === "mm" ? resForecast?.forecast.forecastday[selectDetailDay].day.totalprecip_mm + " mm" : resForecast?.forecast.forecastday[selectDetailDay].day.totalprecip_in + " in"}
-                                    </p>
-                                    <p className='text-xl text-white/70'>Tổng trong 24 giờ</p>
-                                </>
-                            )}
-                            {isSelectDetail === 4 && (//ap suat
-                                <>
-                                    <p className='text-3xl text-white font-bold'>{selectPressure === "in" ? resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].pressure_in + " in" : resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].pressure_mb + " mb"}</p>
-                                    <p className='text-xl text-white/70'>Ngay bây giờ</p>
-                                </>
-                            )}
-                            {isSelectDetail === 5 && (//tam nhịn
-                                <>
-                                    <p className='text-3xl text-white flex gap-2 font-bold'>
-                                        {selectVis === "km" ? resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_km + " km" : resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_miles + " dặm"}
-                                    </p>
-                                    <p className='text-xl text-white/70'>{getVisibilityLevel(resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_km)}</p>
-                                </>
-                            )}
-                            {isSelectDetail === 6 && (//do am
-                                <>
-                                    <p className='text-3xl text-white font-bold'>{resForecast?.forecast.forecastday[selectDetailDay].day.avghumidity}%</p>
-                                    <p className='text-xl text-white/70'>Điểm sương hiện tại: {selectTypeCF === 0 ? resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].dewpoint_f + '°' : resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].dewpoint_c + '°'}</p>
-                                </>
-                            )}
-                            {isSelectDetail === 7 && (//chat luong khong khi
-                                <>
-                                    <p className='text-3xl text-white flex gap-2 font-bold'>
-                                        {selectAir === "us-epa" ? "US-EPA: " + resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['us-epa-index'] : "GB-DEFRA: " + resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['gb-defra-index']}
-                                    </p>
-                                    <p className='text-xl text-white/70'>
-                                        {selectAir === "us-epa" ?
-                                            getUsEpaLever(resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['us-epa-index'])
-                                            :
-                                            getgetGbDefraLevel(resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['gb-defra-index'])
-                                        }
-                                    </p>
-                                </>
-                            )}
-
-                        </div>
-                        <div className='sm:hidden'>
-                            <button className="text-white/70 px-[15px] py-[10px] bg-white/5 rounded-[15px] "
-                                onClick={handleClickSelect}
-                            >
-                                <div className='flex gap-3'>
-                                    <span>
-                                        {listSelectShowDetail[isSelectDetail].icon}
-                                    </span>
-                                    {icons.iconDown}
-                                </div>
-                            </button>
-                            <Menu
-                                anchorEl={anchorElSelect}
-                                open={openSelect}
-                                onClose={handleCloseSelect}
-                                PaperProps={PaperProps}
-                                MenuListProps={MenuListProps}
-                            >
-                                {listSelectShowDetail.map((list, index) => (
-                                    <MenuItem key={index}
-                                        onClick={() => {
-                                            handleCloseSelect()
-                                            setIsSelectDetail(list.id)
-                                        }}
-                                        sx={sxMenuItem}
-                                    >
-                                        <div className='w-full  flex items-center justify-between gap-3'>{list.title}
-                                            <span>{list.icon}</span>
+                        <div className='flex justify-between items-center'>
+                            <div className='grid gap-2 w-full'>
+                                {isSelectDetail === 0 && (//thoi tiet
+                                    <>
+                                        <div className='flex gap-2 items-center'>
+                                            <p className='text-3xl text-white font-bold'>{selectTypeCF === 0 ? resForecast?.forecast.forecastday[selectDetailDay].day.avgtemp_f + '°' : resForecast?.forecast.forecastday[selectDetailDay].day.avgtemp_c + '°'}</p>
+                                            <img alt='' src={resForecast?.forecast.forecastday[selectDetailDay].day.condition.icon} />
                                         </div>
-                                    </MenuItem>
-                                ))}
-                            </Menu>
+                                        <div className='flex gap-2 items-center text-lg text-white/70'>
+                                            <p>C: {selectTypeCF === 0 ? resForecast?.forecast.forecastday[selectDetailDay].day.maxtemp_f + '°' : resForecast?.forecast.forecastday[selectDetailDay].day.maxtemp_c + '°'}</p>
+                                            <p>T: {selectTypeCF === 0 ? resForecast?.forecast.forecastday[selectDetailDay].day.mintemp_f + '°' : resForecast?.forecast.forecastday[selectDetailDay].day.mintemp_c + '°'}</p>
+                                        </div>
+                                    </>
+                                )}
+                                {isSelectDetail === 1 && (//gio
+                                    <>
+                                        <div className='flex gap-2 items-center text-3xl'>
+                                            <p className='text-3xl text-white flex gap-2 font-bold'>
+                                                {selectWind === "km/h" ? resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_kph + " km/h" : resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_mph + " mph"}
+                                            </p>
+                                            <p className='text-white/70'>{resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_degree}°  {windDirectionVN(resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_dir)}</p>
+                                        </div>
+                                        <p className=' text-xl text-white/70'>
+                                            Gió giật {selectWind === "km/h" ? resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].gust_kph + " km/h" : resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].gust_mph + " mph"}
+                                        </p>
+                                    </>
+                                )}
+                                {isSelectDetail === 2 && (//uv
+                                    <>
+                                        <p className='text-3xl text-white font-bold'>{resForecast?.forecast.forecastday[selectDetailDay].day.uv}</p>
+                                        <p className='text-xl text-white/70'>Chỉ số trung bình trong 24 giờ</p>
+                                    </>
+                                )}
+                                {isSelectDetail === 3 && (//luong mua
+                                    <>
+                                        <p className='text-3xl text-white flex gap-2 font-bold'>
+                                            {selectSrecip === "mm" ? resForecast?.forecast.forecastday[selectDetailDay].day.totalprecip_mm + " mm" : resForecast?.forecast.forecastday[selectDetailDay].day.totalprecip_in + " in"}
+                                        </p>
+                                        <p className='text-xl text-white/70'>Tổng trong 24 giờ</p>
+                                    </>
+                                )}
+                                {isSelectDetail === 4 && (//ap suat
+                                    <>
+                                        <p className='text-3xl text-white font-bold'>{selectPressure === "in" ? resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].pressure_in + " in" : resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].pressure_mb + " mb"}</p>
+                                        <p className='text-xl text-white/70'>Ngay bây giờ</p>
+                                    </>
+                                )}
+                                {isSelectDetail === 5 && (//tam nhịn
+                                    <>
+                                        <p className='text-3xl text-white flex gap-2 font-bold'>
+                                            {selectVis === "km" ? resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_km + " km" : resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_miles + " dặm"}
+                                        </p>
+                                        <p className='text-xl text-white/70'>{getVisibilityLevel(resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_km)}</p>
+                                    </>
+                                )}
+                                {isSelectDetail === 6 && (//do am
+                                    <>
+                                        <p className='text-3xl text-white font-bold'>{resForecast?.forecast.forecastday[selectDetailDay].day.avghumidity}%</p>
+                                        <p className='text-xl text-white/70'>Điểm sương hiện tại: {selectTypeCF === 0 ? resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].dewpoint_f + '°' : resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].dewpoint_c + '°'}</p>
+                                    </>
+                                )}
+                                {isSelectDetail === 7 && (//chat luong khong khi
+                                    <>
+                                        <p className='text-3xl text-white flex gap-2 font-bold'>
+                                            {selectAir === "us-epa" ? "US-EPA: " + resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['us-epa-index'] : "GB-DEFRA: " + resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['gb-defra-index']}
+                                        </p>
+                                        <p className='text-xl text-white/70'>
+                                            {selectAir === "us-epa" ?
+                                                getUsEpaLever(resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['us-epa-index'])
+                                                :
+                                                getgetGbDefraLevel(resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['gb-defra-index'])
+                                            }
+                                        </p>
+                                    </>
+                                )}
+
+                            </div>
+                            <div className='sm:hidden'>
+                                <button className="text-white/70 px-[15px] py-[10px] bg-white/5 rounded-[15px] "
+                                    onClick={handleClickSelect}
+                                >
+                                    <div className='flex gap-3'>
+                                        <span>
+                                            {listSelectShowDetail[isSelectDetail].icon}
+                                        </span>
+                                        {icons.iconDown}
+                                    </div>
+                                </button>
+                                <Menu
+                                    anchorEl={anchorElSelect}
+                                    open={openSelect}
+                                    onClose={handleCloseSelect}
+                                    PaperProps={PaperProps}
+                                    MenuListProps={MenuListProps}
+                                >
+                                    {listSelectShowDetail.map((list, index) => (
+                                        <MenuItem key={index}
+                                            onClick={() => {
+                                                handleCloseSelect()
+                                                setIsSelectDetail(list.id)
+                                            }}
+                                            sx={sxMenuItem}
+                                        >
+                                            <div className='w-full  flex items-center justify-between gap-3'>{list.title}
+                                                <span>{list.icon}</span>
+                                            </div>
+                                        </MenuItem>
+                                    ))}
+                                </Menu>
+                            </div>
                         </div>
+
+                        {isSelectDetail === 0 &&
+                            <DetailThermometer />
+                        }
+                        {isSelectDetail === 1 &&
+                            <DetailWind />
+                        }
+                        {isSelectDetail === 2 &&
+                            <DetailUV />
+                        }
+                        {isSelectDetail === 3 &&
+                            <DetailRain />
+                        }
+                        {isSelectDetail === 4 &&
+                            <DetailPressure />
+                        }
+                        {isSelectDetail === 5 &&
+                            <DetailVis />
+                        }
+                        {isSelectDetail === 6 &&
+                            <DetailHumidity />
+                        }
+                        {isSelectDetail === 7 &&
+                            <DetailAir />
+                        }
                     </div>
-
-                    {isSelectDetail === 0 &&
-                        <DetailThermometer />
-                    }
-                    {isSelectDetail === 1 &&
-                        <DetailWind />
-                    }
-                    {isSelectDetail === 2 &&
-                        <DetailUV />
-                    }
-                    {isSelectDetail === 3 &&
-                        <DetailRain />
-                    }
-                    {isSelectDetail === 4 &&
-                        <DetailPressure />
-                    }
-                    {isSelectDetail === 5 &&
-                        <DetailVis />
-                    }
-                    {isSelectDetail === 6 &&
-                        <DetailHumidity />
-                    }
-                    {isSelectDetail === 7 &&
-                        <DetailAir />
-                    }
                 </div>
-
             </section>
         </main>
     )
