@@ -63,11 +63,11 @@ const DetailThermometer: React.FC = () => {
 
     return (
         <div className='grid gap-6'>
-            <div className='grid grid-cols-2 gap-2 max-lg:hidden'>
-                <div className="w-full">
+            <div className='grid grid-cols-2 gap-5 max-lg:hidden'>
+                <div className="w-full p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
                     <ChartLineTopText currentIndex={isBorderDash} itemTop={imgCondition} hours={hours} dataDetail={temp} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvCF} />
                 </div>
-                <div className="w-full">
+                <div className="w-full p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
                     <ChartLineTopText currentIndex={isBorderDash} itemTop={imgCondition} hours={hours} dataDetail={feelslike} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvCF} />
                 </div>
                 {typeTemp_Fellslike.map((type, id) => (
@@ -82,12 +82,12 @@ const DetailThermometer: React.FC = () => {
                 {/* bieu do theo selectTypeTemp_Fellslike */}
                 {selectTypeTemp_Fellslike === 0 ?
                     //thuc te
-                    <div className="w-full">
+                    <div className="w-full p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
                         <ChartLineTopText currentIndex={isBorderDash} itemTop={imgCondition} hours={hours} dataDetail={temp} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvCF} />
                     </div>
                     :
                     //cam nhan
-                    <div className="w-full">
+                    <div className="w-full p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
                         <ChartLineTopText currentIndex={isBorderDash} itemTop={imgCondition} hours={hours} dataDetail={feelslike} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvCF} />
                     </div>
                 }
@@ -110,7 +110,7 @@ const DetailThermometer: React.FC = () => {
                 <p className='text-white text-xl font-bold'>Khả năng có mưa</p>
                 <p className='text-lg text-white/70'>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
                 {/* bieu do */}
-                <div className='w-full'>
+                <div className='w-full p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
                     <ChartLineBase currentIndex={isBorderDash} hours={hours} dataDetail={rainChance} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="%" />
                 </div>
                 <p className='text-lg text-white/70'>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>

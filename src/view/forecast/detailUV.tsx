@@ -35,7 +35,7 @@ const DetailUV: React.FC = () => {
 
     return (
         <div className='grid gap-6'>
-            <div className="w-full">
+            <div className="w-full p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
                 <ChartLineBase currentIndex={isBorderDash} hours={hours} dataDetail={uv} borderColor="white" backgroundColor="rgb(255,255,255,0.5)"  donvi=""/>
             </div>
             <div className='grid gap-4'>

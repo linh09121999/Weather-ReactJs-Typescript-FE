@@ -46,7 +46,7 @@ const DetailRain: React.FC = () => {
 
     return (
         <div className='grid gap-6'>
-            <div className='w-full'>
+            <div className='w-full p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
                 {/* bieu do mmua */}
                 <ChartBarBase currentIndex={isBorderDash} labels={hours} values={rain} borderWidth={0} borderColor="white" backgroundColor="white" donvi={selectSrecip === "mm" ? "mm" : "in"} />
             </div>
@@ -55,7 +55,7 @@ const DetailRain: React.FC = () => {
                 <p className='text-white text-lg font-bold'>Khả năng có mưa</p>
                 <p className='text-lg text-white/70'>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
                 {/* bieu do */}
-                <div className='w-full'>
+                <div className='w-full p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
                     <ChartLineBase currentIndex={isBorderDash} hours={hours} dataDetail={rainChance} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="%" />
                 </div>
                 <p className='text-lg text-white/70'>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>

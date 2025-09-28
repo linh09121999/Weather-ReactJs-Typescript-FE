@@ -208,7 +208,7 @@ const DetailForecast: React.FC = () => {
                     <div className="max-sm:hidden shadow-lg border-[1px] border-solid border-white/10 gap-1 relative lg:flex lg:justify-between max-lg:grid max-lg:grid-cols-8 max-lg:gap-2 rounded-[15px] bg-white/5 p-1 backdrop-blur-[10px]">
                         {listSelectShowDetail.map((list, id1) => (
                             <button key={id1}
-                                className={`flex h-[36px] text-white text-lg lg:px-[15px] lg:py-[5px] justify-center items-center gap-2 whitespace-nowrap rounded-[10px] transition-all duration-300 group hover:bg-white/70 ${isSelectDetail === list.id ? " bg-white " : ""}`}
+                                className={`flex h-[36px] text-white text-lg lg:px-[15px] lg:py-[5px] justify-center items-center gap-2 whitespace-nowrap rounded-[10px] transition-all duration-300 group hover:bg-white/70 ${isSelectDetail === list.id ? " bg-white shadow-lg" : ""}`}
                                 onClick={() => setIsSelectDetail(list.id)}
                             >
                                 <svg
