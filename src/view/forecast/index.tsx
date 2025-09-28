@@ -535,7 +535,7 @@ const Home: React.FC = () => {
                                         <p className="text-white/70 text-lg md:text-xl">Áp Suất</p>
                                     </div>
                                     <div className="p-10 justify-self-center">
-                                        <ChartGauge value={selectPressure === "mb" ? resForecast?.current.pressure_mb : resForecast?.current.pressure_in} min={selectPressure === "mb" ? 870 : 25.7} max={selectPressure === "mb" ? 1085 : 32.0} donvi={selectPressure === "mb" ? " mb" : " in"} backgroundColor={["white", "rgb(255,255,255,0.4)"]} />
+                                        <ChartGauge value={selectPressure === "mb" ? resForecast?.current.pressure_mb : resForecast?.current.pressure_in} min={selectPressure === "mb" ? 960 : 28.5} max={selectPressure === "mb" ? 1050 : 31} donvi={selectPressure === "mb" ? " mb" : " in"} backgroundColor={["white", "rgb(255,255,255,0.4)"]} />
                                     </div>
                                 </div>
 
