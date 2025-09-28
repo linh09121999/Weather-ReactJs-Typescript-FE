@@ -336,6 +336,10 @@ const Home: React.FC = () => {
         return hours * 60 + minutes;
     }
 
+    const persentMinutes = (timeStr: string) => {
+        return timeToMinutes(timeStr) / 1440 * 100
+    }
+
     return (
         <>
             <main className="min-h-[80vh] p-[20px]">
@@ -738,12 +742,12 @@ const Home: React.FC = () => {
                                                         <div className="min-w-[40px] flex h-[5px] rounded-full bg-white/30">
                                                             <div
                                                                 style={{
-                                                                    width: `${(timeToMinutes(forecast.astro.sunrise) / 1440 * 100).toFixed(3)}%`
+                                                                    width: `${persentMinutes(forecast.astro.sunrise)}%`
                                                                 }}
                                                             ></div>
                                                             <div className="bg-orange-400 w-full"></div>
                                                             <div style={{
-                                                                width: `${(100 - (timeToMinutes(forecast.astro.sunset)) / 1440 * 100).toFixed(3)}%`
+                                                                width: `${(100 - persentMinutes(forecast.astro.sunset))}%`
                                                             }}
                                                             ></div>
                                                         </div>
