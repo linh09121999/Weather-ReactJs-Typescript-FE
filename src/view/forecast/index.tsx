@@ -412,23 +412,29 @@ const Home: React.FC = () => {
                                         navigate("/chi-tiet-theo-ngay");
                                     }}
                                 >
-                                    <div className="flex gap-2 items-center">
-                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconWind}</span>
-                                        <p className="text-white/70 text-lg md:text-xl">Gió</p>
+                                    <div className="flex gap-4 justify-between">
+                                        <div className="w-full">
+                                            <div className="flex gap-2 items-center">
+                                                <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconWind}</span>
+                                                <p className="text-white/70 text-lg md:text-xl">Gió</p>
+                                            </div>
+
+                                            <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
+                                                <p className="w-[calc(100%-78px)] text-start">Gió</p>
+                                                <p>{selectWind === "km/h" ? resForecast?.current.wind_kph + " km/h" : resForecast?.current.wind_mph + " mph"}</p>
+                                            </div>
+                                            <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
+                                                <p className="w-[calc(100%-78px)] text-start">Gió giật</p>
+                                                <p>{selectWind === "km/h" ? resForecast?.current.gust_kph + " km/h" : resForecast?.current.gust_mph + " mph"}</p>
+                                            </div>
+                                            <div className="flex pt-[15px] pb-[5px]">
+                                                <p className="w-[calc(100%-78px)] text-start">Hướng gió</p>
+                                                <p>{resForecast?.current.wind_degree}° {windDirectionVN(resForecast?.current.wind_dir) ?? undefined}</p>
+                                            </div>
+                                        </div>
+                                        {/* <ChartWindDoungtnut value={45} speed={12} donvi="m/s" /> */}
                                     </div>
 
-                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
-                                        <p className="w-[calc(100%-78px)] text-start">Gió</p>
-                                        <p>{selectWind === "km/h" ? resForecast?.current.wind_kph + " km/h" : resForecast?.current.wind_mph + " mph"}</p>
-                                    </div>
-                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
-                                        <p className="w-[calc(100%-78px)] text-start">Gió giật</p>
-                                        <p>{selectWind === "km/h" ? resForecast?.current.gust_kph + " km/h" : resForecast?.current.gust_mph + " mph"}</p>
-                                    </div>
-                                    <div className="flex pt-[15px] pb-[5px]">
-                                        <p className="w-[calc(100%-78px)] text-start">Hướng gió</p>
-                                        <p>{resForecast?.current.wind_degree}° {windDirectionVN(resForecast?.current.wind_dir) ?? undefined}</p>
-                                    </div>
                                     {/* thêm minh họa ở bên phải: la bàn có mũi tên hướng gió và hiện tốc độ gió */}
                                 </button>
                             </div>
@@ -534,8 +540,8 @@ const Home: React.FC = () => {
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconTachometer}</span>
                                         <p className="text-white/70 text-lg md:text-xl">Áp Suất</p>
                                     </div>
-                                    <div className="p-10 justify-self-center">
-                                        <ChartGauge value={selectPressure === "mb" ? resForecast?.current.pressure_mb : resForecast?.current.pressure_in} min={selectPressure === "mb" ? 960 : 28.5} max={selectPressure === "mb" ? 1050 : 31} donvi={selectPressure === "mb" ? " mb" : " in"} backgroundColor={["white", "rgb(255,255,255,0.4)"]} />
+                                    <div className="pb-[25px] mt-[15px] justify-self-center">
+                                        <ChartGauge value={selectPressure === "mb" ? resForecast?.current.pressure_mb : resForecast?.current.pressure_in} min={selectPressure === "mb" ? 960 : 28.5} max={selectPressure === "mb" ? 1050 : 31} donvi={selectPressure === "mb" ? " mb" : " in"} backgroundColor={["rgb(255,255,255,0.2)", "white", "rgb(255,255,255,0.2)"]} />
                                     </div>
                                 </div>
 

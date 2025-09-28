@@ -26,9 +26,10 @@ const ChartGauge: React.FC<GaugeProps> = ({ value, min, max, donvi, backgroundCo
   const data = {
     datasets: [
       {
-        data: [angle, rest], // phần đã điền & phần còn lại
+        data: [angle - 0.5, 1, rest - 0.5], // phần đã điền & phần còn lại
         backgroundColor: backgroundColor,
-        borderWidth: 0,
+        borderWidth: [0, 4, 0],
+        borderColor: backgroundColor,
         cutout: "85%", // tạo gauge rỗng ở giữa
         rotation: -135, // bắt đầu từ -135 độ
         circumference: 270, // quét 270 độ
@@ -37,11 +38,11 @@ const ChartGauge: React.FC<GaugeProps> = ({ value, min, max, donvi, backgroundCo
   };
 
   return (
-    <div className="flex flex-col items-center relative w-64 h-64">
+    <div className="flex flex-col items-center relative w-36 h-36">
       <Doughnut data={data} options={{ plugins: { legend: { display: false } } }} />
 
       {/* Hiển thị value + đơn vị ở giữa */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 text-center">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/4 text-center">
         <p className="text-3xl font-bold">{safeValue}</p>
         <p className="text-xl text-white/70">{donvi}</p>
       </div>
