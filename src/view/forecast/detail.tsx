@@ -212,14 +212,14 @@ const DetailForecast: React.FC = () => {
                                 onClick={() => setIsSelectDetail(list.id)}
                             >
                                 <svg
-                                    className={`fill-current ${isSelectDetail === list.id ? "font-bold text-[#2B32B2]" : "text-white/50"} lg:hidden group-hover:hover:text-[#2B32B2]`}
+                                    className={`fill-current ${isSelectDetail === list.id ? "font-bold text-[#2B32B2]" : "text-white/50"} lg:hidden group-hover:text-[#2B32B2]`}
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="20"
                                     height="20"
                                 >
                                     {list.icon}
                                 </svg>
-                                <span className={`max-lg:hidden  ${isSelectDetail === list.id ? "font-bold text-[#2B32B2]" : "text-white/50"} group-hover:hover:text-[#2B32B2]`}>{list.title}</span>
+                                <span className={`max-lg:hidden  ${isSelectDetail === list.id ? "font-bold text-[#2B32B2]" : "text-white/50"} group-hover:text-[#2B32B2]`}>{list.title}</span>
                             </button>
                         ))}
                     </div>
