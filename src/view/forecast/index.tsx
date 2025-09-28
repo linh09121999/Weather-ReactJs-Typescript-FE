@@ -337,8 +337,38 @@ const Home: React.FC = () => {
         return hours * 60 + minutes;
     }
 
+    const getUVlevel = (uv: number | undefined) => {
+        if (!uv) return undefined
+        const levers = [
+            { min: 11, label: "Cực đoan" },
+            { min: 8, label: "Rất cao" },
+            { min: 6, label: "Cao" },
+            { min: 3, label: "Trung bình" },
+        ];
+
+        return levers.find(l => uv >= l.min)?.label || "Thấp";
+    }
+
+    const getRainLever = (rain: number | undefined) => {
+        if (!rain) return undefined
+        const levers = [
+            { minMM: 50, minIn: 0.098, label: "Mưa rất to" },
+            { minMM: 7.6, minIn: 0.3, label: "Mưa to" },
+            { minMM: 2.5, minIn: 2, label: "Mưa vừa" },
+        ];
+
+        return selectSrecip === "mm" ?
+            levers.find(l => rain >= l.minMM)?.label || "Mưa nhỏ"
+            :
+            levers.find(l => rain >= l.minIn)?.label || "Mưa nhỏ"
+    }
+
     const persentMinutes = (timeStr: string) => {
         return timeToMinutes(timeStr) / 1440 * 100
+    }
+
+    const presentUV = (uv: number | undefined) => {
+        return uv !== undefined ? uv / 11 * 100 : undefined
     }
 
     return (
@@ -439,7 +469,7 @@ const Home: React.FC = () => {
                                 </button>
                             </div>
                             <div className="grid lg:grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-5 ">
-                                <button className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
                                     onClick={() => {
                                         setSelectDetailDay(0);
                                         setIsSelectDetail(2)
@@ -452,8 +482,13 @@ const Home: React.FC = () => {
                                     </div>
                                     <p className="text-3xl my-[15px] font-[600] text-start">{resForecast?.current.uv}</p>
                                     {/* thêm minh họa ở giữa  */}
+                                    <div className={`w-full my-[15px] h-[5px] rounded-xl [background:linear-gradient(to_right,#00ff00,#ffff00,#ff9900,#ff0000,#800080)] relative before:absolute before:w-[9px] before:h-[9px] before:rounded-full before:z-2 before:border-[2px] before:border-white before:top-[-2px] before:left-[var(--uv-pos)] `}
+                                        style={{ "--uv-pos": `${presentUV(resForecast?.current.uv)?.toFixed(0)}%` } as React.CSSProperties}
+                                    >
+                                    </div>
+                                    <p className="text-lg text-start">Đang ở mức {getUVlevel(resForecast?.current.uv)} </p>
 
-                                </button>
+                                </div>
                                 <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
 
                                     {resForecast?.current.is_day === 1 ?
@@ -478,7 +513,7 @@ const Home: React.FC = () => {
                                     {/* thêm minh họa */}
 
                                 </div>
-                                <button className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
                                     onClick={() => {
                                         setSelectDetailDay(0);
                                         setIsSelectDetail(3)
@@ -489,11 +524,12 @@ const Home: React.FC = () => {
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconCloudRain}</span>
                                         <p className="text-white/70 text-lg md:text-xl ">Lượng Mưa</p>
                                     </div>
-
                                     {/* them minh hoa */}
                                     <p className="text-3xl my-[15px] font-[600] text-start">{selectSrecip === "mm" ? resForecast?.current.precip_mm + " mm" : resForecast?.current.precip_in + " in"}</p>
-                                </button>
-                                <button className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                    <p className="text-lg text-start">{selectSrecip === "mm" ? getRainLever(resForecast?.current.precip_mm) : getRainLever(resForecast?.current.precip_in)} </p>
+
+                                </div>
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
                                     onClick={() => {
                                         setSelectDetailDay(0);
                                         setIsSelectDetail(5)
@@ -506,7 +542,7 @@ const Home: React.FC = () => {
                                     </div>
                                     <p className="text-3xl my-[15px] font-[600] text-start">{selectVis === "km" ? resForecast?.current.vis_km + " km" : resForecast?.current.vis_miles + " dặm"}</p>
                                     {/* them minh hoa */}
-                                </button>
+                                </div>
                                 <button className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
                                     onClick={() => {
                                         setSelectDetailDay(0);
@@ -522,7 +558,7 @@ const Home: React.FC = () => {
                                     <p className="text-lg text-start">Điểm sương là {selectTypeCF === 0 ? resForecast?.current.dewpoint_f + "°" : resForecast?.current.dewpoint_c + "°"} ngay lúc này</p>
                                     {/* thhem mih hoa */}
                                 </button>
-                                <button className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
                                     onClick={() => {
                                         setSelectDetailDay(0);
                                         setIsSelectDetail(4)
@@ -535,7 +571,7 @@ const Home: React.FC = () => {
                                     </div>
                                     <p className="text-3xl my-[15px] font-[600] text-start">{selectPressure === "mb" ? resForecast?.current.pressure_mb + " mb" : resForecast?.current.pressure_in + " in"}</p>
                                     {/* them minh hoa */}
-                                </button>
+                                </div>
 
                             </div>
                             <div className="grid lg:grid-cols-2 gap-5">
@@ -562,7 +598,7 @@ const Home: React.FC = () => {
                                     </div>
                                     {/* them minh hoa */}
                                 </div>
-                                <button className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
                                     onClick={() => {
                                         setSelectDetailDay(0);
                                         setIsSelectDetail(7)
@@ -597,7 +633,7 @@ const Home: React.FC = () => {
                                         <p className="w-[calc(100%-110px)] text-start">Bụi mịn PM10</p>
                                         <p>{resForecast?.current.air_quality?.pm10} μg/m³</p>
                                     </div>
-                                </button>
+                                </div>
                                 {/* them minh hoa va Chỉ số EPA Hoa Kỳ & Chỉ số Defra Anh */}
                             </div>
                             <button className="grid justify-center w-full text-white items-center css-icon"

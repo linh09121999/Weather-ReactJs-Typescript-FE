@@ -21,9 +21,6 @@ const ProtectedRoute: React.FC = () => {
     :
     "./src/assets/image/img-rain.png"
 
-
-
-
   return (
     <div className="flex flex-col w-full min-h-screen" >
       <img src={bgImg} alt="Background" className="fixed top-0 left-0 w-screen h-screen object-cover -z-10"></img>
