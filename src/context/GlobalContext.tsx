@@ -919,8 +919,8 @@ export interface GlobalState {
     getUVlevel: (uv: number | undefined) => void;
     getRainLever: (rain: number | undefined) => void;
     getVisibilityLevel: (vis: number | undefined) => void;
-    getUsEpaLever : (lv: number | undefined) =>void;
-    getgetGbDefraLevel : (lv: number | undefined) => void
+    getUsEpaLever: (lv: number | undefined) => void;
+    getgetGbDefraLevel: (lv: number | undefined) => void
 }
 
 
@@ -1020,15 +1020,17 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     const getVisibilityLevel = (vis: number | undefined) => {
         if (vis === undefined || vis === null) return undefined;
         const levels = [
-            { min: 19, label: "Hoàn toàn rõ" },
-            { min: 15, label: "Rõ ràng" },
-            { min: 10, label: "Khá rõ" },
-            { min: 5, label: "Trung bình" },
-            { min: 1, label: "Hạn chế" },
-            { min: 0.2, label: "Kém" }
+            { minKm: 19, minMiles: 11.8, label: "Hoàn toàn rõ" },
+            { minKm: 15, minMiles: 9.3, label: "Rõ ràng" },
+            { minKm: 10, minMiles: 6.2, label: "Khá rõ" },
+            { minKm: 5, minMiles: 3.1, label: "Trung bình" },
+            { minKm: 1, minMiles: 0.6, label: "Hạn chế" },
+            { minKm: 0.2, minMiles: 0.12, label: "Kém" }
         ];
 
-        return levels.find(l => vis >= l.min)?.label || "Rất kém";
+        return selectVis === "km" ? levels.find(l => vis >= l.minKm)?.label || "Rất kém"
+            :
+            levels.find(l => vis >= l.minMiles)?.label || "Rất kém"
     }
 
     const getUsEpaLever = (lv: number | undefined) => {

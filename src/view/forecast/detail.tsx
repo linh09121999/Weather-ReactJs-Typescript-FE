@@ -224,7 +224,7 @@ const DetailForecast: React.FC = () => {
                                         <p className='text-3xl text-white flex gap-2 font-bold'>
                                             {selectVis === "km" ? resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_km + " km" : resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_miles + " dặm"}
                                         </p>
-                                        <p className='text-xl text-white/70'>{getVisibilityLevel(resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_km) ?? undefined}</p>
+                                        <p className='text-xl text-white/70'>{selectVis === "km" ? getVisibilityLevel(resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_km) ?? undefined : getVisibilityLevel(resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_miles) ?? undefined}</p>
                                     </>
                                 )}
                                 {isSelectDetail === 6 && (//do am

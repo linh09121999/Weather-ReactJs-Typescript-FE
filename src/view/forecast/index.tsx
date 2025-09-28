@@ -84,7 +84,8 @@ const Home: React.FC = () => {
         currentHour,
         windDirectionVN,
         getUVlevel,
-        getRainLever
+        getRainLever,
+        getVisibilityLevel
     } = useGlobal();
 
     const Api_findForecast = async (q: string, days: number, aqi: string, alerts: string, lang: string) => {
@@ -503,6 +504,7 @@ const Home: React.FC = () => {
                                     </div>
                                     <p className="text-3xl my-[15px] font-[600] text-start">{selectVis === "km" ? resForecast?.current.vis_km + " km" : resForecast?.current.vis_miles + " dặm"}</p>
                                     {/* them minh hoa */}
+                                    <p className="text-lg text-start">Tầm nhìn {selectVis === "km" ? getVisibilityLevel(resForecast?.current.vis_km) ?? undefined : getVisibilityLevel(resForecast?.current.vis_miles) ?? undefined} </p>
                                 </div>
                                 <button className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
                                     onClick={() => {
