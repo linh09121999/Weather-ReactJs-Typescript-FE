@@ -6,6 +6,8 @@ import { MenuItem, Menu } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
 import { useNavigate } from 'react-router-dom';
 
+import ChartGauge from "../../props/chartGauge";
+
 const Home: React.FC = () => {
     const navigate = useNavigate();
 
@@ -506,7 +508,7 @@ const Home: React.FC = () => {
                                     {/* them minh hoa */}
                                     <p className="text-lg text-start">Tầm nhìn {selectVis === "km" ? getVisibilityLevel(resForecast?.current.vis_km) ?? undefined : getVisibilityLevel(resForecast?.current.vis_miles) ?? undefined} </p>
                                 </div>
-                                <button className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
                                     onClick={() => {
                                         setSelectDetailDay(0);
                                         setIsSelectDetail(6)
@@ -520,7 +522,7 @@ const Home: React.FC = () => {
                                     <p className="text-3xl my-[15px] font-[600] text-start">{resForecast?.current.humidity}%</p>
                                     <p className="text-lg text-start">Điểm sương là {selectTypeCF === 0 ? resForecast?.current.dewpoint_f + "°" : resForecast?.current.dewpoint_c + "°"} ngay lúc này</p>
                                     {/* thhem mih hoa */}
-                                </button>
+                                </div>
                                 <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
                                     onClick={() => {
                                         setSelectDetailDay(0);
@@ -532,8 +534,9 @@ const Home: React.FC = () => {
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconTachometer}</span>
                                         <p className="text-white/70 text-lg md:text-xl">Áp Suất</p>
                                     </div>
-                                    <p className="text-3xl my-[15px] font-[600] text-start">{selectPressure === "mb" ? resForecast?.current.pressure_mb + " mb" : resForecast?.current.pressure_in + " in"}</p>
-                                    {/* them minh hoa */}
+                                    <div className="p-10 justify-self-center">
+                                        <ChartGauge value={selectPressure === "mb" ? resForecast?.current.pressure_mb : resForecast?.current.pressure_in} min={selectPressure === "mb" ? 870 : 25.7} max={selectPressure === "mb" ? 1085 : 32.0} donvi={selectPressure === "mb" ? " mb" : " in"} backgroundColor={["white", "rgb(255,255,255,0.4)"]} />
+                                    </div>
                                 </div>
 
                             </div>
