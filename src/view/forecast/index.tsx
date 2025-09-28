@@ -80,7 +80,8 @@ const Home: React.FC = () => {
         selectWind, setSelectWind,
         selectPressure, setSelectPressure,
         selectVis, setSelectVis,
-        setIsSelectDetail
+        setIsSelectDetail,
+        currentHour
     } = useGlobal();
 
     const Api_findForecast = async (q: string, days: number, aqi: string, alerts: string, lang: string) => {
@@ -610,8 +611,6 @@ const Home: React.FC = () => {
                     <div className="flex overflow-x-auto bg-white/10 text-white border-[1px] border-white/5 backdrop-blur-[10px] mt-[30px] shadow-lg rounded-[10px]">
                         <div className="flex m-[25px] gap-3 scroll-x overflow-x-auto py-[10px] w-full">
                             {(() => {
-                                const currentHour = new Date().getHours();
-
                                 // Giờ hôm nay (>= giờ hiện tại)
                                 const todayHours =
                                     resForecast?.forecast.forecastday[0].hour
