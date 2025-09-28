@@ -56,7 +56,9 @@ const DetailForecast: React.FC = () => {
         selectVis,
         selectAir,
         isSelectDetail, setIsSelectDetail,
-        currentHour
+        currentHour,
+        windDirectionVN,
+        getVisibilityLevel, getUsEpaLever, getgetGbDefraLevel
     } = useGlobal()
 
 
@@ -95,46 +97,6 @@ const DetailForecast: React.FC = () => {
         return day
     }
 
-    const getVisibilityLevel = (km: number | undefined) => {
-        if (km === undefined || km === null) return undefined;
-        const levels = [
-            { min: 19, label: "Hoàn toàn rõ" },
-            { min: 15, label: "Rõ ràng" },
-            { min: 10, label: "Khá rõ" },
-            { min: 5, label: "Trung bình" },
-            { min: 1, label: "Hạn chế" },
-            { min: 0.2, label: "Kém" }
-        ];
-
-        return levels.find(l => km >= l.min)?.label || "Rất kém";
-    }
-
-    const getUsEpaLever = (lv: number | undefined) => {
-        if (lv === undefined || lv === null) return undefined;
-
-        const levels: Record<number, string> = {
-            1: "Tốt",
-            2: "Trung bình",
-            3: "Không tốt",
-            4: "Không lành mạnh",
-            5: "Xấu",
-            6: "Nguy hại"
-        };
-        return levels[lv];
-    }
-
-    const getgetGbDefraLevel = (lv: number | undefined) => {
-        if (lv === undefined || lv === null) return undefined;
-
-        const levels = [
-            { min: 10, label: "Rất cao" },
-            { min: 7, label: "Cao" },
-            { min: 4, label: "Trung bình" },
-        ];
-
-        return levels.find(l => lv >= l.min)?.label || "Thấp";
-    }
-
     const formatDate = (dateStr: string) => {
         const inputDate: Date = new Date(dateStr);
 
@@ -154,22 +116,6 @@ const DetailForecast: React.FC = () => {
         ]
 
         return isMobile === true ? weekdays[inputDate.getDay()] : weekdaysFull[inputDate.getDay()]
-    }
-
-
-    const windDirectionVN = (dir: string | undefined) => {
-        if (!dir) return undefined;
-        const map: Record<string, string> = {
-            N: "B",
-            S: "N",
-            E: "Đ",
-            W: "T",
-        };
-
-        return dir
-            .split("")       // tách chuỗi thành từng ký tự
-            .map((c) => map[c] || c) // đổi sang tiếng Việt
-            .join("");
     }
 
     return (
@@ -226,26 +172,6 @@ const DetailForecast: React.FC = () => {
                                 </button>
                             ))}
                         </div>
-                        {/* <div className='max-sm:hidden max-lg:grid max-lg:grid-cols-8 max-lg:gap-2 lg:flex lg:justify-between '>
-                        {listSelectShowDetail.map((list) => (
-                            <>
-                                <button key={list.id} className={`${isSelectDetail === list.id ? "font-bold before:left-0 before:w-full before:opacity-100 text-[#2B32B2] " : " before:left-1/2 before:w-0  before:opacity-0 border-[1px] border-solid border-white/10 text-white/50"} text-lg bg-white/5 backdrop-blur-[10px shadow-lg px-[15px] py-[5px] rounded-[10px_10px_0_0]  backdrop-blur-[10px] max-lg:hidden group transiton-all duration-300 relative before:content-[""] before:absolute before:bg-white before:backdrop-blur-[10px] before:shadow-lg before:rounded-[10px_10px_0_0] before:transition-all before:duration-300 before:top-0 before:h-full before:z-[-1] hover:before:left-0 hover:before:w-full hover:before:opacity-100 hover:text-[#2B32B2]`}
-                                    onClick={() => {
-                                        setIsSelectDetail(list.id)
-                                    }}
-                                >
-                                    {list.title}
-                                </button>
-                                <button key={list.id} className={`${isSelectDetail === list.id ? "font-bold before:left-0 before:w-full before:opacity-100 text-[#2B32B2] " : " before:left-1/2 before:w-0  before:opacity-0 border-[1px] border-solid border-white/10 text-white/50"} text-lg bg-white/5 backdrop-blur-[10px shadow-lg px-[15px] py-[10px] rounded-[10px_10px_0_0]  backdrop-blur-[10px] lg:hidden group transiton-all duration-300 relative before:content-[""] before:absolute before:bg-white before:backdrop-blur-[10px] before:shadow-lg before:rounded-[10px_10px_0_0] before:transition-all before:duration-300 before:top-0 before:h-full before:z-[-1] hover:before:left-0 hover:before:w-full hover:before:opacity-100 hover:text-[#2B32B2]`}
-                                    onClick={() => {
-                                        setIsSelectDetail(list.id)
-                                    }}
-                                >
-                                    {list.icon}
-                                </button>
-                            </>
-                        ))}
-                    </div> */}
                         <div className='flex justify-between items-center'>
                             <div className='grid gap-2 w-full'>
                                 {isSelectDetail === 0 && (//thoi tiet
@@ -266,7 +192,7 @@ const DetailForecast: React.FC = () => {
                                             <p className='text-3xl text-white flex gap-2 font-bold'>
                                                 {selectWind === "km/h" ? resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_kph + " km/h" : resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_mph + " mph"}
                                             </p>
-                                            <p className='text-white/70'>{resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_degree}°  {windDirectionVN(resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_dir)}</p>
+                                            <p className='text-white/70'>{resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_degree}°  {windDirectionVN(resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_dir) ?? undefined}</p>
                                         </div>
                                         <p className=' text-xl text-white/70'>
                                             Gió giật {selectWind === "km/h" ? resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].gust_kph + " km/h" : resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].gust_mph + " mph"}
@@ -298,7 +224,7 @@ const DetailForecast: React.FC = () => {
                                         <p className='text-3xl text-white flex gap-2 font-bold'>
                                             {selectVis === "km" ? resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_km + " km" : resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_miles + " dặm"}
                                         </p>
-                                        <p className='text-xl text-white/70'>{getVisibilityLevel(resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_km)}</p>
+                                        <p className='text-xl text-white/70'>{getVisibilityLevel(resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_km) ?? undefined}</p>
                                     </>
                                 )}
                                 {isSelectDetail === 6 && (//do am
@@ -314,9 +240,9 @@ const DetailForecast: React.FC = () => {
                                         </p>
                                         <p className='text-xl text-white/70'>
                                             {selectAir === "us-epa" ?
-                                                getUsEpaLever(resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['us-epa-index'])
+                                                getUsEpaLever(resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['us-epa-index']) ?? undefined
                                                 :
-                                                getgetGbDefraLevel(resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['gb-defra-index'])
+                                                getgetGbDefraLevel(resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['gb-defra-index']) ?? undefined
                                             }
                                         </p>
                                     </>

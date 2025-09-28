@@ -81,7 +81,10 @@ const Home: React.FC = () => {
         selectPressure, setSelectPressure,
         selectVis, setSelectVis,
         setIsSelectDetail,
-        currentHour
+        currentHour,
+        windDirectionVN,
+        getUVlevel,
+        getRainLever
     } = useGlobal();
 
     const Api_findForecast = async (q: string, days: number, aqi: string, alerts: string, lang: string) => {
@@ -290,22 +293,6 @@ const Home: React.FC = () => {
 
     const [showDetailForecast, setShowDetailForecast] = useState<boolean>(false)
 
-    const windDirectionVN = (dir: string | undefined) => {
-        if (!dir) return undefined;
-        const map: Record<string, string> = {
-            N: "B",
-            S: "N",
-            E: "Đ",
-            W: "T",
-        };
-
-        return dir
-            .split("")       // tách chuỗi thành từng ký tự
-            .map((c) => map[c] || c) // đổi sang tiếng Việt
-            .join("");
-    }
-
-
     const convertTo24 = (time12h: string | undefined) => {
         if (!time12h) return undefined;
         const [time, modifier] = time12h.trim().split(" ");
@@ -335,33 +322,6 @@ const Home: React.FC = () => {
         }
 
         return hours * 60 + minutes;
-    }
-
-    const getUVlevel = (uv: number | undefined) => {
-        if (uv === undefined || uv === null) return undefined;
-        const levers = [
-            { min: 11, label: "Cực đoan" },
-            { min: 8, label: "Rất cao" },
-            { min: 6, label: "Cao" },
-            { min: 3, label: "Trung bình" },
-        ];
-
-        return levers.find(l => uv >= l.min)?.label || "Thấp";
-    }
-
-    const getRainLever = (rain: number | undefined) => {
-        if (rain === undefined || rain === null) return undefined;
-
-        const levers = [
-            { minMM: 50, minIn: 2, label: "Mưa rất to" },
-            { minMM: 7.6, minIn: 0.3, label: "Mưa to" },
-            { minMM: 2.5, minIn: 0.098, label: "Mưa vừa" },
-        ];
-
-        return selectSrecip === "mm" ?
-            levers.find(l => rain >= l.minMM)?.label || "Mưa nhỏ"
-            :
-            levers.find(l => rain >= l.minIn)?.label || "Mưa nhỏ"
     }
 
     const persentMinutes = (timeStr: string) => {
@@ -464,7 +424,7 @@ const Home: React.FC = () => {
                                     </div>
                                     <div className="flex pt-[15px] pb-[5px]">
                                         <p className="w-[calc(100%-78px)] text-start">Hướng gió</p>
-                                        <p>{resForecast?.current.wind_degree}° {windDirectionVN(resForecast?.current.wind_dir)}</p>
+                                        <p>{resForecast?.current.wind_degree}° {windDirectionVN(resForecast?.current.wind_dir) ?? undefined}</p>
                                     </div>
                                     {/* thêm minh họa ở bên phải: la bàn có mũi tên hướng gió và hiện tốc độ gió */}
                                 </button>
@@ -487,7 +447,7 @@ const Home: React.FC = () => {
                                         style={{ "--uv-pos": `${presentUV(resForecast?.current.uv)?.toFixed(0)}%` } as React.CSSProperties}
                                     >
                                     </div>
-                                    <p className="text-lg text-start">Đang ở mức {getUVlevel(resForecast?.current.uv)} </p>
+                                    <p className="text-lg text-start">Đang ở mức {getUVlevel(resForecast?.current.uv) ?? undefined} </p>
 
                                 </div>
                                 <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
@@ -527,7 +487,7 @@ const Home: React.FC = () => {
                                     </div>
                                     {/* them minh hoa */}
                                     <p className="text-3xl my-[15px] font-[600] text-start">{selectSrecip === "mm" ? resForecast?.current.precip_mm + " mm" : resForecast?.current.precip_in + " in"}</p>
-                                    <p className="text-lg text-start">{selectSrecip === "mm" ? getRainLever(resForecast?.current.precip_mm) : getRainLever(resForecast?.current.precip_in)} </p>
+                                    <p className="text-lg text-start">{selectSrecip === "mm" ? getRainLever(resForecast?.current.precip_mm) ?? undefined : getRainLever(resForecast?.current.precip_in) ?? undefined} </p>
 
                                 </div>
                                 <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
@@ -645,7 +605,7 @@ const Home: React.FC = () => {
                             </button>
                         </div>
                     </div>
-                    <div className="flex overflow-x-auto bg-white/10 text-white border-[1px] border-white/5 backdrop-blur-[10px] mt-[30px] shadow-lg rounded-[10px]">
+                    <div className="flex overflow-x-auto bg-white/5 text-white border-[1px] border-white/5 backdrop-blur-[10px] mt-[30px] shadow-lg rounded-[10px]">
                         <div className="flex m-[25px] gap-3 scroll-x overflow-x-auto py-[10px] w-full">
                             {(() => {
                                 // Giờ hôm nay (>= giờ hiện tại)

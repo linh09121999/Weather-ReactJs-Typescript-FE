@@ -914,7 +914,13 @@ export interface GlobalState {
     selectTypeTemp_Fellslike: number;
     setSelectTypeTemp_Fellslike: (selectTypeTemp_Fellslike: number) => void;
     currentHour: number,
-    isBorderDash: number
+    isBorderDash: number,
+    windDirectionVN: (dir: string | undefined) => void;
+    getUVlevel: (uv: number | undefined) => void;
+    getRainLever: (rain: number | undefined) => void;
+    getVisibilityLevel: (vis: number | undefined) => void;
+    getUsEpaLever : (lv: number | undefined) =>void;
+    getgetGbDefraLevel : (lv: number | undefined) => void
 }
 
 
@@ -967,7 +973,89 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     const [isSelectDetail, setIsSelectDetail] = useState<number>(0)
     const [selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike] = useState<number>(0)
 
-  const isBorderDash = selectDetailDay === 0 ? currentHour : 0
+    const isBorderDash = selectDetailDay === 0 ? currentHour : 0
+
+    const windDirectionVN = (dir: string | undefined) => {
+        if (!dir) return undefined;
+        const map: Record<string, string> = {
+            N: "B",
+            S: "N",
+            E: "Đ",
+            W: "T",
+        };
+
+        return dir
+            .split("")       // tách chuỗi thành từng ký tự
+            .map((c) => map[c] || c) // đổi sang tiếng Việt
+            .join("");
+    }
+
+    const getUVlevel = (uv: number | undefined) => {
+        if (uv === undefined || uv === null) return undefined;
+        const levers = [
+            { min: 11, label: "Cực đoan" },
+            { min: 8, label: "Rất cao" },
+            { min: 6, label: "Cao" },
+            { min: 3, label: "Trung bình" },
+        ];
+
+        return levers.find(l => uv >= l.min)?.label || "Thấp";
+    }
+
+    const getRainLever = (rain: number | undefined) => {
+        if (rain === undefined || rain === null) return undefined;
+
+        const levers = [
+            { minMM: 50, minIn: 2, label: "Mưa rất to" },
+            { minMM: 7.6, minIn: 0.3, label: "Mưa to" },
+            { minMM: 2.5, minIn: 0.098, label: "Mưa vừa" },
+        ];
+
+        return selectSrecip === "mm" ?
+            levers.find(l => rain >= l.minMM)?.label || "Mưa nhỏ"
+            :
+            levers.find(l => rain >= l.minIn)?.label || "Mưa nhỏ"
+    }
+
+    const getVisibilityLevel = (vis: number | undefined) => {
+        if (vis === undefined || vis === null) return undefined;
+        const levels = [
+            { min: 19, label: "Hoàn toàn rõ" },
+            { min: 15, label: "Rõ ràng" },
+            { min: 10, label: "Khá rõ" },
+            { min: 5, label: "Trung bình" },
+            { min: 1, label: "Hạn chế" },
+            { min: 0.2, label: "Kém" }
+        ];
+
+        return levels.find(l => vis >= l.min)?.label || "Rất kém";
+    }
+
+    const getUsEpaLever = (lv: number | undefined) => {
+        if (lv === undefined || lv === null) return undefined;
+
+        const levels: Record<number, string> = {
+            1: "Tốt",
+            2: "Trung bình",
+            3: "Không tốt",
+            4: "Không lành mạnh",
+            5: "Xấu",
+            6: "Nguy hại"
+        };
+        return levels[lv];
+    }
+
+    const getgetGbDefraLevel = (lv: number | undefined) => {
+        if (lv === undefined || lv === null) return undefined;
+
+        const levels = [
+            { min: 10, label: "Rất cao" },
+            { min: 7, label: "Cao" },
+            { min: 4, label: "Trung bình" },
+        ];
+
+        return levels.find(l => lv >= l.min)?.label || "Thấp";
+    }
 
     const value = {
         resCurrent, setResCurrent,
@@ -1008,7 +1096,8 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         isSelectDetail, setIsSelectDetail,
         selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike,
         currentHour,
-        isBorderDash
+        isBorderDash,
+        windDirectionVN, getUVlevel, getRainLever, getVisibilityLevel, getUsEpaLever, getgetGbDefraLevel
     }
 
     return (
