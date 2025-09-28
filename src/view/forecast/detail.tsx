@@ -96,7 +96,7 @@ const DetailForecast: React.FC = () => {
     }
 
     const getVisibilityLevel = (km: number | undefined) => {
-        if (!km) return undefined;
+        if (km === undefined || km === null) return undefined;
         const levels = [
             { min: 19, label: "Hoàn toàn rõ" },
             { min: 15, label: "Rõ ràng" },
@@ -110,7 +110,8 @@ const DetailForecast: React.FC = () => {
     }
 
     const getUsEpaLever = (lv: number | undefined) => {
-        if (!lv) return undefined;
+        if (lv === undefined || lv === null) return undefined;
+
         const levels: Record<number, string> = {
             1: "Tốt",
             2: "Trung bình",
@@ -123,7 +124,8 @@ const DetailForecast: React.FC = () => {
     }
 
     const getgetGbDefraLevel = (lv: number | undefined) => {
-        if (!lv) return undefined;
+        if (lv === undefined || lv === null) return undefined;
+
         const levels = [
             { min: 10, label: "Rất cao" },
             { min: 7, label: "Cao" },

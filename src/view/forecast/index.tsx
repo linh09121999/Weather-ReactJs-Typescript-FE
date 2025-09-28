@@ -338,7 +338,7 @@ const Home: React.FC = () => {
     }
 
     const getUVlevel = (uv: number | undefined) => {
-        if (!uv) return undefined
+        if (uv === undefined || uv === null) return undefined;
         const levers = [
             { min: 11, label: "Cực đoan" },
             { min: 8, label: "Rất cao" },
@@ -350,11 +350,12 @@ const Home: React.FC = () => {
     }
 
     const getRainLever = (rain: number | undefined) => {
-        if (!rain) return undefined
+        if (rain === undefined || rain === null) return undefined;
+
         const levers = [
-            { minMM: 50, minIn: 0.098, label: "Mưa rất to" },
+            { minMM: 50, minIn: 2, label: "Mưa rất to" },
             { minMM: 7.6, minIn: 0.3, label: "Mưa to" },
-            { minMM: 2.5, minIn: 2, label: "Mưa vừa" },
+            { minMM: 2.5, minIn: 0.098, label: "Mưa vừa" },
         ];
 
         return selectSrecip === "mm" ?
