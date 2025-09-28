@@ -322,6 +322,20 @@ const Home: React.FC = () => {
             .padStart(2, "0")}`;
     };
 
+    const timeToMinutes = (timeStr: string) => {
+        const [time, modifier] = timeStr.split(" ");
+        let [hours, minutes] = time.split(":").map(Number);
+
+        if (modifier === "PM" && hours !== 12) {
+            hours += 12;
+        }
+        if (modifier === "AM" && hours === 12) {
+            hours = 0;
+        }
+
+        return hours * 60 + minutes;
+    }
+
     return (
         <>
             <main className="min-h-[80vh] p-[20px]">
@@ -721,7 +735,18 @@ const Home: React.FC = () => {
                                                     </td>
                                                     {/* them mau  */}
                                                     <td className="p-[10px]">
-                                                        <div className="min-w-[40px]  h-[5px] rounded-full bg-white/30"></div>
+                                                        <div className="min-w-[40px] flex h-[5px] rounded-full bg-white/30">
+                                                            <div
+                                                                style={{
+                                                                    width: `${(timeToMinutes(forecast.astro.sunrise) / 1440 * 100).toFixed(3)}%`
+                                                                }}
+                                                            ></div>
+                                                            <div className="bg-orange-400 w-full"></div>
+                                                            <div style={{
+                                                                width: `${(100 - (timeToMinutes(forecast.astro.sunset)) / 1440 * 100).toFixed(3)}%`
+                                                            }}
+                                                            ></div>
+                                                        </div>
                                                     </td>
                                                     <td className="w-[50px]">
                                                         <p className="text-white text-lg font-bold ">{selectTypeCF === 0 ? forecast.day.maxtemp_f + "°" : forecast.day.maxtemp_c + "°"}</p>
