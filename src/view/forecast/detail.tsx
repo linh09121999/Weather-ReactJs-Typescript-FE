@@ -130,7 +130,7 @@ const DetailForecast: React.FC = () => {
 
             <section className=' px-[20px]'>
                 <div className='max-w-[1350px] mt-[10px] mx-auto'>
-                    <div className='grid gap-2'>
+                    <div className='grid gap-2 max-sm:border-b-[1px] max-sm:border-b-white/40 max-sm:pb-[10px]'>
                         {/* list lich 7 ngay toi có [thứ, ngày] */}
                         <div className='flex justify-between'>
                             {resForecast?.forecast.forecastday.map((forecast, index) => (
