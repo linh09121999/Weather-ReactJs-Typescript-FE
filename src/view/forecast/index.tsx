@@ -248,6 +248,10 @@ const Home: React.FC = () => {
         // Api_findSports(selectQ!, selectLang)
     }, [formatCityName(selectQ!), selectDays, currentHour])
 
+    useEffect(() => {
+        Api_findForecast(formatCityName(selectQ!), selectDays, selectAqi, selectAlerts, selectLang)
+    }, [])
+
     const formatDate = (dateStr: string) => {
         const inputDate: Date = new Date(dateStr);
         const today: Date = new Date();
