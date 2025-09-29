@@ -929,7 +929,10 @@ export interface GlobalState {
     img_Day: string;
     img_Night: string;
     formatCityName: (city: string) => string;
-    removeVietnameseTones: (str: string) => string
+    removeVietnameseTones: (str: string) => string,
+    timestamp: number | null;
+    checkTimeExp: () => boolean;
+    setForecast: (data: ResForecast) => void;
 }
 
 
@@ -954,6 +957,17 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     const [resAstronomy, setResAstronomy] = useState<ResAstronomy>();
     const [resTimeZone, setResTimeZone] = useState<ResTimeZone>();
     const [resSports, setResSports] = useState<ResSports>();
+
+    const [timestamp, setTimestamp] = useState<number | null>(null);
+    const setForecast = (data: ResForecast) => {
+        setResForecast(data);
+        setTimestamp(Date.now());
+    };
+    // true = đã hết hạn, false = còn hạn
+    const checkTimeExp = () => {
+        if (!timestamp) return true;
+        return Date.now() - timestamp > 5 * 60 * 1000; // 5 phút
+    };
 
     const [selectQ, setSelectQ] = useState<string | undefined>("HaNoi");
 
@@ -1101,6 +1115,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         resAstronomy, setResAstronomy,
         resTimeZone, setResTimeZone,
         resSports, setResSports,
+        setForecast, checkTimeExp, timestamp,
         img_Rain, img_Day, img_Night,
         isMobile, is920px,
         keyApi,

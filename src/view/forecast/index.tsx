@@ -70,33 +70,38 @@ const Home: React.FC = () => {
         getUVlevel,
         getRainLever,
         getVisibilityLevel,
+        checkTimeExp,setForecast
     } = useGlobal();
 
     const Api_findForecast = async (q: string, days: number, aqi: string, alerts: string, lang: string) => {
-        try {
-            const response = await axios.get("https://weather-be-hhcd.onrender.com/api/forecast", { //"http://api.weatherapi.com/v1/forecast.json", { //https://weather-be-hhcd.onrender.com/api/forecast
-                params: {
-                    key: keyApi,
-                    q: q,
-                    days: days,
-                    aqi: aqi,
-                    alerts: alerts,
-                    lang: lang
-                },
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            })
-            setResForecast(response.data)
-        }
-        catch (err) {
-            if (axios.isAxiosError(err)) {
-                console.error("Axios error:", err.message);
-                toast.error(err.message);
-            } else {
-                console.error("Unexpected error:", err);
+        if (!resForecast || checkTimeExp()) {
+            try {
+                const response = await axios.get("https://weather-be-hhcd.onrender.com/api/forecast", { //"http://api.weatherapi.com/v1/forecast.json", { //https://weather-be-hhcd.onrender.com/api/forecast
+                    params: {
+                        key: keyApi,
+                        q: q,
+                        days: days,
+                        aqi: aqi,
+                        alerts: alerts,
+                        lang: lang
+                    },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                })
+                setResForecast(response.data)
+                setForecast(response.data)
             }
+            catch (err) {
+                if (axios.isAxiosError(err)) {
+                    console.error("Axios error:", err.message);
+                    toast.error(err.message);
+                } else {
+                    console.error("Unexpected error:", err);
+                }
+            }
+            
         }
     }
 

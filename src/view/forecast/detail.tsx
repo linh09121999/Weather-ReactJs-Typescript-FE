@@ -63,34 +63,38 @@ const DetailForecast: React.FC = () => {
         currentHour,
         windDirectionVN,
         getVisibilityLevel, getUsEpaLever, getgetGbDefraLevel,
-        keyApi, setResForecast, formatCityName, selectQ, selectDays, selectAqi, selectAlerts, selectLang
+        keyApi, setResForecast, formatCityName, selectQ, selectDays, selectAqi, selectAlerts, selectLang,
+        checkTimeExp, setForecast
     } = useGlobal()
 
     const Api_findForecast = async (q: string, days: number, aqi: string, alerts: string, lang: string) => {
-        try {
-            const response = await axios.get("https://weather-be-hhcd.onrender.com/api/forecast", { //"http://api.weatherapi.com/v1/forecast.json", { //https://weather-be-hhcd.onrender.com/api/forecast
-                params: {
-                    key: keyApi,
-                    q: q,
-                    days: days,
-                    aqi: aqi,
-                    alerts: alerts,
-                    lang: lang
-                },
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+        if (!resForecast || checkTimeExp()) {
+
+            try {
+                const response = await axios.get("https://weather-be-hhcd.onrender.com/api/forecast", { //"http://api.weatherapi.com/v1/forecast.json", { //https://weather-be-hhcd.onrender.com/api/forecast
+                    params: {
+                        key: keyApi,
+                        q: q,
+                        days: days,
+                        aqi: aqi,
+                        alerts: alerts,
+                        lang: lang
+                    },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                })
+                setResForecast(response.data)
+                setForecast(response.data)
+            }
+            catch (err) {
+                if (axios.isAxiosError(err)) {
+                    console.error("Axios error:", err.message);
+                    toast.error(err.message);
+                } else {
+                    console.error("Unexpected error:", err);
                 }
-            })
-            setResForecast(response.data)
-            return response.data;
-        }
-        catch (err) {
-            if (axios.isAxiosError(err)) {
-                console.error("Axios error:", err.message);
-                toast.error(err.message);
-            } else {
-                console.error("Unexpected error:", err);
             }
         }
     }
@@ -105,7 +109,7 @@ const DetailForecast: React.FC = () => {
         const interval = setInterval(() => {
             lastHourRef.current = currentHour
             Api_findForecast(formatCityName(selectQ!), selectDays, selectAqi, selectAlerts, selectLang)
-        }, 60 *60 * 1000); //check mỗi h
+        }, 60 * 60 * 1000); //check mỗi h
         return () => clearInterval(interval)
     }, [])
 
