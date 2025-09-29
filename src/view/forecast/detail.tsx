@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { useGlobal } from '../../context/GlobalContext';
 import { Menu, MenuItem } from "@mui/material"
 import type { SxProps, Theme } from "@mui/material/styles";
@@ -93,8 +93,8 @@ const DetailForecast: React.FC = () => {
 
     const getDay = (dateStr: string | undefined) => {
         if (!dateStr) return undefined;
-        const [year, month, day] = dateStr.split("-").map(Number);
-        return day
+        const day = Number(dateStr.split("-")[2]);
+        return day;
     }
 
     const formatDate = (dateStr: string) => {
