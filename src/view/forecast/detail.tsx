@@ -105,7 +105,7 @@ const DetailForecast: React.FC = () => {
         const interval = setInterval(() => {
             lastHourRef.current = currentHour
             Api_findForecast(formatCityName(selectQ!), selectDays, selectAqi, selectAlerts, selectLang)
-        }, 60 * 1000); //check mỗi phút
+        }, 60 *60 * 1000); //check mỗi h
         return () => clearInterval(interval)
     }, [])
 
