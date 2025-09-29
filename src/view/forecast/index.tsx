@@ -61,28 +61,20 @@ const Home: React.FC = () => {
         // resAstronomy, setResAstronomy,
         // resTimeZone, setResTimeZone,
         // resSports, setResSports,
-        // yes_no,
         selectLang,
-        // selectSetLang,
         selectAqi,
-        // setSelectAqi,
         selectAlerts,
-        // setSelectAlerts,
         days,
         selectDays, setSelectDays,
-        // dt, setDt,
         selectQ,
-        // setSelectQ,
         selectTypeCF,
-        // setSelectTypeCF,
         icons,
         setSelectDetailDay,
-        listSrecip, listWind, listPressure, listVis,
         is920px, isMobile,
-        selectSrecip, setSelectSrecip,
-        selectWind, setSelectWind,
-        selectPressure, setSelectPressure,
-        selectVis, setSelectVis,
+        selectSrecip,
+        selectWind,
+        selectPressure,
+        selectVis,
         setIsSelectDetail,
         currentHour,
         windDirectionVN,
@@ -93,7 +85,7 @@ const Home: React.FC = () => {
 
     const Api_findForecast = async (q: string, days: number, aqi: string, alerts: string, lang: string) => {
         try {
-            const response = await axios.get("http://api.weatherapi.com/v1/forecast.json", { //https://weather-be-hhcd.onrender.com/api/forecast
+            const response = await axios.get("https://weather-be-hhcd.onrender.com/api/forecast", { //"http://api.weatherapi.com/v1/forecast.json", { //https://weather-be-hhcd.onrender.com/api/forecast
                 params: {
                     key: keyApi,
                     q: q,

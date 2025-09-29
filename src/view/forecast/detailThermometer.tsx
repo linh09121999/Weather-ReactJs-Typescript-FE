@@ -4,21 +4,11 @@ import ChartLineTopText from "../../props/chartLineTopText";
 import { useGlobal } from '../../context/GlobalContext';
 
 const DetailThermometer: React.FC = () => {
-    const { icons,
-        selectDetailDay, setSelectDetailDay,
-        listSelectShowDetail,
+    const { selectDetailDay, 
         resForecast,
-        selectTypeCF, isMobile,
-        selectSrecip, setSelectSrecip,
-        selectWind, setSelectWind,
-        selectPressure, setSelectPressure,
-        selectVis, setSelectVis,
-        selectAir, setSelectAir,
+        selectTypeCF,
         typeTemp_Fellslike,
-        listBeaufore,
-        isSelectDetail, setIsSelectDetail,
         selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike,
-        currentHour,
         isBorderDash
     } = useGlobal()
 

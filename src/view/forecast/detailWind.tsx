@@ -8,7 +8,6 @@ const DetailWind: React.FC = () => {
         selectDetailDay,
         resForecast,
         selectWind,
-        currentHour,
         isBorderDash
     } = useGlobal()
 

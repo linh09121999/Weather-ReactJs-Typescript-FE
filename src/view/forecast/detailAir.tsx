@@ -5,10 +5,8 @@ import ChartMultiLine from "../../props/chartMultiLine";
 
 const DetailAir: React.FC = () => {
   const {
-    listBeaufore,
     selectDetailDay,
     resForecast,
-    currentHour,
     isBorderDash
   } = useGlobal()
 

@@ -3,21 +3,7 @@ import ChartLineBase from '../../props/chartLineBase';
 import { useGlobal } from '../../context/GlobalContext';
 
 const DetailPressure: React.FC = () => {
-    const { icons,
-        selectDetailDay, setSelectDetailDay,
-        listSelectShowDetail,
-        resForecast,
-        selectTypeCF, isMobile,
-        selectSrecip, setSelectSrecip,
-        selectWind, setSelectWind,
-        selectPressure, setSelectPressure,
-        selectVis, setSelectVis,
-        selectAir, setSelectAir,
-        typeTemp_Fellslike,
-        listBeaufore,
-        isSelectDetail, setIsSelectDetail,
-        selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike,
-        currentHour,
+    const { selectDetailDay,resForecast, selectPressure, 
         isBorderDash
     } = useGlobal()
 
