@@ -10,22 +10,19 @@ const Page404 = React.lazy(() => import('./view/pages/page404/Page404'));
 const Page500 = React.lazy(() => import('./view/pages/page500/Page500'));
 
 const ProtectedRoute: React.FC = () => {
-  const { resForecast, currentHour } = useGlobal();
+  const { resForecast, currentHour, img_Rain, img_Day, img_Night } = useGlobal();
 
   const bgImg = resForecast?.forecast.forecastday[0].hour[currentHour].will_it_rain === 0 ?
-    (resForecast?.current.is_day === 0 ?
-      "./src/assets/image/img-night.png"
-      :
-      "./src/assets/image/img-day.png"
+    (
+      resForecast?.current.is_day === 0 ? img_Night : img_Day
     )
-    :
-    "./src/assets/image/img-rain.png"
+    : img_Rain
 
   return (
-    <div className="flex flex-col w-full min-h-screen" >
+    <div className="flex flex-col w-full h-screen" >
       <img src={bgImg} alt="Background" className="fixed top-0 left-0 w-screen h-screen object-cover -z-10"></img>
       {/* <!-- Header --> */}
-      <div className='text-center p-[5px] bg-white text-red-900 font-[600]'>! Địa điểm có thể chưa chính xác vì api của quốc tế</div>
+      <div className='text-center p-[5px] bg-white text-red-900 font-[600] max-sm:text-sm'>! Địa điểm có thể chưa chính xác vì api của quốc tế</div>
       <BackToTop />
       <Header />
       <Nav />

@@ -33,6 +33,10 @@ import { IoMdSearch } from "react-icons/io";
 import { BsFillSunsetFill, BsFillSunriseFill } from "react-icons/bs"
 import { LuSettings2 } from "react-icons/lu";
 
+import imgRain from "../assets/image/img-rain.png"
+import imgDay from "../assets/image/img-day.png"
+import imgNight from "../assets/image/img-night.png"
+
 // Định nghĩa interface cho cấu trúc dữ liệu vị trí
 export interface Location {
     name: string;
@@ -573,7 +577,7 @@ export interface Icons {
 
 const defaultIcons: Icons = {
     iconMenu: <CgMenu />,
-    iconClose: <IoClose className="justify-self-center" />,
+    iconClose: <IoClose className=" mx-auto" />,
     iconBackToTop: <FaAngleDoubleUp />,
     iconMap: <FaMapMarkerAlt size={30} />,
     iconNext: <MdNavigateNext size={24} />,
@@ -581,21 +585,21 @@ const defaultIcons: Icons = {
     iconCalendar: <FaCalendarDays />,
     iconUp: <FaChevronUp />,
     iconDown: <FaChevronDown />,
-    iconThermometer: <FaThermometerHalf className="justify-self-center" />,
-    iconWind: <FaWind className="justify-self-center" />,
-    iconTachometer: <FaTachometerAlt className="justify-self-center" />,
-    iconCloudRain: <FaCloudRain className="justify-self-center" />,
-    iconTint: <FaTint className="justify-self-center" />,
-    iconEye: <FaEye className="justify-self-center" />,
-    iconSun: <FaSun className="justify-self-center" />,
-    iconSolarPanel: <FaSolarPanel className="justify-self-center" />,
-    iconSmog: <FaSmog className="justify-self-center" />,
-    iconCloud: <FaCloud className="justify-self-center" />,
-    iconSunset: <BsFillSunsetFill className="justify-self-center" />,
-    iconSunrise: <BsFillSunriseFill className="justify-self-center" />,
-    iconSnow: <FaRegSnowflake className="justify-self-center" />,
+    iconThermometer: <FaThermometerHalf className="mx-auto" />,
+    iconWind: <FaWind className="mx-auto" />,
+    iconTachometer: <FaTachometerAlt className="mx-auto" />,
+    iconCloudRain: <FaCloudRain className="mx-auto" />,
+    iconTint: <FaTint className="mx-auto" />,
+    iconEye: <FaEye className="mx-auto" />,
+    iconSun: <FaSun className="mx-auto" />,
+    iconSolarPanel: <FaSolarPanel className="mx-auto" />,
+    iconSmog: <FaSmog className="mx-auto" />,
+    iconCloud: <FaCloud className="mx-auto" />,
+    iconSunset: <BsFillSunsetFill className="mx-auto" />,
+    iconSunrise: <BsFillSunriseFill className="mx-auto" />,
+    iconSnow: <FaRegSnowflake className="mx-auto" />,
     iconHome: <FaHome />,
-    iconSetting: <LuSettings2 className="justify-self-center" />,
+    iconSetting: <LuSettings2 className="mx-auto" />,
 }
 
 export interface Header {
@@ -920,7 +924,10 @@ export interface GlobalState {
     getRainLever: (rain: number | undefined) => void;
     getVisibilityLevel: (vis: number | undefined) => void;
     getUsEpaLever: (lv: number | undefined) => void;
-    getgetGbDefraLevel: (lv: number | undefined) => void
+    getgetGbDefraLevel: (lv: number | undefined) => void;
+    img_Rain: string;
+    img_Day: string;
+    img_Night: string;
 }
 
 
@@ -931,6 +938,10 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     const is920px = useMediaQuery("(max-width:920px)");
 
     const keyApi = "230f3011bf6d47bd997172046252009";
+
+    const img_Rain = imgRain;
+    const img_Day = imgDay;
+    const img_Night = imgNight
 
     const [resCurrent, setResCurrent] = useState<ResCurrent>();
     const [resForecast, setResForecast] = useState<ResForecast>();
@@ -1069,6 +1080,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         resAstronomy, setResAstronomy,
         resTimeZone, setResTimeZone,
         resSports, setResSports,
+        img_Rain, img_Day, img_Night,
         isMobile, is920px,
         keyApi,
         lang: defaultLang,

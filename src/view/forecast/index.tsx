@@ -398,7 +398,7 @@ const Home: React.FC = () => {
                                     {/* thêm minh họa ở bên phải:  */}
                                 </button>
 
-                                <button className="rounded-[10px] mb-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                <div className="rounded-[10px] mb-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
                                     onClick={() => {
                                         setSelectDetailDay(0);
                                         setIsSelectDetail(1)
@@ -433,7 +433,7 @@ const Home: React.FC = () => {
                                     </div>
 
                                     {/* thêm minh họa ở bên phải: la bàn có mũi tên hướng gió và hiện tốc độ gió */}
-                                </button>
+                                </div>
                             </div>
                             <div className="grid lg:grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-5 ">
                                 <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"

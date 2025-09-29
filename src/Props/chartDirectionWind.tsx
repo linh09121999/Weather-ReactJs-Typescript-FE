@@ -101,8 +101,8 @@ const WindDirectionChart: React.FC<WindDirectionChartProps> = ({
         <div className="flex flex-col items-center relative w-48">
             <Doughnut data={data} options={options} plugins={[arrowPlugin]} />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
-                <p className="text-3xl font-bold text-white">{value}</p>
-                <p className="text-xl text-white/70">{donvi}</p>
+                <p className="text-xl font-bold text-white">{value}</p>
+                <p className="text-lg text-white/70">{donvi}</p>
             </div>
             <p className="absolute -top-2 text-white text-lg">B</p>
             <p className="absolute right-0 top-1/2 -translate-y-1/2 text-white text-lg">Đ</p>
