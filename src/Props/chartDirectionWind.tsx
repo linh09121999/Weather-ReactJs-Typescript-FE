@@ -20,7 +20,7 @@ export type WindDirectionChartProps = {
 const WindDirectionChart: React.FC<WindDirectionChartProps> = ({
     value,
     donvi,
-    direction = 0,
+    direction,
 }) => {
     // Dữ liệu vòng tròn nền
     const data = {
@@ -58,7 +58,7 @@ const WindDirectionChart: React.FC<WindDirectionChartProps> = ({
             const radius = Math.min(chartArea.width, chartArea.height) / 2;
 
             // Hướng gió (90° = Bắc, 180° = Đông, 270° = Nam, 0° = Tây)
-            const angle = ((direction ?? 0) - 180) * Math.PI / 180;
+            const angle = ((direction ?? 0) + 90) * Math.PI / 180;
 
             // Bắt đầu ngoài vùng text , cach tam 50%
             const innerGap = radius * 0.50;
@@ -125,7 +125,7 @@ const WindDirectionChart: React.FC<WindDirectionChartProps> = ({
 
     return (
         <div className="flex flex-col items-center relative w-50">
-            <Doughnut data={data} options={options} plugins={[arrowPlugin]} />
+            <Doughnut key={direction} data={data} options={options} plugins={[arrowPlugin]} />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
                 <p className="text-xl font-bold text-white">{value}</p>
                 <p className="text-lg text-white/70 max-sm:text-sm">{donvi}</p>

@@ -19,7 +19,7 @@ const ProtectedRoute: React.FC = () => {
     : img_Rain
 
   return (
-    <div className="flex flex-col w-full h-screen" >
+    <div className="flex flex-col w-full h-full" >
       <img src={bgImg} alt="Background" className="fixed top-0 left-0 w-screen h-screen object-cover -z-10"></img>
       {/* <!-- Header --> */}
       <div className='text-center p-[5px] bg-white text-red-900 font-[600] max-sm:text-sm'>! Địa điểm có thể chưa chính xác vì api của quốc tế</div>

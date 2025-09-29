@@ -119,7 +119,7 @@ const DetailForecast: React.FC = () => {
     }
 
     return (
-        <main className="min-h-[80vh]">
+        <main className="min-h-[70vh]">
             <div className='w-full backdrop-blur-[10px] px-[20px] sticky z-[99] md:top-[77px] max-md:top-[135px]'>
                 <div className='flex gap-2 max-w-[1350px] mx-auto items-center text-white py-[10px] text-xl max-md:text-lg '>
                     <a href='/' className='transition duration-300 ease css-icon'>{icons.iconHome}</a>
@@ -129,8 +129,8 @@ const DetailForecast: React.FC = () => {
             </div>
 
             <section className=' px-[20px]'>
-                <div className='max-w-[1350px] mt-[30px] mx-auto'>
-                    <div className='grid gap-4'>
+                <div className='max-w-[1350px] mt-[10px] mx-auto'>
+                    <div className='grid gap-2'>
                         {/* list lich 7 ngay toi có [thứ, ngày] */}
                         <div className='flex justify-between'>
                             {resForecast?.forecast.forecastday.map((forecast, index) => (
@@ -150,10 +150,10 @@ const DetailForecast: React.FC = () => {
                             ))}
                         </div>
                         {/* ngay thang nam bang chu */}
-                        <p className='text-xl text-white max-md:text-center'>{formatDateVN(resForecast?.forecast.forecastday[selectDetailDay].date)}</p>
+                        <p className='text-xl max-sm:text-lg text-white max-md:text-center'>{formatDateVN(resForecast?.forecast.forecastday[selectDetailDay].date)}</p>
                     </div>
 
-                    <div className='mt-[30px] grid items-center gap-6 '>
+                    <div className='mt-[10px] grid items-center gap-6 '>
                         <div className="max-sm:hidden shadow-lg border-[1px] border-solid border-white/10 gap-1 relative lg:flex lg:justify-between max-lg:grid max-lg:grid-cols-8 max-lg:gap-2 rounded-[15px] bg-white/5 p-1 backdrop-blur-[10px]">
                             {listSelectShowDetail.map((list, id1) => (
                                 <button key={id1}
@@ -177,10 +177,10 @@ const DetailForecast: React.FC = () => {
                                 {isSelectDetail === 0 && (//thoi tiet
                                     <>
                                         <div className='flex gap-2 items-center'>
-                                            <p className='text-3xl text-white font-bold'>{selectTypeCF === 0 ? resForecast?.forecast.forecastday[selectDetailDay].day.avgtemp_f + '°' : resForecast?.forecast.forecastday[selectDetailDay].day.avgtemp_c + '°'}</p>
-                                            <img alt='' src={resForecast?.forecast.forecastday[selectDetailDay].day.condition.icon} />
+                                            <p className='text-3xl text-white font-bold max-sm:text-2xl'>{selectTypeCF === 0 ? resForecast?.forecast.forecastday[selectDetailDay].day.avgtemp_f + '°' : resForecast?.forecast.forecastday[selectDetailDay].day.avgtemp_c + '°'}</p>
+                                            <img alt='img' src={resForecast?.forecast.forecastday[selectDetailDay].day.condition.icon} className='max-sm:w-[30px]'/>
                                         </div>
-                                        <div className='flex gap-2 items-center text-lg text-white/70'>
+                                        <div className='flex gap-2 items-center text-lg text-white/70 max-sm:text-sm'>
                                             <p>C: {selectTypeCF === 0 ? resForecast?.forecast.forecastday[selectDetailDay].day.maxtemp_f + '°' : resForecast?.forecast.forecastday[selectDetailDay].day.maxtemp_c + '°'}</p>
                                             <p>T: {selectTypeCF === 0 ? resForecast?.forecast.forecastday[selectDetailDay].day.mintemp_f + '°' : resForecast?.forecast.forecastday[selectDetailDay].day.mintemp_c + '°'}</p>
                                         </div>
@@ -188,57 +188,57 @@ const DetailForecast: React.FC = () => {
                                 )}
                                 {isSelectDetail === 1 && (//gio
                                     <>
-                                        <div className='flex gap-2 items-center text-3xl'>
-                                            <p className='text-3xl text-white flex gap-2 font-bold'>
+                                        <div className='flex gap-2 items-center text-3xl max-sm:text-2xl'>
+                                            <p className=' text-white flex gap-2 font-bold'>
                                                 {selectWind === "km/h" ? resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_kph + " km/h" : resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_mph + " mph"}
                                             </p>
                                             <p className='text-white/70'>{resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_degree}°  {windDirectionVN(resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].wind_dir) ?? undefined}</p>
                                         </div>
-                                        <p className=' text-xl text-white/70'>
+                                        <p className=' text-xl text-white/70 max-sm:text-sm'>
                                             Gió giật {selectWind === "km/h" ? resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].gust_kph + " km/h" : resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].gust_mph + " mph"}
                                         </p>
                                     </>
                                 )}
                                 {isSelectDetail === 2 && (//uv
                                     <>
-                                        <p className='text-3xl text-white font-bold'>{resForecast?.forecast.forecastday[selectDetailDay].day.uv}</p>
-                                        <p className='text-xl text-white/70'>Chỉ số trung bình trong 24 giờ</p>
+                                        <p className='text-3xl text-white font-bold max-sm:text-2xl '>{resForecast?.forecast.forecastday[selectDetailDay].day.uv}</p>
+                                        <p className='text-xl text-white/70 max-sm:text-sm'>Chỉ số trung bình trong 24 giờ</p>
                                     </>
                                 )}
                                 {isSelectDetail === 3 && (//luong mua
                                     <>
-                                        <p className='text-3xl text-white flex gap-2 font-bold'>
+                                        <p className='text-3xl text-white flex gap-2 font-bold max-sm:text-2xl' >
                                             {selectSrecip === "mm" ? resForecast?.forecast.forecastday[selectDetailDay].day.totalprecip_mm + " mm" : resForecast?.forecast.forecastday[selectDetailDay].day.totalprecip_in + " in"}
                                         </p>
-                                        <p className='text-xl text-white/70'>Tổng trong 24 giờ</p>
+                                        <p className='text-xl text-white/70 max-sm:text-sm'>Tổng trong 24 giờ</p>
                                     </>
                                 )}
                                 {isSelectDetail === 4 && (//ap suat
                                     <>
-                                        <p className='text-3xl text-white font-bold'>{selectPressure === "in" ? resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].pressure_in + " in" : resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].pressure_mb + " mb"}</p>
-                                        <p className='text-xl text-white/70'>Ngay bây giờ</p>
+                                        <p className='text-3xl text-white font-bold max-sm:text-2xl'>{selectPressure === "in" ? resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].pressure_in + " in" : resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].pressure_mb + " mb"}</p>
+                                        <p className='text-xl text-white/70 max-sm:text-sm'>Ngay bây giờ</p>
                                     </>
                                 )}
                                 {isSelectDetail === 5 && (//tam nhịn
                                     <>
-                                        <p className='text-3xl text-white flex gap-2 font-bold'>
+                                        <p className='text-3xl text-white flex gap-2 font-bold max-sm:text-2xl'>
                                             {selectVis === "km" ? resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_km + " km" : resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_miles + " dặm"}
                                         </p>
-                                        <p className='text-xl text-white/70'>{selectVis === "km" ? getVisibilityLevel(resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_km) ?? undefined : getVisibilityLevel(resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_miles) ?? undefined}</p>
+                                        <p className='text-xl text-white/70 max-sm:text-sm'>{selectVis === "km" ? getVisibilityLevel(resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_km) ?? undefined : getVisibilityLevel(resForecast?.forecast.forecastday[selectDetailDay].day.avgvis_miles) ?? undefined}</p>
                                     </>
                                 )}
                                 {isSelectDetail === 6 && (//do am
                                     <>
-                                        <p className='text-3xl text-white font-bold'>{resForecast?.forecast.forecastday[selectDetailDay].day.avghumidity}%</p>
-                                        <p className='text-xl text-white/70'>Điểm sương hiện tại: {selectTypeCF === 0 ? resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].dewpoint_f + '°' : resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].dewpoint_c + '°'}</p>
+                                        <p className='text-3xl text-white font-bold max-sm:text-2xl'>{resForecast?.forecast.forecastday[selectDetailDay].day.avghumidity}%</p>
+                                        <p className='text-xl text-white/70 max-sm:text-sm'>Điểm sương hiện tại: {selectTypeCF === 0 ? resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].dewpoint_f + '°' : resForecast?.forecast.forecastday[selectDetailDay].hour[currentHour].dewpoint_c + '°'}</p>
                                     </>
                                 )}
                                 {isSelectDetail === 7 && (//chat luong khong khi
                                     <>
-                                        <p className='text-3xl text-white flex gap-2 font-bold'>
+                                        <p className='text-3xl text-white flex gap-2 font-bold max-sm:text-2xl'>
                                             {selectAir === "us-epa" ? "US-EPA: " + resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['us-epa-index'] : "GB-DEFRA: " + resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['gb-defra-index']}
                                         </p>
-                                        <p className='text-xl text-white/70'>
+                                        <p className='text-xl text-white/70 max-sm:text-sm'>
                                             {selectAir === "us-epa" ?
                                                 getUsEpaLever(resForecast?.forecast.forecastday[selectDetailDay].day.air_quality?.['us-epa-index']) ?? undefined
                                                 :

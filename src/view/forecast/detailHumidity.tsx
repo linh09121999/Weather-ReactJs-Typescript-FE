@@ -22,21 +22,21 @@ const DetailHumidity: React.FC = () => {
 
     return (
         <div className='grid gap-6'>
-            <div className='w-full p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
+            <div className='w-full p-[25px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
                 <ChartLineBase currentIndex={isBorderDash} hours={hours} dataDetail={humidity} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="%"/>
             </div>
             <div className='grid gap-4'>
-                <p className='text-white text-xl font-bold'>Giới thiệu về độ ẩm tương đối</p>
-                <div className='p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
-                    <p className='text-white text-lg'>
+                <p className='text-white text-xl font-bold max-sm:text-lg'>Giới thiệu về độ ẩm tương đối</p>
+                <div className='p-[25px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
+                    <p className='text-white text-lg max-sm:text-sm'>
                         Độ ẩm tương đối, thường được gọi đơn giản là độ ẩm, là lượng hi ẩm có trong không khí so với lượng hơi ẩm mà không khí có thể lưu giữ. Không khí có thể lưu giữ nhiều hơi ẩm hơn ở nhiệt độ cao hơn. Độ ẩm tương đối gần 100% nghĩa là có thể có sương hoặc sương mù.
                     </p>
                 </div>
             </div>
             <div className='grid gap-4'>
-                <p className='text-white text-xl font-bold'>Giới thiệu về điểm sương</p>
-                <div className='p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
-                    <p className='text-white text-lg'>
+                <p className='text-white text-xl font-bold max-sm:text-lg' >Giới thiệu về điểm sương</p>
+                <div className='p-[25px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
+                    <p className='text-white text-lg max-sm:text-sm'>
                         Điểm sương là ngưỡng mà nhiệt độ cần giảm xuống để hình thành sương. Đó có thể là một cách hữu ích để cho biết cảm giác về độ ẩm không khí - điểm sương càng cao thì cảm giác độ ẩm càng lớn. Điểm sương khớp với nhiệt độ hiện tại nghĩa là độ ẩm tương đối bằng 100% và có thể có sương hoặc sương mù.</p>
                 </div>
             </div>

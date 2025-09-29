@@ -34,25 +34,25 @@ const DetailRain: React.FC = () => {
 
     return (
         <div className='grid gap-6'>
-            <div className='w-full p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
+            <div className='w-full p-[25px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
                 {/* bieu do mmua */}
                 <ChartBarBase currentIndex={isBorderDash} labels={hours} values={rain} borderWidth={0} borderColor="white" backgroundColor="white" donvi={selectSrecip === "mm" ? "mm" : "in"} />
             </div>
 
             <div className='grid gap-4'>
-                <p className='text-white text-lg font-bold'>Khả năng có mưa</p>
-                <p className='text-lg text-white/70'>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
+                <p className='text-white text-xl max-sm:text-lg font-bold'>Khả năng có mưa</p>
+                <p className='text-lg max-sm:text-sm text-white/70'>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
                 {/* bieu do */}
-                <div className='w-full p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
+                <div className='w-full p-[25px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
                     <ChartLineBase currentIndex={isBorderDash} hours={hours} dataDetail={rainChance} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="%" />
                 </div>
-                <p className='text-lg text-white/70'>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>
+                <p className='text-lg max-sm:text-sm text-white/70'>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>
 
             </div>
             <div className='grid gap-4'>
-                <p className='text-white text-xl font-bold'>Cường độ mưa</p>
-                <div className='p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
-                    <p className='text-white text-lg'>
+                <p className='text-white text-xl font-bold max-sm:text-lg'>Cường độ mưa</p>
+                <div className='p-[25px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
+                    <p className='text-white text-lg max-sm:text-sm'>
                         Cường độ được tính toán dựa trên lượng mưa hoặc tuyết rơi mỗi giờ và nhằm cho biết mức độ mưa hoặc tuyết cảm nhận được. Cường độ cũng được sử dụng cho các loại mưa khác, ví dụ như mưa tuyết cũng như mưa và tuyết hỗn hợp. Một trận mưa như trút nước hoặc bão tuyết dày đặc có thể có cường độ "cao", trong khi lượng mưa trung bình hoặc mưa phùn nhẹ hơn có thể có cường độ "trung bình" hoặc "thấp".
                     </p>
                 </div>

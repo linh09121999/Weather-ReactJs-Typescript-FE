@@ -3,9 +3,9 @@ import { useGlobal } from '../../context/GlobalContext';
 import ChartLineBase from '../../props/chartLineBase';
 
 const DetailVis: React.FC = () => {
-    const { selectDetailDay, 
+    const { selectDetailDay,
         resForecast,
-        selectVis, 
+        selectVis,
         isBorderDash
     } = useGlobal()
 
@@ -26,8 +26,9 @@ const DetailVis: React.FC = () => {
 
     return (
         <div className='grid gap-6'>
-            <div className='w-full p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]' >
+            <div className='w-full p-[25px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]' >
                 <ChartLineBase
+                    maxValue={45}
                     currentIndex={isBorderDash}
                     hours={hours}
                     dataDetail={vis}
@@ -37,9 +38,9 @@ const DetailVis: React.FC = () => {
                 />
             </div>
             <div className='grid gap-4'>
-                <p className='text-white text-xl font-bold'>Giới thiệu về tầm nhìn</p>
-                <div className='p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
-                    <p className='text-white text-lg'>
+                <p className='text-white text-xl font-bold max-sm:text-lg'>Giới thiệu về tầm nhìn</p>
+                <div className='p-[25px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
+                    <p className='text-white text-lg max-sm:text-sm'>
                         Tầm nhìn cho biết khoảng cách mà bạn có thể nhìn rõ các vật thể như tòa nhà và đồi núi. Đó là một số đo về độ trong suốt của không khí và không tính đến lượng ánh sáng mặt trời hoặc sự hiện diện của các vật cản. Tầm nhìn bằng hoặc trên 10 km được coi là rõ.
                     </p>
                 </div>

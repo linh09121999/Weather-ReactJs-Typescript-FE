@@ -30,6 +30,7 @@ type LineChartProps = {
     backgroundColor: string;
     donvi: string;
     currentIndex: number; // 👈 vị trí giờ hiện tại
+    maxValue?: number
 };
 
 const ChartLineBase: React.FC<LineChartProps> = ({
@@ -40,6 +41,7 @@ const ChartLineBase: React.FC<LineChartProps> = ({
     backgroundColor,
     donvi,
     currentIndex,
+    maxValue
 }) => {
     const data: ChartData<"line"> = {
         labels: hours,
@@ -74,6 +76,7 @@ const ChartLineBase: React.FC<LineChartProps> = ({
         },
         scales: {
             y: {
+                max: maxValue,
                 beginAtZero: true,
                 ticks: {
                     color: "rgba(255,255,255,0.7)",

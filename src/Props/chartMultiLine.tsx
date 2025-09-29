@@ -79,7 +79,8 @@ const ChartMultiLine: React.FC<LineChartProps> = ({
                 position: "bottom",
                 labels: {
                     color: "white",
-                    font: { size: 14 }
+                    font: { size: 14 },
+                    
                 },
             },
             title: { display: !!title, text: title ?? "" },

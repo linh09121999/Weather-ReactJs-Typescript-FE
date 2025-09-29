@@ -80,7 +80,7 @@ const Home: React.FC = () => {
         windDirectionVN,
         getUVlevel,
         getRainLever,
-        getVisibilityLevel
+        getVisibilityLevel,
     } = useGlobal();
 
     const Api_findForecast = async (q: string, days: number, aqi: string, alerts: string, lang: string) => {
@@ -246,7 +246,7 @@ const Home: React.FC = () => {
         // Api_findAstronomy(selectQ!, dt, selectLang)
         // Api_findTimezone(selectQ!, selectLang)
         // Api_findSports(selectQ!, selectLang)
-    }, [formatCityName(selectQ!), selectDays])
+    }, [formatCityName(selectQ!), selectDays, currentHour])
 
     const formatDate = (dateStr: string) => {
         const inputDate: Date = new Date(dateStr);
@@ -689,7 +689,7 @@ const Home: React.FC = () => {
                     </div>
 
                 </section>
-                <section className="max-w-[1350px] mt-[20px] mx-auto grid p-[25px] items-center gap-2 bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px]  shadow-lg rounded-[10px]">
+                <section className="max-w-[1350px] mt-[20px] mx-auto grid p-[25px] items-center gap-2 bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
                     <div className="flex items-center flex justify-between">
                         <p className=" text-white/70 flex gap-2 items-center pb-[10px] max-sm:text-sm sm:text-lg md:text-xl">Dự báo {selectDays} ngày tới</p>
                         <div className="justify-self-end flex gap-2 items-center pb-[10px]">
