@@ -237,9 +237,13 @@ const Home: React.FC = () => {
     // Api_findSports(selectQ!, selectLang)
 
     useEffect(() => {
-        if (!resForecast || checkTimeExp()) {
-            Api_findForecast(formatCityName(selectQ!), selectDays, selectAqi, selectAlerts, selectLang)
+        // if (!resForecast || checkTimeExp()) {
+        const isTimeExp = checkTimeExp();
+        if (!isTimeExp) {
+            return;
         }
+        Api_findForecast(formatCityName(selectQ!), selectDays, selectAqi, selectAlerts, selectLang)
+        // }
     }, [])
 
     const prevHourRef = useRef(new Date().getHours());
@@ -247,6 +251,7 @@ const Home: React.FC = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             if (currentHour !== prevHourRef.current) {
+                const currentHour = new Date().getHours();
                 prevHourRef.current = currentHour;
                 console.log("⏰ Sang giờ mới:", currentHour);
                 Api_findForecast(formatCityName(selectQ!), selectDays, selectAqi, selectAlerts, selectLang)
