@@ -84,8 +84,8 @@ const Header: React.FC = () => {
 
     const sxMenuItem: SxProps<Theme> = {
         justifyContent: 'start',
-        paddingY: '10px',
-        paddingLeft: '20px',
+        paddingY: '5px',
+        paddingX: '20px',
         color: 'var(--color-white)',
         zIndex: 100,
     }
@@ -215,7 +215,7 @@ const Header: React.FC = () => {
                             MenuListProps={MenuListProps}
                         >
                             <MenuItem sx={sxMenuItem}>
-                                <div className='flex justify-between w-full items-center gap-3'>Nhiệt độ
+                                <div className='flex justify-between w-full items-center gap-3 text-lg max-sm:text-sm'>Nhiệt độ
                                     <div className='flex bg-white/5 rounded-[50px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[5px] py-[5px] shadow-lg'>
                                         {typeCF.map((type, index) => (
                                             <button key={index}
@@ -229,7 +229,7 @@ const Header: React.FC = () => {
                                 </div>
                             </MenuItem>
                             <MenuItem sx={sxMenuItem}>
-                                <div className='flex justify-between w-full items-center gap-3'>Gió
+                                <div className='flex justify-between w-full items-center gap-3 text-lg max-sm:text-sm'>Gió
                                     <div className='flex bg-white/5 rounded-[50px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[5px] py-[5px] shadow-lg'>
                                         {listWind.map((wind, index) => (
                                             <button key={index}
@@ -243,7 +243,7 @@ const Header: React.FC = () => {
                                 </div>
                             </MenuItem>
                             <MenuItem sx={sxMenuItem}>
-                                <div className='flex justify-between w-full items-center gap-3'>Lượng mưa
+                                <div className='flex justify-between w-full items-center gap-3 text-lg max-sm:text-sm'>Lượng mưa
                                     <div className='flex bg-white/5 rounded-[50px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[5px] py-[5px] shadow-lg'>
                                         {listSrecip.map((srecip, index) => (
                                             <button key={index}
@@ -257,7 +257,7 @@ const Header: React.FC = () => {
                                 </div>
                             </MenuItem>
                             <MenuItem sx={sxMenuItem}>
-                                <div className='flex justify-between w-full items-center gap-3'>Tầm Nhìn
+                                <div className='flex justify-between w-full items-center gap-3 text-lg max-sm:text-sm'>Tầm Nhìn
                                     <div className='flex bg-white/5 rounded-[50px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[5px] py-[5px] shadow-lg'>
                                         {listVis.map((vis, index) => (
                                             <button key={index}
@@ -271,7 +271,7 @@ const Header: React.FC = () => {
                                 </div>
                             </MenuItem>
                             <MenuItem sx={sxMenuItem}>
-                                <div className='flex justify-between w-full items-center gap-3'>Áp Suất
+                                <div className='flex justify-between w-full items-center gap-3 text-lg max-sm:text-sm'>Áp Suất
                                     <div className='flex bg-white/5 rounded-[50px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[5px] py-[5px] shadow-lg'>
                                         {listPressure.map((pressure, index) => (
                                             <button key={index}
@@ -285,7 +285,7 @@ const Header: React.FC = () => {
                                 </div>
                             </MenuItem>
                             <MenuItem sx={sxMenuItem}>
-                                <div className='flex justify-between w-full items-center gap-3'>Chất lượng không khí
+                                <div className='flex justify-between w-full items-center gap-3 text-lg max-sm:text-sm'>Chất lượng không khí
                                     <div className='flex bg-white/5 rounded-[50px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[5px] py-[5px] shadow-lg'>
                                         {listAir.map((air, index) => (
                                             <button key={index}

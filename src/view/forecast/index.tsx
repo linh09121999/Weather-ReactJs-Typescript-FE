@@ -406,7 +406,7 @@ const Home: React.FC = () => {
                                     {/* thêm minh họa ở bên phải:  */}
                                 </button>
 
-                                <div className="rounded-[10px] mb-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
                                     onClick={() => {
                                         setSelectDetailDay(0);
                                         setIsSelectDetail(1)
@@ -545,7 +545,7 @@ const Home: React.FC = () => {
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm max-sm:h-[25px] max-sm:w-[25px]">{icons.iconTachometer}</span>
                                         <p className="text-white/70 max-md:text-lg md:text-xl max-sm:text-sm">Áp Suất</p>
                                     </div>
-                                    <div className="sm:pb-[25px] mt-[15px] max-sm:pb-[5px]">
+                                    <div className="sm:pb-[15px] mt-[15px] max-sm:mb-[10px]">
                                         <ChartGauge value={selectPressure === "mb" ? resForecast?.current.pressure_mb : resForecast?.current.pressure_in} min={selectPressure === "mb" ? 960 : 28.5} max={selectPressure === "mb" ? 1050 : 31} donvi={selectPressure === "mb" ? " mb" : " in"} backgroundColor={["rgb(255,255,255,0.2)", "white", "rgb(255,255,255,0.2)"]} />
                                     </div>
                                 </div>
@@ -621,7 +621,7 @@ const Home: React.FC = () => {
                             </button>
                         </div>
                     </div>
-                    <div className="flex overflow-x-auto bg-white/5 text-white border-[1px] border-white/5 backdrop-blur-[10px] mt-[30px] shadow-lg rounded-[10px]">
+                    <div className="flex overflow-x-auto bg-white/5 text-white border-[1px] border-white/5 backdrop-blur-[10px] mt-[10px] shadow-lg rounded-[10px]">
                         <div className="flex m-[25px] gap-3 scroll-x overflow-x-auto py-[10px] max-sm:py-0 w-full">
                             {(() => {
                                 // Giờ hôm nay (>= giờ hiện tại)
@@ -656,7 +656,7 @@ const Home: React.FC = () => {
                                             }}
                                             className="grid justify-center px-[10px] gap-2"
                                         >
-                                            <p className="text-white text-center w-max">
+                                            <p className="text-white text-center w-max text-lg max-sm:text-sm">
                                                 {isCurrentHour ? "Hiện tại" : `${forecastHour}:00`}
                                             </p>
                                             <div>
@@ -666,18 +666,18 @@ const Home: React.FC = () => {
                                                     src={hour.condition.icon}
                                                 />
                                                 {hour.will_it_rain == 1 && (
-                                                    <p className="text-center text-sm text-cyan-300">
+                                                    <p className="text-center text-sm text-cyan-300 max-sm:text-[10px]">
                                                         {hour.chance_of_rain}%
                                                     </p>
                                                 )}
                                                 {hour.will_it_snow == 1 && (
-                                                    <p className="text-center text-sm text-cyan-300">
+                                                    <p className="text-center text-sm text-cyan-300 max-sm:text-[10px]">
                                                         {hour.chance_of_snow}%
                                                     </p>
                                                 )}
                                             </div>
 
-                                            <p className="text-white max-md:text-sm font-bold text-center self-end">
+                                            <p className="text-lg text-white max-sm:text-sm font-bold text-center self-end">
                                                 {selectTypeCF === 0 ? hour.temp_f + "°" : hour.temp_c + "°"}
                                             </p>
                                         </button>
@@ -689,11 +689,11 @@ const Home: React.FC = () => {
                     </div>
 
                 </section>
-                <section className="max-w-[1350px] mt-[30px] mx-auto grid p-[25px] items-center gap-2 bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px]  shadow-lg rounded-[10px]">
+                <section className="max-w-[1350px] mt-[20px] mx-auto grid p-[25px] items-center gap-2 bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px]  shadow-lg rounded-[10px]">
                     <div className="flex items-center flex justify-between">
-                        <p className=" text-white/70 flex gap-2 items-center pb-[10px] text-lg md:text-xl">Dự báo {selectDays} ngày tới</p>
+                        <p className=" text-white/70 flex gap-2 items-center pb-[10px] max-sm:text-sm sm:text-lg md:text-xl">Dự báo {selectDays} ngày tới</p>
                         <div className="justify-self-end flex gap-2 items-center pb-[10px]">
-                            <p className="text-white/70 text-lg md:text-xl">Chọn</p>
+                            <p className="text-white/70 max-sm:text-sm sm:text-lg md:text-xl">Chọn</p>
                             <button className="text-white/70"
                                 onClick={handleClickCalendar}
                             >{icons.iconCalendar}</button>
@@ -732,22 +732,22 @@ const Home: React.FC = () => {
                                             <tbody >
                                                 <tr>
                                                     <td className="w-[85px]">
-                                                        <p className="text-white text-start text-lg w-[80px]"> {formatDate(forecast.date)}</p>
+                                                        <p className="text-white text-start text-lg w-[80px] max-sm:text-sm"> {formatDate(forecast.date)}</p>
                                                     </td>
                                                     <td className="w-[50px]">
                                                         <div className="grid w-[40px]">
                                                             <img className="h-[40px] mx-auto" alt={forecast.day.condition.text} src={forecast.day.condition.icon} />
 
                                                             {forecast.day.daily_will_it_rain == 1 && (
-                                                                <p className="text-center text-sm text-cyan-300">{forecast.day.daily_chance_of_rain}%</p>
+                                                                <p className="text-center text-sm text-cyan-300 max-sm:text-[10px]">{forecast.day.daily_chance_of_rain}%</p>
                                                             )}
                                                             {forecast.day.daily_will_it_snow == 1 && (
-                                                                <p className="text-center text-sm text-cyan-300">{forecast.day.daily_chance_of_snow}%</p>
+                                                                <p className="text-center text-sm text-cyan-300 max-sm:text-[10px]">{forecast.day.daily_chance_of_snow}%</p>
                                                             )}
                                                         </div>
                                                     </td>
                                                     <td className="w-[50px]">
-                                                        <p className="text-white/70 text-lg  w-[50px]">{selectTypeCF === 0 ? forecast.day.mintemp_f + "°" : forecast.day.mintemp_c + "°"}</p>
+                                                        <p className="text-white/70 text-lg  w-[50px] max-sm:text-sm">{selectTypeCF === 0 ? forecast.day.mintemp_f + "°" : forecast.day.mintemp_c + "°"}</p>
                                                     </td>
                                                     {/* them mau  */}
                                                     <td className="p-[10px]">
@@ -765,7 +765,7 @@ const Home: React.FC = () => {
                                                         </div>
                                                     </td>
                                                     <td className="w-[50px]">
-                                                        <p className="text-white text-lg font-bold ">{selectTypeCF === 0 ? forecast.day.maxtemp_f + "°" : forecast.day.maxtemp_c + "°"}</p>
+                                                        <p className="text-white text-lg font-bold max-sm:text-sm">{selectTypeCF === 0 ? forecast.day.maxtemp_f + "°" : forecast.day.maxtemp_c + "°"}</p>
                                                     </td>
                                                 </tr>
                                             </tbody>
