@@ -1,7 +1,8 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import { useGlobal } from '../../context/GlobalContext';
 import { Menu, MenuItem } from "@mui/material"
 import type { SxProps, Theme } from "@mui/material/styles";
+import { useNavigate } from 'react-router-dom';
 
 import DetailThermometer from './detailThermometer';
 import DetailWind from './detailWind';
@@ -13,6 +14,7 @@ import DetailHumidity from './detailHumidity';
 import DetailAir from './detailAir';
 
 const DetailForecast: React.FC = () => {
+    const navigate = useNavigate()
 
     const PaperProps: SxProps<Theme> = {
         sx: {
@@ -58,9 +60,8 @@ const DetailForecast: React.FC = () => {
         isSelectDetail, setIsSelectDetail,
         currentHour,
         windDirectionVN,
-        getVisibilityLevel, getUsEpaLever, getgetGbDefraLevel
+        getVisibilityLevel, getUsEpaLever, getgetGbDefraLevel,
     } = useGlobal()
-
 
     const [anchorElSelect, setAnchorElSelect] = useState<null | HTMLElement>(null);
     const openSelect = Boolean(anchorElSelect);
@@ -122,9 +123,11 @@ const DetailForecast: React.FC = () => {
         <main className="min-h-[70vh]">
             <div className='w-full backdrop-blur-[10px] px-[20px] sticky z-[99] md:top-[77px] max-md:top-[135px]'>
                 <div className='flex gap-2 max-w-[1350px] mx-auto items-center text-white py-[10px] text-xl max-md:text-lg '>
-                    <a href='/' className='transition duration-300 ease css-icon'>{icons.iconHome}</a>
+                    <div
+                        onClick={() => navigate("/")}
+                        className='transition duration-300 ease css-icon'>{icons.iconHome}</div>
                     <span>{icons.iconNext}</span>
-                    <a href='#' className='transition duration-300 ease css-icon'>Chi tiết {listSelectShowDetail[isSelectDetail].title.toLowerCase()}</a>
+                    <div className='transition duration-300 ease css-icon'>Chi tiết {listSelectShowDetail[isSelectDetail].title.toLowerCase()}</div>
                 </div>
             </div>
 
@@ -178,7 +181,7 @@ const DetailForecast: React.FC = () => {
                                     <>
                                         <div className='flex gap-2 items-center'>
                                             <p className='text-3xl text-white font-bold '>{selectTypeCF === 0 ? resForecast?.forecast.forecastday[selectDetailDay].day.avgtemp_f + '°' : resForecast?.forecast.forecastday[selectDetailDay].day.avgtemp_c + '°'}</p>
-                                            <img alt='img' src={resForecast?.forecast.forecastday[selectDetailDay].day.condition.icon} className='max-sm:w-[30px]'/>
+                                            <img alt='img' src={resForecast?.forecast.forecastday[selectDetailDay].day.condition.icon} className='max-sm:w-[30px]' />
                                         </div>
                                         <div className='flex gap-2 items-center text-lg text-white/70 '>
                                             <p>C: {selectTypeCF === 0 ? resForecast?.forecast.forecastday[selectDetailDay].day.maxtemp_f + '°' : resForecast?.forecast.forecastday[selectDetailDay].day.maxtemp_c + '°'}</p>

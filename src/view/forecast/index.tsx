@@ -43,18 +43,7 @@ const Home: React.FC = () => {
         },
     }
 
-    const formatCityName = (city: string) => {
-        return city
-            .replace(/^Thành phố\s*/i, '') // bỏ "Thành phố" ở đầu
-            .normalize('NFD')          // tách ký tự gốc và dấu
-            .replace(/[\u0300-\u036f]/g, '') // xoá dấu
-            .replace(/đ/g, 'd')
-            .replace(/Đ/g, 'D')
-            .replace(/\s+/g, ' ') // gộp khoảng trắng thừa
-            .trim();
-    }
-
-    const { keyApi,
+    const { keyApi, formatCityName,
         resForecast, setResForecast,
         // resFuture, setResFuture,
         // resMarine, setResMarine,
@@ -246,11 +235,17 @@ const Home: React.FC = () => {
         // Api_findAstronomy(selectQ!, dt, selectLang)
         // Api_findTimezone(selectQ!, selectLang)
         // Api_findSports(selectQ!, selectLang)
-    }, [formatCityName(selectQ!), selectDays, currentHour])
+    }, [currentHour])
 
     useEffect(() => {
         Api_findForecast(formatCityName(selectQ!), selectDays, selectAqi, selectAlerts, selectLang)
     }, [])
+
+    const handleClickSelectDays = (day: number) => {
+        handleCloseCalendar()
+        setSelectDays(day)
+        Api_findForecast(formatCityName(selectQ!), day, selectAqi, selectAlerts, selectLang)
+    }
 
     const formatDate = (dateStr: string) => {
         const inputDate: Date = new Date(dateStr);
@@ -710,10 +705,7 @@ const Home: React.FC = () => {
                             >
                                 {days.map((day, index) => (
                                     <MenuItem key={index}
-                                        onClick={() => {
-                                            handleCloseCalendar()
-                                            setSelectDays(day.id)
-                                        }}
+                                        onClick={() => handleClickSelectDays(day.id)}
                                         sx={sxMenuItem}
                                     >
                                         {day.desc}

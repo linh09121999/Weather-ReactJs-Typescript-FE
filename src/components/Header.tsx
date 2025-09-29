@@ -101,6 +101,10 @@ const Header: React.FC = () => {
         selectVis, setSelectVis,
         selectAir, setSelectAir,
         listSrecip, listWind, listPressure, listVis, listAir,
+        formatCityName,
+        keyApi,
+        setResForecast, selectDays, selectAqi, selectAlerts, selectLang,
+        removeVietnameseTones
     } = useGlobal()
     const [listQ, setListQ] = useState<ListCity[]>([])
 
@@ -125,17 +129,57 @@ const Header: React.FC = () => {
         }
     }
 
+    const Api_findForecast = async (q: string, days: number, aqi: string, alerts: string, lang: string) => {
+        try {
+            const response = await axios.get("https://weather-be-hhcd.onrender.com/api/forecast", { //"http://api.weatherapi.com/v1/forecast.json", { //https://weather-be-hhcd.onrender.com/api/forecast
+                params: {
+                    key: keyApi,
+                    q: q,
+                    days: days,
+                    aqi: aqi,
+                    alerts: alerts,
+                    lang: lang
+                },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+            setResForecast(response.data)
+        }
+        catch (err) {
+            if (axios.isAxiosError(err)) {
+                console.error("Axios error:", err.message);
+                toast.error(err.message);
+            } else {
+                console.error("Unexpected error:", err);
+            }
+        }
+    }
+
     useEffect(() => {
         Api_findLocate()
     }, [])
 
-    const removeVietnameseTones = (str: string) => {
-        return str
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .replace(/đ/g, 'd')
-            .replace(/Đ/g, 'D');
+    const handleChangeQ = (_: React.SyntheticEvent | null, newValue: { name: string } | null) => {
+        const nameCity = newValue ? newValue.name : undefined
+        setSelectQ(nameCity);
+        Api_findForecast(formatCityName(nameCity!), selectDays, selectAqi, selectAlerts, selectLang)
+    };
+
+    const handleSearchCity = () => {
+        Api_findForecast(formatCityName(selectQ!), selectDays, selectAqi, selectAlerts, selectLang)
     }
+
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        // 1. Ngăn Menu “ăn” phím
+        e.stopPropagation();
+        // 2. Nếu bạn có logic riêng (Enter để search…) thì giữ lại:
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleSearchCity();
+        }
+    };
 
     const [anchorElSetting, setAnchorElSetting] = useState<null | HTMLElement>(null);
     const openSetting = Boolean(anchorElSetting);
@@ -178,19 +222,20 @@ const Header: React.FC = () => {
                                         ? listQ.find((c) => c.name === selectQ) ?? undefined
                                         : undefined
                                 }
-                                onChange={(_, newValue) => {
-                                    setSelectQ(newValue ? newValue.name : undefined);
-                                }}
+                                onChange={handleChangeQ}
                                 renderInput={(params) => (
                                     <TextField  {...params}
                                         type="search"
                                         placeholder="Tìm kiếm tỉnh thành..."
                                         sx={sxText}
+                                        onKeyDown={handleKeyPress}
                                         InputProps={{
                                             ...params.InputProps,
                                             endAdornment: (
                                                 <InputAdornment position="end" sx={{ marginRight: '-20px', color: 'white' }}>
-                                                    <button className='btn-merge'>
+                                                    <button className='btn-merge'
+                                                        onClick={handleSearchCity}
+                                                    >
                                                         {header.iconSearch}
                                                     </button>
                                                 </InputAdornment>

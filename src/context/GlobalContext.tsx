@@ -928,6 +928,8 @@ export interface GlobalState {
     img_Rain: string;
     img_Day: string;
     img_Night: string;
+    formatCityName: (city: string) => string;
+    removeVietnameseTones: (str: string) => string
 }
 
 
@@ -967,7 +969,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     const [dt, setDt] = useState<string>("2025-09-23")
     const [selectTypeCF, setSelectTypeCF] = useState<number>(1)
 
-    const [selectDetailDay, setSelectDetailDay] = useState<number>(-1)
+    const [selectDetailDay, setSelectDetailDay] = useState<number>(0)
     const currentHour = new Date().getHours();
 
     const listSrecip = ["mm", "in"]
@@ -999,6 +1001,25 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
             .split("")       // tách chuỗi thành từng ký tự
             .map((c) => map[c] || c) // đổi sang tiếng Việt
             .join("");
+    }
+
+    const formatCityName = (city: string): string => {
+        return city
+            .replace(/^Thành phố\s*/i, "") // bỏ "Thành phố" ở đầu
+            .normalize("NFD") // tách ký tự gốc và dấu
+            .replace(/[\u0300-\u036f]/g, "") // xoá dấu
+            .replace(/đ/g, "d")
+            .replace(/Đ/g, "D")
+            .replace(/\s+/g, " ") // gộp khoảng trắng thừa
+            .trim();
+    };
+
+    const removeVietnameseTones = (str: string) => {
+        return str
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/đ/g, 'd')
+            .replace(/Đ/g, 'D');
     }
 
     const getUVlevel = (uv: number | undefined) => {
@@ -1092,6 +1113,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         selectDays, setSelectDays,
         dt, setDt,
         selectQ, setSelectQ,
+        removeVietnameseTones,
         icons: defaultIcons,
         header: defaultHeader,
         typeCF: defaultTypeCF,
@@ -1111,6 +1133,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike,
         currentHour,
         isBorderDash,
+        formatCityName,
         windDirectionVN, getUVlevel, getRainLever, getVisibilityLevel, getUsEpaLever, getgetGbDefraLevel
     }
 
