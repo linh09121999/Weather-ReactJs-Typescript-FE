@@ -7,6 +7,7 @@ import type { SxProps, Theme } from "@mui/material/styles";
 import { useNavigate } from 'react-router-dom';
 
 import ChartGauge from "../../props/chartGauge";
+import WindDirectionChart from "../../props/chartDirectionWind"
 
 const Home: React.FC = () => {
     const navigate = useNavigate();
@@ -412,13 +413,12 @@ const Home: React.FC = () => {
                                         navigate("/chi-tiet-theo-ngay");
                                     }}
                                 >
+                                    <div className="flex gap-2 items-center">
+                                        <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconWind}</span>
+                                        <p className="text-white/70 text-lg md:text-xl">Gió</p>
+                                    </div>
                                     <div className="flex gap-4 justify-between">
                                         <div className="w-full">
-                                            <div className="flex gap-2 items-center">
-                                                <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm">{icons.iconWind}</span>
-                                                <p className="text-white/70 text-lg md:text-xl">Gió</p>
-                                            </div>
-
                                             <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px]">
                                                 <p className="w-[calc(100%-78px)] text-start">Gió</p>
                                                 <p>{selectWind === "km/h" ? resForecast?.current.wind_kph + " km/h" : resForecast?.current.wind_mph + " mph"}</p>
@@ -433,6 +433,11 @@ const Home: React.FC = () => {
                                             </div>
                                         </div>
                                         {/* <ChartWindDoungtnut value={45} speed={12} donvi="m/s" /> */}
+                                        <WindDirectionChart
+                                            value={selectWind === "km/h" ? resForecast?.current.wind_kph : resForecast?.current.wind_mph}
+                                            donvi={selectWind === "km/h" ? "km/h" : "mph"}
+                                            direction={resForecast?.current.wind_degree} // 45 độ - hướng Đông Bắc
+                                        />
                                     </div>
 
                                     {/* thêm minh họa ở bên phải: la bàn có mũi tên hướng gió và hiện tốc độ gió */}
