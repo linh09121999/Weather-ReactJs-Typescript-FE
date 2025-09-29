@@ -38,18 +38,18 @@ const ChartGauge: React.FC<GaugeProps> = ({ value, min, max, donvi, backgroundCo
   };
 
   return (
-    <div className="flex flex-col items-center relative w-36 h-36">
+    <div className="flex flex-col mx-auto items-center relative w-36 h-36 max-sm:w-30">
       <Doughnut data={data} options={{ plugins: { legend: { display: false } } }} />
 
       {/* Hiển thị value + đơn vị ở giữa */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/4 text-center">
-        <p className="text-3xl font-bold">{safeValue}</p>
-        <p className="text-xl text-white/70">{donvi}</p>
+        <p className="sm:text-3xl font-bold max-sm:text-2xl">{safeValue}</p>
+        <p className="sm:text-xl text-white/70 max-sm:text-sm">{donvi}</p>
       </div>
 
       {/* Min - Max ở 2 đầu */}
-      <div className="absolute bottom-[-18px] left-6 text-lg font-medium">Thấp</div>
-      <div className="absolute bottom-[-18px] right-6 text-lg font-medium">Cao</div>
+      <div className="absolute bottom-[-18px] max-sm:bottom-2 left-6 max-sm:left-2 text-lg font-medium max-sm:text-sm">Thấp</div>
+      <div className="absolute bottom-[-18px] max-sm:bottom-2 right-6 max-sm:right-2 text-lg font-medium max-sm:text-sm">Cao</div>
     </div>
   );
 };

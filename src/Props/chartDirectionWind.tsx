@@ -37,6 +37,11 @@ const WindDirectionChart: React.FC<WindDirectionChartProps> = ({
 
     const options: ChartOptions<"doughnut"> = {
         responsive: true,
+        layout: {
+            padding: {
+                top: 2, // 👈 chừa chỗ phía trên cho icon
+            },
+        },
         plugins: {
             legend: { display: false },
             tooltip: { enabled: false },
@@ -93,21 +98,42 @@ const WindDirectionChart: React.FC<WindDirectionChartProps> = ({
             ctx.closePath();
             ctx.fill();
 
+            // Danh sách nhãn
+            const directions = [
+                { label: "B", angle: -90 }, // 0° Bắc (trên)
+                { label: "Đ", angle: 0 },   // 90° Đông (phải)
+                { label: "N", angle: 90 },  // 180° Nam (dưới)
+                { label: "T", angle: 180 }, // 270° Tây (trái)
+            ];
+
+            ctx.save();
+            ctx.fillStyle = "white";
+            ctx.font = "16px sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+
+            directions.forEach(({ label, angle }) => {
+                const rad = (angle * Math.PI) / 180;
+                const x = centerX + radius * 0.90 * Math.cos(rad);
+                const y = centerY + radius * 0.90 * Math.sin(rad);
+                ctx.fillText(label, x, y);
+            });
+
             ctx.restore();
         },
     };
 
     return (
-        <div className="flex flex-col items-center relative w-48">
+        <div className="flex flex-col items-center relative w-50">
             <Doughnut data={data} options={options} plugins={[arrowPlugin]} />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
                 <p className="text-xl font-bold text-white">{value}</p>
-                <p className="text-lg text-white/70">{donvi}</p>
+                <p className="text-lg text-white/70 max-sm:text-sm">{donvi}</p>
             </div>
-            <p className="absolute -top-2 text-white text-lg">B</p>
+            {/* <p className="absolute -top-2 text-white text-lg">B</p>
             <p className="absolute right-0 top-1/2 -translate-y-1/2 text-white text-lg">Đ</p>
             <p className="absolute -bottom-2 text-white text-lg">N</p>
-            <p className="absolute left-0 top-1/2 -translate-y-1/2 text-white text-lg">T</p>
+            <p className="absolute left-0 top-1/2 -translate-y-1/2 text-white text-lg">T</p> */}
         </div>
     );
 };
