@@ -406,7 +406,7 @@ const Home: React.FC = () => {
                                     {/* thêm minh họa ở bên phải:  */}
                                 </button>
 
-                                <button className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                <button className="rounded-[10px] mb-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
                                     onClick={() => {
                                         setSelectDetailDay(0);
                                         setIsSelectDetail(1)
