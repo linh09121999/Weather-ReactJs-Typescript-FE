@@ -4,12 +4,13 @@ import ChartLineTopText from "../../props/chartLineTopText";
 import { useGlobal } from '../../context/GlobalContext';
 
 const DetailThermometer: React.FC = () => {
-    const { selectDetailDay, 
+    const { selectDetailDay,
         resForecast,
         selectTypeCF,
         typeTemp_Fellslike,
         selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike,
-        isBorderDash
+        isBorderDash,
+        isMobile
     } = useGlobal()
 
     // lấy danh sách 24 giờ của ngày được chọn
@@ -49,7 +50,7 @@ const DetailThermometer: React.FC = () => {
             (h) => h.chance_of_rain ?? 0 // hoặc h.daily_chance_of_rain
         ) ?? [];
 
-    const dvCF = selectTypeCF === 0 ? '°F' : '°C'
+    const dvCF = isMobile ? "" : selectTypeCF === 0 ? '°F' : '°C'
 
     return (
         <div className='grid gap-6'>
@@ -101,7 +102,7 @@ const DetailThermometer: React.FC = () => {
                 <p className='text-lg text-white/70  '>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
                 {/* bieu do */}
                 <div className='w-full p-[25px] max-sm:p-[15px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
-                    <ChartLineBase maxValue={100} currentIndex={isBorderDash} hours={hours} dataDetail={rainChance} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="%" />
+                    <ChartLineBase maxValue={100} currentIndex={isBorderDash} hours={hours} dataDetail={rainChance} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={isMobile ? "" : "%"} />
                 </div>
                 <p className='text-lg text-white/70 '>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>
 

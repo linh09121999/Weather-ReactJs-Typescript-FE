@@ -8,7 +8,8 @@ const DetailWind: React.FC = () => {
         selectDetailDay,
         resForecast,
         selectWind,
-        isBorderDash
+        isBorderDash,
+        isMobile
     } = useGlobal()
 
     const hours = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
@@ -30,7 +31,7 @@ const DetailWind: React.FC = () => {
             ) ?? []
         )
 
-    const donvi = selectWind === "km/h" ? "km/h" : "mph"
+    const donvi = isMobile ? "" : selectWind === "km/h" ? "km/h" : "mph"
 
     return (
         <div className='grid gap-6'>

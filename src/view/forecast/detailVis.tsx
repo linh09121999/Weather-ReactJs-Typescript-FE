@@ -6,7 +6,8 @@ const DetailVis: React.FC = () => {
     const { selectDetailDay,
         resForecast,
         selectVis,
-        isBorderDash
+        isBorderDash,
+        isMobile
     } = useGlobal()
 
     const hours = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
@@ -24,6 +25,8 @@ const DetailVis: React.FC = () => {
             (h) => h.vis_miles ?? 0
         ) ?? [])
 
+    const dvVis = isMobile ? "" : selectVis === "km" ? "km" : "dặm"
+
     return (
         <div className='grid gap-6'>
             <div className='w-full p-[25px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]' >
@@ -34,7 +37,7 @@ const DetailVis: React.FC = () => {
                     dataDetail={vis}
                     borderColor="white"
                     backgroundColor="rgb(255,255,255,0.5)"
-                    donvi={selectVis === "km" ? "km" : "dặm"}
+                    donvi={dvVis}
                 />
             </div>
             <div className='grid gap-4'>

@@ -10,6 +10,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import type { ChartOptions, ChartData } from "chart.js";
+import { useGlobal } from "../context/GlobalContext";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -34,6 +35,8 @@ const ChartBarBase: React.FC<BarChartProps> = ({
     donvi,
     currentIndex,
 }) => {
+    const { isMobile } = useGlobal()
+
     const options: ChartOptions<"bar"> = {
         responsive: true,
         maintainAspectRatio: false,
@@ -45,7 +48,7 @@ const ChartBarBase: React.FC<BarChartProps> = ({
             x: {
                 ticks: {
                     color: "rgba(255,255,255,0.7)",
-                    font: { size: 16 },
+                    font: { size: isMobile ? 12 : 16 },
                 },
                 grid: { color: "rgba(255,255,255,0.2)" },
             },
@@ -53,7 +56,7 @@ const ChartBarBase: React.FC<BarChartProps> = ({
                 beginAtZero: true,
                 ticks: {
                     color: "rgba(255,255,255,0.7)",
-                    font: { size: 16 },
+                    font: { size: isMobile ? 12 : 16 },
                     callback: (value) => `${value} ${donvi}`,
                 },
                 grid: { color: "rgba(255,255,255,0.2)" },

@@ -3,8 +3,9 @@ import ChartLineBase from '../../props/chartLineBase';
 import { useGlobal } from '../../context/GlobalContext';
 
 const DetailPressure: React.FC = () => {
-    const { selectDetailDay,resForecast, selectPressure, 
-        isBorderDash
+    const { selectDetailDay, resForecast, selectPressure,
+        isBorderDash,
+        isMobile
     } = useGlobal()
 
     // lấy danh sách 24 giờ của ngày được chọn
@@ -26,7 +27,7 @@ const DetailPressure: React.FC = () => {
     return (
         <div className='grid gap-6'>
             <div className='w-full p-[25px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
-                <ChartLineBase maxValue={1050} currentIndex={isBorderDash} hours={hours} dataDetail={pressure} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="hPa" />
+                <ChartLineBase maxValue={1050} currentIndex={isBorderDash} hours={hours} dataDetail={pressure} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={isMobile ? "" : "hPa"} />
             </div>
             <div className='grid gap-4'>
                 <p className='text-white text-xl  font-bold'>Giới thiệu về Áp suất</p>

@@ -3,9 +3,10 @@ import { useGlobal } from '../../context/GlobalContext';
 import ChartLineBase from '../../props/chartLineBase';
 
 const DetailHumidity: React.FC = () => {
-    const { selectDetailDay, 
+    const { selectDetailDay,
         resForecast,
-        isBorderDash
+        isBorderDash,
+        isMobile
     } = useGlobal()
 
     // lấy danh sách 24 giờ của ngày được chọn
@@ -23,7 +24,7 @@ const DetailHumidity: React.FC = () => {
     return (
         <div className='grid gap-6'>
             <div className='w-full p-[25px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
-                <ChartLineBase currentIndex={isBorderDash} hours={hours} dataDetail={humidity} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="%"/>
+                <ChartLineBase currentIndex={isBorderDash} hours={hours} dataDetail={humidity} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={isMobile ? "" : "%"} />
             </div>
             <div className='grid gap-4'>
                 <p className='text-white text-xl font-bold '>Giới thiệu về độ ẩm tương đối</p>

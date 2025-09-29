@@ -6,7 +6,8 @@ const DetailAir: React.FC = () => {
   const {
     selectDetailDay,
     resForecast,
-    isBorderDash
+    isBorderDash,
+    isMobile
   } = useGlobal()
 
   const hours = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
@@ -55,7 +56,7 @@ const DetailAir: React.FC = () => {
             "rgba(128,0,128,0.2)",
             "rgba(0,255,255,0.2)",
           ]}
-          currentIndex={isBorderDash} donvi="μg/m³" />
+          currentIndex={isBorderDash} donvi={isMobile ? "" : "μg/m³"} />
       </div>
       <div className='grid gap-4'>
         <p className='text-white text-xl font-bold '>Giới thiệu về khí CO</p>

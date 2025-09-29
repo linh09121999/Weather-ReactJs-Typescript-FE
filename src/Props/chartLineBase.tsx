@@ -11,6 +11,7 @@ import {
 } from "chart.js";
 import type { ChartOptions, ChartData, ScriptableLineSegmentContext } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { useGlobal } from "../context/GlobalContext";
 
 ChartJS.register(
     CategoryScale,
@@ -30,7 +31,8 @@ type LineChartProps = {
     backgroundColor: string;
     donvi: string;
     currentIndex: number; // 👈 vị trí giờ hiện tại
-    maxValue?: number
+    maxValue?: number,
+    yCount?: number;
 };
 
 const ChartLineBase: React.FC<LineChartProps> = ({
@@ -41,8 +43,10 @@ const ChartLineBase: React.FC<LineChartProps> = ({
     backgroundColor,
     donvi,
     currentIndex,
-    maxValue
+    maxValue,
 }) => {
+    const { isMobile } = useGlobal()
+
     const data: ChartData<"line"> = {
         labels: hours,
         datasets: [
@@ -80,7 +84,7 @@ const ChartLineBase: React.FC<LineChartProps> = ({
                 beginAtZero: true,
                 ticks: {
                     color: "rgba(255,255,255,0.7)",
-                    font: { size: 16 },
+                    font: { size: isMobile ? 12 : 16 },
                     callback: (value) => `${value} ${donvi}`,
                 },
                 grid: { color: "rgba(255,255,255,0.2)" },
@@ -88,7 +92,7 @@ const ChartLineBase: React.FC<LineChartProps> = ({
             x: {
                 ticks: {
                     color: "rgba(255,255,255,0.7)",
-                    font: { size: 16 },
+                    font: { size: isMobile ? 12 : 16 },
                 },
                 grid: { color: "rgba(255,255,255,0.2)" },
             },

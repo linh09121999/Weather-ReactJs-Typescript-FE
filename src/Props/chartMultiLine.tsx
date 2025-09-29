@@ -12,6 +12,7 @@ import {
 } from "chart.js";
 import type { ChartOptions, ChartData, ScriptableLineSegmentContext } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { useGlobal } from "../context/GlobalContext";
 
 ChartJS.register(
     CategoryScale,
@@ -44,6 +45,8 @@ const ChartMultiLine: React.FC<LineChartProps> = ({
     donvi,
     currentIndex,
 }) => {
+    const { isMobile } = useGlobal()
+
     const datasets = dataDetail.map((arr, idx) => ({
         label: label[idx],
         data: arr,
@@ -79,8 +82,8 @@ const ChartMultiLine: React.FC<LineChartProps> = ({
                 position: "bottom",
                 labels: {
                     color: "white",
-                    font: { size: 14 },
-                    
+                    font: { size: isMobile ? 12 : 16 },
+
                 },
             },
             title: { display: !!title, text: title ?? "" },
@@ -90,7 +93,7 @@ const ChartMultiLine: React.FC<LineChartProps> = ({
                 beginAtZero: true,
                 ticks: {
                     color: "rgba(255,255,255,0.7)",
-                    font: { size: 14 },
+                    font: { size: isMobile ? 12 : 16 },
                     callback: (value) => `${value} ${donvi}`,
                 },
                 grid: { color: "rgba(255,255,255,0.2)" },
@@ -98,7 +101,7 @@ const ChartMultiLine: React.FC<LineChartProps> = ({
             x: {
                 ticks: {
                     color: "rgba(255,255,255,0.7)",
-                    font: { size: 14 },
+                    font: { size: isMobile ? 12 : 16 },
                 },
                 grid: { color: "rgba(255,255,255,0.2)" },
             },
