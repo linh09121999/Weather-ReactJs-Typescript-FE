@@ -1,6 +1,6 @@
 import React from "react";
-import { useGlobal } from '../../context/GlobalContext';
-import ChartMultiLine from "../../props/chartMultiLine";
+import { useGlobal } from '../../../context/GlobalContext';
+import ChartMultiLine from "../../../charts/chartMultiLine";
 
 const DetailAir: React.FC = () => {
   const {

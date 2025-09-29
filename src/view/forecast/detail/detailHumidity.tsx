@@ -1,6 +1,6 @@
 import React from "react";
-import { useGlobal } from '../../context/GlobalContext';
-import ChartLineBase from '../../props/chartLineBase';
+import { useGlobal } from '../../../context/GlobalContext';
+import ChartLineBase from '../../../charts/chartLineBase';
 
 const DetailHumidity: React.FC = () => {
     const { selectDetailDay,

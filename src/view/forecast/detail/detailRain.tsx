@@ -1,7 +1,7 @@
 import React from "react";
-import ChartLineBase from "../../props/chartLineBase";
-import ChartBarBase from "../../props/chartBarBase";
-import { useGlobal } from '../../context/GlobalContext';
+import ChartLineBase from "../../../charts/chartLineBase";
+import ChartBarBase from "../../../charts/chartBarBase";
+import { useGlobal } from '../../../context/GlobalContext';
 
 const DetailRain: React.FC = () => {
     const { selectDetailDay,

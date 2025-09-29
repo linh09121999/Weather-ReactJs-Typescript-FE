@@ -1,6 +1,6 @@
 import React from "react";
-import ChartLineBase from '../../props/chartLineBase';
-import { useGlobal } from '../../context/GlobalContext';
+import ChartLineBase from '../../../charts/chartLineBase';
+import { useGlobal } from '../../../context/GlobalContext';
 
 const DetailPressure: React.FC = () => {
     const { selectDetailDay, resForecast, selectPressure,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useGlobal } from '../../context/GlobalContext';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios";
@@ -6,8 +6,8 @@ import { MenuItem, Menu } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
 import { useNavigate } from 'react-router-dom';
 
-import ChartGauge from "../../props/chartGauge";
-import WindDirectionChart from "../../props/chartDirectionWind"
+import ChartGauge from "../../charts/chartGauge";
+import WindDirectionChart from "../../charts/chartDirectionWind"
 
 const Home: React.FC = () => {
     const navigate = useNavigate();
@@ -228,17 +228,24 @@ const Home: React.FC = () => {
     //    }
     // }
 
-    useEffect(() => {
-        Api_findForecast(formatCityName(selectQ!), selectDays, selectAqi, selectAlerts, selectLang)
-        // Api_findFuture(selectQ!, dt, selectLang)
-        // Api_findMarine(selectQ!, selectDays, selectLang)
-        // Api_findAstronomy(selectQ!, dt, selectLang)
-        // Api_findTimezone(selectQ!, selectLang)
-        // Api_findSports(selectQ!, selectLang)
-    }, [currentHour])
+    // Api_findFuture(selectQ!, dt, selectLang)
+    // Api_findMarine(selectQ!, selectDays, selectLang)
+    // Api_findAstronomy(selectQ!, dt, selectLang)
+    // Api_findTimezone(selectQ!, selectLang)
+    // Api_findSports(selectQ!, selectLang)
 
     useEffect(() => {
         Api_findForecast(formatCityName(selectQ!), selectDays, selectAqi, selectAlerts, selectLang)
+    }, [])
+
+    const lastHourRef = useRef<number>(currentHour);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            lastHourRef.current = currentHour
+            Api_findForecast(formatCityName(selectQ!), selectDays, selectAqi, selectAlerts, selectLang)
+        }, 60 * 1000); //check mỗi phút
+        return () => clearInterval(interval)
     }, [])
 
     const handleClickSelectDays = (day: number) => {

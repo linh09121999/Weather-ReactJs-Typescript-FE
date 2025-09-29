@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react';
 import { Route, Routes, Navigate, Outlet, BrowserRouter } from 'react-router-dom';
 import { useGlobal } from './context/GlobalContext';
-
 import { Footer, Header, Nav, BackToTop } from './components';
 
 const Home = React.lazy(() => import('./view/forecast/index'));

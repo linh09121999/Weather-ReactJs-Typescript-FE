@@ -1,7 +1,7 @@
 import React from "react";
-import ChartLineBase from '../../props/chartLineBase';
-import ChartLineTopText from "../../props/chartLineTopText";
-import { useGlobal } from '../../context/GlobalContext';
+import ChartLineBase from '../../../charts/chartLineBase';
+import ChartLineTopText from "../../../charts/chartLineTopText";
+import { useGlobal } from '../../../context/GlobalContext';
 
 const DetailThermometer: React.FC = () => {
     const { selectDetailDay,
