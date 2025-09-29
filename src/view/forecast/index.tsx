@@ -338,23 +338,23 @@ const Home: React.FC = () => {
 
     return (
         <>
-            <main className="min-h-[80vh] p-[20px]">
+            <main className="min-h-[80vh] p-[25px] max-sm:p-[15px]">
                 <section className="max-w-[1350px] mx-auto grid  items-center gap-4  ">
                     <div className="border-b-[2px] border-b-white/50 pb-[10px] grid gap-4">
-                        <div className="flex text-white items-center gap-5 max-md:justify-center">
+                        <div className="flex text-white items-center max-sm:gap-3 gap-5 max-md:justify-center">
                             <p className="text-white text-4xl max-md:2xl font-bold relative after:absolute after:w-[4px] after:h-full after:bg-white after:right-[-10px]">{resForecast?.location.name} </p>
                             <p className="text-xl">{resForecast?.location.country}</p>
                         </div>
                         <div className="flex md:justify-between max-md:justify-center pb-[20px]">
                             {/* loaction */}
                             <div className="grid gap-2">
-                                <p className="text-white max-md:text-center">{convertDateTime(resForecast?.current.last_updated)}</p>
+                                <p className="text-white max-md:text-center text-lg">{convertDateTime(resForecast?.current.last_updated)}</p>
                                 <div className="flex items-center gap-3 max-lg:grid">
                                     <p className="text-white text-8xl font-bold max-md:text-6xl max-md:text-center">{selectTypeCF === 0 ? resForecast?.current.temp_f + "°" : resForecast?.current.temp_c + "°"}</p>
                                     <img className="size-35 max-md:mx-auto max-lg:justify-self-start max-md:hidden" alt={resForecast?.current.condition.text} src={resForecast?.current.condition.icon} />
-                                    <p className="text-white text-center md:hidden">{resForecast?.current.condition.text}</p>
+                                    <p className="text-white text-center md:hidden text-lg">{resForecast?.current.condition.text}</p>
                                 </div>
-                                <p className="text-white/70 max-md:text-sm max-md:text-center">Cảm giác như {selectTypeCF === 0 ? resForecast?.current.feelslike_f + "°" : resForecast?.current.feelslike_c + "°"}</p>
+                                <p className="text-white/70 text-sm max-md:text-center">Cảm giác như {selectTypeCF === 0 ? resForecast?.current.feelslike_f + "°" : resForecast?.current.feelslike_c + "°"}</p>
                             </div>
 
                             {/* img */}
@@ -378,9 +378,9 @@ const Home: React.FC = () => {
                             Chi tiết
                             <span className="mx-auto">{icons.iconDown}</span>
                         </button>
-                        <div className={`${showDetailForecast === true ? "" : "hidden"} transition-all duration-300 ease grid gap-5`}>
-                            <div className="grid lg:grid-cols-2 gap-5">
-                                <button className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                        <div className={`${showDetailForecast === true ? "" : "hidden"} transition-all duration-300 ease grid max-sm:gap-3 gap-5`}>
+                            <div className="grid lg:grid-cols-2 max-sm:gap-3 gap-5">
+                                <button className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[25px] max-sm:p-[15px] w-full"
                                     onClick={() => {
                                         setSelectDetailDay(0);
                                         setIsSelectDetail(0)
@@ -389,9 +389,9 @@ const Home: React.FC = () => {
                                 >
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full content-center max-md:text-sm max-sm:h-[25px] max-sm:w-[25px]">{icons.iconThermometer}</span>
-                                        <p className="text-white/70 max-md:text-lg md:text-xl max-sm:text-sm">Nhiệt Độ</p>
+                                        <p className="text-white/70 max-md:text-lg md:text-xl ">Nhiệt Độ</p>
                                     </div>
-                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] max-sm:text-sm">
+                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] ">
                                         <p className="w-[calc(100%-50px)] text-start">Nhiệt độ cảm nhận</p>
                                         <p>{selectTypeCF === 0 ? resForecast?.current.feelslike_f + "°" : resForecast?.current.feelslike_c + "°"}</p>
                                     </div>
@@ -406,7 +406,7 @@ const Home: React.FC = () => {
                                     {/* thêm minh họa ở bên phải:  */}
                                 </button>
 
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[25px] max-sm:p-[15px] w-full"
                                     onClick={() => {
                                         setSelectDetailDay(0);
                                         setIsSelectDetail(1)
@@ -415,19 +415,19 @@ const Home: React.FC = () => {
                                 >
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full content-center max-md:text-sm max-sm:h-[25px] max-sm:w-[25px]">{icons.iconWind}</span>
-                                        <p className="text-white/70 max-md:text-lg md:text-xl max-sm:text-sm">Gió</p>
+                                        <p className="text-white/70 max-md:text-lg md:text-xl ">Gió</p>
                                     </div>
                                     <div className="flex gap-4 justify-between items-center">
                                         <div className="w-full">
-                                            <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] max-sm:text-sm">
+                                            <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] ">
                                                 <p className="w-[calc(100%-78px)] text-start">Gió</p>
                                                 <p>{selectWind === "km/h" ? resForecast?.current.wind_kph + " km/h" : resForecast?.current.wind_mph + " mph"}</p>
                                             </div>
-                                            <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] max-sm:text-sm">
+                                            <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] ">
                                                 <p className="w-[calc(100%-78px)] text-start">Gió giật</p>
                                                 <p>{selectWind === "km/h" ? resForecast?.current.gust_kph + " km/h" : resForecast?.current.gust_mph + " mph"}</p>
                                             </div>
-                                            <div className="flex pt-[15px] pb-[5px] max-sm:text-sm">
+                                            <div className="flex pt-[15px] pb-[5px] ">
                                                 <p className="w-[calc(100%-78px)] text-start">Hướng gió</p>
                                                 <p>{resForecast?.current.wind_degree}° {windDirectionVN(resForecast?.current.wind_dir) ?? undefined}</p>
                                             </div>
@@ -443,8 +443,8 @@ const Home: React.FC = () => {
                                     {/* thêm minh họa ở bên phải: la bàn có mũi tên hướng gió và hiện tốc độ gió */}
                                 </div>
                             </div>
-                            <div className="grid lg:grid-cols-3 max-lg:grid-cols-2  gap-5 ">
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                            <div className="grid lg:grid-cols-3 max-lg:grid-cols-2  max-sm:gap-3 gap-5 ">
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[25px] max-sm:p-[15px] w-full"
                                     onClick={() => {
                                         setSelectDetailDay(0);
                                         setIsSelectDetail(2)
@@ -453,7 +453,7 @@ const Home: React.FC = () => {
                                 >
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm max-sm:h-[25px] max-sm:w-[25px]">{icons.iconSun}</span>
-                                        <p className="text-white/70 max-md:text-lg md:text-xl max-sm:text-sm">Chỉ Số UV</p>
+                                        <p className="text-white/70 max-md:text-lg md:text-xl ">Chỉ Số UV</p>
                                     </div>
                                     <p className="text-3xl my-[15px] font-[600] text-start max-sm:text-2xl">{resForecast?.current.uv}</p>
                                     {/* thêm minh họa ở giữa  */}
@@ -461,34 +461,34 @@ const Home: React.FC = () => {
                                         style={{ "--uv-pos": `${presentUV(resForecast?.current.uv)?.toFixed(0)}%` } as React.CSSProperties}
                                     >
                                     </div>
-                                    <p className="text-lg text-start max-sm:text-sm">Đang ở mức {getUVlevel(resForecast?.current.uv) ?? undefined} </p>
+                                    <p className="text-lg text-start ">Đang ở mức {getUVlevel(resForecast?.current.uv) ?? undefined} </p>
 
                                 </div>
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[25px] max-sm:p-[15px] w-full">
 
                                     {resForecast?.current.is_day === 1 ?
                                         <>
                                             <div className="flex gap-2 items-center">
                                                 <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm max-sm:h-[25px] max-sm:w-[25px]">{icons.iconSunset}</span>
-                                                <p className="text-white/70 max-md:text-lg md:text-xl max-sm:text-sm">Mặt trời lặn</p>
+                                                <p className="text-white/70 max-md:text-lg md:text-xl ">Mặt trời lặn</p>
                                             </div>
                                             <p className="text-3xl my-[15px] font-[600] max-sm:text-2xl">{convertTo24(resForecast?.forecast.forecastday[0].astro.sunset)}</p>
-                                            <p className="text-lg max-sm:text-sm">Mặt trời mọc: {convertTo24(resForecast?.forecast.forecastday[0].astro.sunrise)} </p>
+                                            <p className="text-lg ">Mặt trời mọc: {convertTo24(resForecast?.forecast.forecastday[0].astro.sunrise)} </p>
                                         </>
                                         :
                                         <>
                                             <div className="flex gap-2 items-center">
                                                 <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm max-sm:h-[25px] max-sm:w-[25px]">{icons.iconSunrise}</span>
-                                                <p className="text-white/70 max-md:text-lg md:text-xl max-sm:text-sm">Mặt trăng lặn</p>
+                                                <p className="text-white/70 max-md:text-lg md:text-xl ">Mặt trăng lặn</p>
                                             </div>
                                             <p className="text-3xl my-[15px] font-[600] max-sm:text-2xl">{convertTo24(resForecast?.forecast.forecastday[0].astro.moonset)}</p>
-                                            <p className="text-lg max-sm:text-sm">Mặt trăng mọc: {convertTo24(resForecast?.forecast.forecastday[0].astro.moonrise)} </p>
+                                            <p className="text-lg ">Mặt trăng mọc: {convertTo24(resForecast?.forecast.forecastday[0].astro.moonrise)} </p>
                                         </>
                                     }
                                     {/* thêm minh họa */}
 
                                 </div>
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[25px] max-sm:p-[15px] w-full"
                                     onClick={() => {
                                         setSelectDetailDay(0);
                                         setIsSelectDetail(3)
@@ -497,14 +497,14 @@ const Home: React.FC = () => {
                                 >
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm max-sm:h-[25px] max-sm:w-[25px]">{icons.iconCloudRain}</span>
-                                        <p className="text-white/70 max-md:text-lg md:text-xl max-sm:text-sm ">Lượng Mưa</p>
+                                        <p className="text-white/70 max-md:text-lg md:text-xl  ">Lượng Mưa</p>
                                     </div>
                                     {/* them minh hoa */}
                                     <p className="text-3xl my-[15px] font-[600] text-start max-sm:text-2xl">{selectSrecip === "mm" ? resForecast?.current.precip_mm + " mm" : resForecast?.current.precip_in + " in"}</p>
-                                    <p className="text-lg text-start max-sm:text-sm">{selectSrecip === "mm" ? getRainLever(resForecast?.current.precip_mm) ?? undefined : getRainLever(resForecast?.current.precip_in) ?? undefined} </p>
+                                    <p className="text-lg text-start ">{selectSrecip === "mm" ? getRainLever(resForecast?.current.precip_mm) ?? undefined : getRainLever(resForecast?.current.precip_in) ?? undefined} </p>
 
                                 </div>
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[25px] max-sm:p-[15px] w-full"
                                     onClick={() => {
                                         setSelectDetailDay(0);
                                         setIsSelectDetail(5)
@@ -513,13 +513,13 @@ const Home: React.FC = () => {
                                 >
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm max-sm:h-[25px] max-sm:w-[25px]">{icons.iconEye}</span>
-                                        <p className="text-white/70 max-md:text-lg md:text-xl max-sm:text-sm">Tầm Nhìn</p>
+                                        <p className="text-white/70 max-md:text-lg md:text-xl ">Tầm Nhìn</p>
                                     </div>
                                     <p className="text-3xl my-[15px] font-[600] text-start max-sm:text-2xl">{selectVis === "km" ? resForecast?.current.vis_km + " km" : resForecast?.current.vis_miles + " dặm"}</p>
                                     {/* them minh hoa */}
-                                    <p className="text-lg text-start max-sm:text-sm">Tầm nhìn {selectVis === "km" ? getVisibilityLevel(resForecast?.current.vis_km) ?? undefined : getVisibilityLevel(resForecast?.current.vis_miles) ?? undefined} </p>
+                                    <p className="text-lg text-start ">Tầm nhìn {selectVis === "km" ? getVisibilityLevel(resForecast?.current.vis_km) ?? undefined : getVisibilityLevel(resForecast?.current.vis_miles) ?? undefined} </p>
                                 </div>
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[25px] max-sm:p-[15px] w-full"
                                     onClick={() => {
                                         setSelectDetailDay(0);
                                         setIsSelectDetail(6)
@@ -528,13 +528,13 @@ const Home: React.FC = () => {
                                 >
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm max-sm:h-[25px] max-sm:w-[25px]">{icons.iconTint}</span>
-                                        <p className="text-white/70 max-md:text-lg md:text-xl max-sm:text-sm">Độ Ẩm</p>
+                                        <p className="text-white/70 max-md:text-lg md:text-xl ">Độ Ẩm</p>
                                     </div>
                                     <p className="text-3xl my-[15px] font-[600] text-start max-sm:text-2xl">{resForecast?.current.humidity}%</p>
-                                    <p className="text-lg text-start max-sm:text-sm">Điểm sương là {selectTypeCF === 0 ? resForecast?.current.dewpoint_f + "°" : resForecast?.current.dewpoint_c + "°"} ngay lúc này</p>
+                                    <p className="text-lg text-start ">Điểm sương là {selectTypeCF === 0 ? resForecast?.current.dewpoint_f + "°" : resForecast?.current.dewpoint_c + "°"} ngay lúc này</p>
                                     {/* thhem mih hoa */}
                                 </div>
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[25px] max-sm:p-[15px] w-full"
                                     onClick={() => {
                                         setSelectDetailDay(0);
                                         setIsSelectDetail(4)
@@ -543,7 +543,7 @@ const Home: React.FC = () => {
                                 >
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm max-sm:h-[25px] max-sm:w-[25px]">{icons.iconTachometer}</span>
-                                        <p className="text-white/70 max-md:text-lg md:text-xl max-sm:text-sm">Áp Suất</p>
+                                        <p className="text-white/70 max-md:text-lg md:text-xl ">Áp Suất</p>
                                     </div>
                                     <div className="sm:pb-[15px] mt-[15px] max-sm:mb-[10px]">
                                         <ChartGauge value={selectPressure === "mb" ? resForecast?.current.pressure_mb : resForecast?.current.pressure_in} min={selectPressure === "mb" ? 960 : 28.5} max={selectPressure === "mb" ? 1050 : 31} donvi={selectPressure === "mb" ? " mb" : " in"} backgroundColor={["rgb(255,255,255,0.2)", "white", "rgb(255,255,255,0.2)"]} />
@@ -551,31 +551,31 @@ const Home: React.FC = () => {
                                 </div>
 
                             </div>
-                            <div className="grid lg:grid-cols-2 gap-5">
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full">
+                            <div className="grid lg:grid-cols-2 max-sm:gap-3 gap-5">
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[25px] max-sm:p-[15px] w-full">
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm max-sm:h-[25px] max-sm:w-[25px]">{icons.iconSolarPanel}</span>
-                                        <p className="text-white/70 max-md:text-lg md:text-xl max-sm:text-sm">Bức Xạ Mặt Trời</p>
+                                        <p className="text-white/70 max-md:text-lg md:text-xl ">Bức Xạ Mặt Trời</p>
                                     </div>
-                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] text-lg max-sm:text-sm">
+                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] text-lg ">
                                         <p className="w-[calc(100%-110px)]">Bức xạ sóng ngắn</p>
                                         <p>{resForecast?.current.short_rad} W/m²</p>
                                     </div>
-                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] text-lg max-sm:text-sm">
+                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] text-lg ">
                                         <p className="w-[calc(100%-110px)]">Bức xạ khuếch tán</p>
                                         <p>{resForecast?.current.diff_rad} W/m²</p>
                                     </div>
-                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] text-lg max-sm:text-sm">
+                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] text-lg ">
                                         <p className="w-[calc(100%-110px)]">Bức xạ trực tiếp</p>
                                         <p>{resForecast?.current.dni} W/m²</p>
                                     </div>
-                                    <div className="flex pt-[15px] pb-[5px] text-lg max-sm:text-sm">
+                                    <div className="flex pt-[15px] pb-[5px] text-lg ">
                                         <p className="w-[calc(100%-110px)]">Bức xạ nghiêng</p>
                                         <p>{resForecast?.current.gti} W/m²</p>
                                     </div>
                                     {/* them minh hoa */}
                                 </div>
-                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[20px] w-full"
+                                <div className="rounded-[10px] justify-center bg-white/5 backdrop-blur-[10px] text-white border-[1px] border-white/10 shadow-lg p-[25px] max-sm:p-[15px] w-full"
                                     onClick={() => {
                                         setSelectDetailDay(0);
                                         setIsSelectDetail(7)
@@ -584,30 +584,30 @@ const Home: React.FC = () => {
                                 >
                                     <div className="flex gap-2 items-center">
                                         <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm max-sm:h-[25px] max-sm:w-[25px]">{icons.iconSmog}</span>
-                                        <p className="text-white/70 max-md:text-lg md:text-xl max-sm:text-sm">Chất Lượng Không Khí</p>
+                                        <p className="text-white/70 max-md:text-lg md:text-xl ">Chất Lượng Không Khí</p>
                                     </div>
-                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] text-lg max-sm:text-sm">
+                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] text-lg ">
                                         <p className="w-[calc(100%-110px)] text-start">Carbon Monoxide (CO)</p>
                                         <p>{resForecast?.current.air_quality?.co} μg/m³</p>
                                     </div>
-                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] text-lg max-sm:text-sm">
+                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] text-lg ">
                                         <p className="w-[calc(100%-110px)] text-start">Nitrogen Dioxide (NO₂)</p>
                                         <p>{resForecast?.current.air_quality?.no2} μg/m³</p>
                                     </div>
-                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] text-lg max-sm:text-sm">
+                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] text-lg ">
                                         <p className="w-[calc(100%-110px)] text-start">Ozone (O₃)</p>
                                         <p>{resForecast?.current.air_quality?.o3} μg/m³</p>
                                     </div>
-                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] text-lg max-sm:text-sm">
+                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] text-lg ">
                                         <p className="w-[calc(100%-110px)] text-start">Sulfur Dioxide (SO₂)</p>
                                         <p>{resForecast?.current.air_quality?.so2} μg/m³</p>
                                     </div>
-                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] text-lg max-sm:text-sm">
+                                    <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] text-lg ">
                                         <p className="w-[calc(100%-110px)] text-start">Bụi mịn PM2.5</p>
                                         <p>{resForecast?.current.air_quality?.pm2_5} μg/m³</p>
                                     </div>
                                     <div className="flex pt-[15px] pb-[5px]">
-                                        <p className="w-[calc(100%-110px)] text-start text-lg max-sm:text-sm">Bụi mịn PM10</p>
+                                        <p className="w-[calc(100%-110px)] text-start text-lg ">Bụi mịn PM10</p>
                                         <p>{resForecast?.current.air_quality?.pm10} μg/m³</p>
                                     </div>
                                 </div>
@@ -656,7 +656,7 @@ const Home: React.FC = () => {
                                             }}
                                             className="grid justify-center px-[10px] gap-2"
                                         >
-                                            <p className="text-white text-center w-max text-lg max-sm:text-sm">
+                                            <p className="text-white text-center w-max text-lg ">
                                                 {isCurrentHour ? "Hiện tại" : `${forecastHour}:00`}
                                             </p>
                                             <div>
@@ -666,18 +666,18 @@ const Home: React.FC = () => {
                                                     src={hour.condition.icon}
                                                 />
                                                 {hour.will_it_rain == 1 && (
-                                                    <p className="text-center text-sm text-cyan-300 max-sm:text-[10px]">
+                                                    <p className="text-center text-sm text-cyan-300 ">
                                                         {hour.chance_of_rain}%
                                                     </p>
                                                 )}
                                                 {hour.will_it_snow == 1 && (
-                                                    <p className="text-center text-sm text-cyan-300 max-sm:text-[10px]">
+                                                    <p className="text-center text-sm text-cyan-300 ">
                                                         {hour.chance_of_snow}%
                                                     </p>
                                                 )}
                                             </div>
 
-                                            <p className="text-lg text-white max-sm:text-sm font-bold text-center self-end">
+                                            <p className="text-lg text-white  font-bold text-center self-end">
                                                 {selectTypeCF === 0 ? hour.temp_f + "°" : hour.temp_c + "°"}
                                             </p>
                                         </button>
@@ -691,9 +691,9 @@ const Home: React.FC = () => {
                 </section>
                 <section className="max-w-[1350px] mt-[20px] mx-auto grid p-[25px] items-center gap-2 bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
                     <div className="flex items-center flex justify-between">
-                        <p className=" text-white/70 flex gap-2 items-center pb-[10px] max-sm:text-sm sm:text-lg md:text-xl">Dự báo {selectDays} ngày tới</p>
+                        <p className=" text-white/70 flex gap-2 items-center pb-[10px]  sm:text-lg md:text-xl">Dự báo {selectDays} ngày tới</p>
                         <div className="justify-self-end flex gap-2 items-center pb-[10px]">
-                            <p className="text-white/70 max-sm:text-sm sm:text-lg md:text-xl">Chọn</p>
+                            <p className="text-white/70  sm:text-lg md:text-xl">Chọn</p>
                             <button className="text-white/70"
                                 onClick={handleClickCalendar}
                             >{icons.iconCalendar}</button>
@@ -732,22 +732,22 @@ const Home: React.FC = () => {
                                             <tbody >
                                                 <tr>
                                                     <td className="w-[85px]">
-                                                        <p className="text-white text-start text-lg w-[80px] max-sm:text-sm"> {formatDate(forecast.date)}</p>
+                                                        <p className="text-white text-start text-lg w-[80px] "> {formatDate(forecast.date)}</p>
                                                     </td>
                                                     <td className="w-[50px]">
                                                         <div className="grid w-[40px]">
                                                             <img className="h-[40px] mx-auto" alt={forecast.day.condition.text} src={forecast.day.condition.icon} />
 
                                                             {forecast.day.daily_will_it_rain == 1 && (
-                                                                <p className="text-center text-sm text-cyan-300 max-sm:text-[10px]">{forecast.day.daily_chance_of_rain}%</p>
+                                                                <p className="text-center text-sm text-cyan-300 ">{forecast.day.daily_chance_of_rain}%</p>
                                                             )}
                                                             {forecast.day.daily_will_it_snow == 1 && (
-                                                                <p className="text-center text-sm text-cyan-300 max-sm:text-[10px]">{forecast.day.daily_chance_of_snow}%</p>
+                                                                <p className="text-center text-sm text-cyan-300 ">{forecast.day.daily_chance_of_snow}%</p>
                                                             )}
                                                         </div>
                                                     </td>
                                                     <td className="w-[50px]">
-                                                        <p className="text-white/70 text-lg  w-[50px] max-sm:text-sm">{selectTypeCF === 0 ? forecast.day.mintemp_f + "°" : forecast.day.mintemp_c + "°"}</p>
+                                                        <p className="text-white/70 text-lg  w-[50px] ">{selectTypeCF === 0 ? forecast.day.mintemp_f + "°" : forecast.day.mintemp_c + "°"}</p>
                                                     </td>
                                                     {/* them mau  */}
                                                     <td className="p-[10px]">
@@ -765,7 +765,7 @@ const Home: React.FC = () => {
                                                         </div>
                                                     </td>
                                                     <td className="w-[50px]">
-                                                        <p className="text-white text-lg font-bold max-sm:text-sm">{selectTypeCF === 0 ? forecast.day.maxtemp_f + "°" : forecast.day.maxtemp_c + "°"}</p>
+                                                        <p className="text-white text-lg font-bold ">{selectTypeCF === 0 ? forecast.day.maxtemp_f + "°" : forecast.day.maxtemp_c + "°"}</p>
                                                     </td>
                                                 </tr>
                                             </tbody>

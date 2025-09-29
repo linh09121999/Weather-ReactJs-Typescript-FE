@@ -29,9 +29,9 @@ const DetailPressure: React.FC = () => {
                 <ChartLineBase maxValue={1050} currentIndex={isBorderDash} hours={hours} dataDetail={pressure} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi="hPa" />
             </div>
             <div className='grid gap-4'>
-                <p className='text-white text-xl max-sm:text-lg font-bold'>Giới thiệu về Áp suất</p>
+                <p className='text-white text-xl  font-bold'>Giới thiệu về Áp suất</p>
                 <div className='p-[25px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
-                    <p className='text-white text-lg max-sm:text-sm'>
+                    <p className='text-white text-lg '>
                         Những gì thay đổi nhanh, đáng kể về áp suất được sử dụng để dự đoán các thay đổi về thời tiết. Ví dụ: sự sụt giảm đáng kể về áp suất có thể nghĩa là sắp có mưa hoặc tuyết và áp suất tăng có nghĩa là thời tiết đang cải thiện. Áp suất cũng được gọi là áp suất khí quyển hoặc áp suất không khí
                     </p>
                 </div>
