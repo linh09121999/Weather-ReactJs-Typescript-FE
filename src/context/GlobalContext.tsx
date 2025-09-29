@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { useEffect, createContext, useContext, useState } from "react";
 import type { JSX, ReactNode } from "react";
 import { useMediaQuery } from "@mui/material"
 
@@ -959,11 +959,24 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     const [resSports, setResSports] = useState<ResSports>();
 
     const [timestamp, setTimestamp] = useState<number | null>(null);
+
+    // Load cache khi refresh
+    useEffect(() => {
+        const cached = localStorage.getItem("forecast_cache");
+        if (cached) {
+            const { data, time } = JSON.parse(cached);
+            setResForecast(data);
+            setTimestamp(time);
+        }
+    }, []);
+
     const setForecast = (data: ResForecast) => {
         setResForecast(data);
-        setTimestamp(Date.now());
+        const now = Date.now();
+        setTimestamp(now);
+        localStorage.setItem("forecast_cache", JSON.stringify({ data, time: now }));
     };
-    // true = đã hết hạn, false = còn hạn
+
     const checkTimeExp = () => {
         if (!timestamp) return true;
         return Date.now() - timestamp > 5 * 60 * 1000; // 5 phút

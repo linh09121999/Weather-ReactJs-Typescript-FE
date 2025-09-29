@@ -70,38 +70,35 @@ const Home: React.FC = () => {
         getUVlevel,
         getRainLever,
         getVisibilityLevel,
-        checkTimeExp,setForecast
+        checkTimeExp, setForecast
     } = useGlobal();
 
     const Api_findForecast = async (q: string, days: number, aqi: string, alerts: string, lang: string) => {
-        if (!resForecast || checkTimeExp()) {
-            try {
-                const response = await axios.get("https://weather-be-hhcd.onrender.com/api/forecast", { //"http://api.weatherapi.com/v1/forecast.json", { //https://weather-be-hhcd.onrender.com/api/forecast
-                    params: {
-                        key: keyApi,
-                        q: q,
-                        days: days,
-                        aqi: aqi,
-                        alerts: alerts,
-                        lang: lang
-                    },
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    }
-                })
-                setResForecast(response.data)
-                setForecast(response.data)
-            }
-            catch (err) {
-                if (axios.isAxiosError(err)) {
-                    console.error("Axios error:", err.message);
-                    toast.error(err.message);
-                } else {
-                    console.error("Unexpected error:", err);
+        try {
+            const response = await axios.get("https://weather-be-hhcd.onrender.com/api/forecast", { //"http://api.weatherapi.com/v1/forecast.json", { //https://weather-be-hhcd.onrender.com/api/forecast
+                params: {
+                    key: keyApi,
+                    q: q,
+                    days: days,
+                    aqi: aqi,
+                    alerts: alerts,
+                    lang: lang
+                },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 }
+            })
+            setResForecast(response.data)
+            setForecast(response.data)
+        }
+        catch (err) {
+            if (axios.isAxiosError(err)) {
+                console.error("Axios error:", err.message);
+                toast.error(err.message);
+            } else {
+                console.error("Unexpected error:", err);
             }
-            
         }
     }
 
@@ -240,18 +237,25 @@ const Home: React.FC = () => {
     // Api_findSports(selectQ!, selectLang)
 
     useEffect(() => {
-        Api_findForecast(formatCityName(selectQ!), selectDays, selectAqi, selectAlerts, selectLang)
+        if (!resForecast || checkTimeExp()) {
+            Api_findForecast(formatCityName(selectQ!), selectDays, selectAqi, selectAlerts, selectLang)
+        }
     }, [])
 
-    const lastHourRef = useRef<number>(currentHour);
+    const prevHourRef = useRef(new Date().getHours());
 
     useEffect(() => {
         const interval = setInterval(() => {
-            lastHourRef.current = currentHour
-            Api_findForecast(formatCityName(selectQ!), selectDays, selectAqi, selectAlerts, selectLang)
-        }, 60 * 60 * 1000); //check mỗi h
-        return () => clearInterval(interval)
-    }, [])
+            if (currentHour !== prevHourRef.current) {
+                prevHourRef.current = currentHour;
+                console.log("⏰ Sang giờ mới:", currentHour);
+                Api_findForecast(formatCityName(selectQ!), selectDays, selectAqi, selectAlerts, selectLang)
+
+            }
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, []);
 
     const handleClickSelectDays = (day: number) => {
         handleCloseCalendar()
