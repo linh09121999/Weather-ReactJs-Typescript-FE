@@ -44,6 +44,7 @@ const DetailAir: React.FC = () => {
     <div className='grid gap-6'>
       <div className="w-full p-[25px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px] grid gap-4">
         <ChartMultiLine
+          stepSize={100}
           label={label}
           hours={hours}
           dataDetail={dataDetail}

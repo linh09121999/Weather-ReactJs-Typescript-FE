@@ -32,7 +32,8 @@ type LineChartProps = {
     donvi: string;
     currentIndex: number; // 👈 vị trí giờ hiện tại
     maxValue?: number,
-    yCount?: number;
+    minValue?: number,
+    stepSize?: number
 };
 
 const ChartLineBase: React.FC<LineChartProps> = ({
@@ -44,6 +45,8 @@ const ChartLineBase: React.FC<LineChartProps> = ({
     donvi,
     currentIndex,
     maxValue,
+    minValue,
+    stepSize
 }) => {
     const { isMobile } = useGlobal()
 
@@ -58,7 +61,8 @@ const ChartLineBase: React.FC<LineChartProps> = ({
                 tension: 0.4,
                 fill: true,
                 // highlight point tại currentIndex
-                pointRadius: dataDetail.map((_, i) => (i === currentIndex ? 4 : 0)),
+                pointRadius: dataDetail.map((_, i) => (i === currentIndex ? 5 : 0)),
+                pointHoverRadius: dataDetail.map((_, i) => (i === currentIndex ? 7 : 4)),
                 pointBackgroundColor: borderColor,
                 segment: {
                     borderDash: (ctx: ScriptableLineSegmentContext) =>
@@ -81,11 +85,13 @@ const ChartLineBase: React.FC<LineChartProps> = ({
         scales: {
             y: {
                 max: maxValue,
+                min: minValue,
                 beginAtZero: true,
                 ticks: {
                     color: "rgba(255,255,255,0.7)",
                     font: { size: isMobile ? 12 : 16 },
                     callback: (value) => `${value} ${donvi}`,
+                    stepSize: stepSize
                 },
                 grid: { color: "rgba(255,255,255,0.2)" },
             },

@@ -33,6 +33,9 @@ type LineChartProps = {
     background: string[]; // màu fill
     donvi: string;
     currentIndex: number;
+    stepSize?: number,
+    maxValue?: number,
+    minValue?:number
 };
 
 const ChartMultiLine: React.FC<LineChartProps> = ({
@@ -44,6 +47,9 @@ const ChartMultiLine: React.FC<LineChartProps> = ({
     background,
     donvi,
     currentIndex,
+    stepSize,
+    maxValue,
+    minValue
 }) => {
     const { isMobile } = useGlobal()
 
@@ -56,6 +62,7 @@ const ChartMultiLine: React.FC<LineChartProps> = ({
         fill: true,
         // chỉ chấm tại currentIndex
         pointRadius: arr.map((_, i) => (i === currentIndex ? 5 : 0)),
+        pointHoverRadius: arr.map((_, i) => (i === currentIndex ? 7 : 4)),
         pointBackgroundColor: arr.map((_, i) =>
             i === currentIndex ? "#fff" : border[idx]
         ),
@@ -83,18 +90,26 @@ const ChartMultiLine: React.FC<LineChartProps> = ({
                 labels: {
                     color: "white",
                     font: { size: isMobile ? 12 : 16 },
-
+                    usePointStyle: true,
+                    padding: isMobile ? 18 : 20,
+                    boxHeight: isMobile ? 9 : 10
                 },
             },
-            title: { display: !!title, text: title ?? "" },
+            title: {
+                display: !!title,
+                text: title ?? ""
+            },
         },
         scales: {
             y: {
+                max: maxValue,
+                min: minValue,
                 beginAtZero: true,
                 ticks: {
                     color: "rgba(255,255,255,0.7)",
                     font: { size: isMobile ? 12 : 16 },
                     callback: (value) => `${value} ${donvi}`,
+                    stepSize: stepSize,
                 },
                 grid: { color: "rgba(255,255,255,0.2)" },
             },

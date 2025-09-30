@@ -26,11 +26,13 @@ const DetailVis: React.FC = () => {
         ) ?? [])
 
     const dvVis = isMobile ? "" : selectVis === "km" ? "km" : "dặm"
+    const stepSizeVis = selectVis === "km" ? 5 : 5
 
     return (
         <div className='grid gap-6'>
             <div className='w-full p-[25px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]' >
                 <ChartLineBase
+                    stepSize={stepSizeVis}
                     maxValue={45}
                     currentIndex={isBorderDash}
                     hours={hours}

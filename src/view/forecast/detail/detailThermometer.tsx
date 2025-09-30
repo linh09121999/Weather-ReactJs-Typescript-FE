@@ -51,15 +51,16 @@ const DetailThermometer: React.FC = () => {
         ) ?? [];
 
     const dvCF = isMobile ? "" : selectTypeCF === 0 ? '°F' : '°C'
+    const stepSizeFC = selectTypeCF === 0 ? 5 : 3
 
     return (
         <div className='grid gap-6'>
             <div className='grid grid-cols-2 gap-5 max-lg:hidden'>
                 <div className="w-full p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
-                    <ChartLineTopText maxValue={42} currentIndex={isBorderDash} itemTop={imgCondition} hours={hours} dataDetail={temp} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvCF} />
+                    <ChartLineTopText stepSize={stepSizeFC} currentIndex={isBorderDash} itemTop={imgCondition} hours={hours} dataDetail={temp} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvCF} />
                 </div>
                 <div className="w-full p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
-                    <ChartLineTopText maxValue={42} currentIndex={isBorderDash} itemTop={imgCondition} hours={hours} dataDetail={feelslike} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvCF} />
+                    <ChartLineTopText stepSize={stepSizeFC} currentIndex={isBorderDash} itemTop={imgCondition} hours={hours} dataDetail={feelslike} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvCF} />
                 </div>
                 {typeTemp_Fellslike.map((type, id) => (
                     <div key={id} className='grid gap-2 text-lg '>
@@ -74,12 +75,12 @@ const DetailThermometer: React.FC = () => {
                 {selectTypeTemp_Fellslike === 0 ?
                     //thuc te
                     <div className="w-full max-sm:p-[15px] p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
-                        <ChartLineTopText maxValue={42} currentIndex={isBorderDash} itemTop={imgCondition} hours={hours} dataDetail={temp} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvCF} />
+                        <ChartLineTopText stepSize={stepSizeFC} currentIndex={isBorderDash} itemTop={imgCondition} hours={hours} dataDetail={temp} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvCF} />
                     </div>
                     :
                     //cam nhan
                     <div className="w-full max-sm:p-[15px] p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
-                        <ChartLineTopText maxValue={42} currentIndex={isBorderDash} itemTop={imgCondition} hours={hours} dataDetail={feelslike} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvCF} />
+                        <ChartLineTopText stepSize={stepSizeFC} currentIndex={isBorderDash} itemTop={imgCondition} hours={hours} dataDetail={feelslike} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvCF} />
                     </div>
                 }
 
@@ -102,7 +103,7 @@ const DetailThermometer: React.FC = () => {
                 <p className='text-lg text-white/70  '>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
                 {/* bieu do */}
                 <div className='w-full p-[25px] max-sm:p-[15px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
-                    <ChartLineBase maxValue={100} currentIndex={isBorderDash} hours={hours} dataDetail={rainChance} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={isMobile ? "" : "%"} />
+                    <ChartLineBase stepSize={20} maxValue={100} currentIndex={isBorderDash} hours={hours} dataDetail={rainChance} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={isMobile ? "" : "%"} />
                 </div>
                 <p className='text-lg text-white/70 '>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>
 

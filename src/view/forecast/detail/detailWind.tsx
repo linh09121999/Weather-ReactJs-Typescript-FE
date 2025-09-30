@@ -33,11 +33,13 @@ const DetailWind: React.FC = () => {
 
     const donvi = isMobile ? "" : selectWind === "km/h" ? "km/h" : "mph"
 
+    const stepSizeWind = selectWind === "km/h" ? 5 : 3
+
     return (
         <div className='grid gap-6'>
             <div className="w-full grid gap-4 max-sm:p-[15px] p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
                 {/* bieu do */}
-                <ChartLineBase currentIndex={isBorderDash} hours={hours} dataDetail={wind} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={donvi} />
+                <ChartLineBase stepSize={stepSizeWind} currentIndex={isBorderDash} hours={hours} dataDetail={wind} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={donvi} />
                 <p className='text-white/70 text-lg '>Tốc độ gió lớn nhất đạt {selectWind === "km/h" ? resForecast?.forecast.forecastday[selectDetailDay].day.maxwind_kph + " km/h" : resForecast?.forecast.forecastday[selectDetailDay].day.maxwind_mph + " mph"}</p>
             </div>
             <div className='grid gap-4'>
