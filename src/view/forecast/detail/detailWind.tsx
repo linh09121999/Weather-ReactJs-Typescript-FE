@@ -33,7 +33,7 @@ const DetailWind: React.FC = () => {
 
     const donvi = isMobile ? "" : selectWind === "km/h" ? "km/h" : "mph"
 
-    const stepSizeWind = selectWind === "km/h" ? 5 : 3
+    const stepSizeWind = selectWind === "km/h" ? 2 : 1
 
     return (
         <div className='grid gap-6'>

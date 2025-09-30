@@ -51,7 +51,7 @@ const DetailThermometer: React.FC = () => {
         ) ?? [];
 
     const dvCF = isMobile ? "" : selectTypeCF === 0 ? '°F' : '°C'
-    const stepSizeFC = selectTypeCF === 0 ? 5 : 3
+    const stepSizeFC = selectTypeCF === 0 ? 2 : 1
 
     return (
         <div className='grid gap-6'>

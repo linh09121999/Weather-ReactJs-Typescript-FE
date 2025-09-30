@@ -23,7 +23,7 @@ const DetailUV: React.FC = () => {
     return (
         <div className='grid gap-6'>
             <div className="w-full p-[25px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
-                <ChartLineBase stepSize={1} maxValue={11} currentIndex={isBorderDash} hours={hours} dataDetail={uv} borderColor="white" backgroundColor="rgb(255,255,255,0.5)"  donvi=""/>
+                <ChartLineBase stepSize={0.5} maxValue={11} currentIndex={isBorderDash} hours={hours} dataDetail={uv} borderColor="white" backgroundColor="rgb(255,255,255,0.5)"  donvi=""/>
             </div>
             <div className='grid gap-4'>
                 <p className='text-white text-xl font-bold '>Giới thiệu về chỉ số UV</p>

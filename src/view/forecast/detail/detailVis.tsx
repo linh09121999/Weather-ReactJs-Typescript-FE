@@ -26,7 +26,7 @@ const DetailVis: React.FC = () => {
         ) ?? [])
 
     const dvVis = isMobile ? "" : selectVis === "km" ? "km" : "dặm"
-    const stepSizeVis = selectVis === "km" ? 5 : 5
+    const stepSizeVis = selectVis === "km" ? 3 : 3
 
     return (
         <div className='grid gap-6'>
