@@ -979,7 +979,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
 
     const checkTimeExp = () => {
         if (!timestamp) return true;
-        return Date.now() - timestamp > 5 * 60 * 1000; // 5 phút
+        return Date.now() - timestamp > 5 * 60 * 1000; //phút
     };
 
     const [selectQ, setSelectQ] = useState<string | undefined>("HaNoi");

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useGlobal } from '../../context/GlobalContext';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios";
@@ -246,18 +246,10 @@ const Home: React.FC = () => {
         // }
     }, [])
 
-    const prevHourRef = useRef(new Date().getHours());
-
     useEffect(() => {
         const interval = setInterval(() => {
-            if (currentHour !== prevHourRef.current) {
-                const currentHour = new Date().getHours();
-                prevHourRef.current = currentHour;
-                console.log("⏰ Sang giờ mới:", currentHour);
-                Api_findForecast(formatCityName(selectQ!), selectDays, selectAqi, selectAlerts, selectLang)
-
-            }
-        }, 1000);
+            Api_findForecast(formatCityName(selectQ!), selectDays, selectAqi, selectAlerts, selectLang)
+        }, 60 * 1000);
 
         return () => clearInterval(interval);
     }, []);
