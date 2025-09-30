@@ -37,9 +37,11 @@ const DetailWind: React.FC = () => {
 
     return (
         <div className='grid gap-6'>
-            <div className="w-full grid gap-4 max-sm:p-[15px] p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
-                {/* bieu do */}
-                <ChartLineBase stepSize={stepSizeWind} currentIndex={isBorderDash} hours={hours} dataDetail={wind} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={donvi} />
+            <div className="w-full grid gap-4">
+                <div className=" max-sm:p-[15px] p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
+                    {/* bieu do */}
+                    <ChartLineBase title="Tốc độ gió" stepSize={stepSizeWind} currentIndex={isBorderDash} hours={hours} dataDetail={wind} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={donvi} />
+                </div>
                 <p className='text-white/70 text-lg '>Tốc độ gió lớn nhất đạt {selectWind === "km/h" ? resForecast?.forecast.forecastday[selectDetailDay].day.maxwind_kph + " km/h" : resForecast?.forecast.forecastday[selectDetailDay].day.maxwind_mph + " mph"}</p>
             </div>
             <div className='grid gap-4'>
@@ -56,7 +58,7 @@ const DetailWind: React.FC = () => {
                         <div className="grid items-center px-[10px] gap-2 text-white font-semibold ">
                             <p className="font-semibold w-max">BFT</p>
                             <p className="font-semibold w-max">Mô tả</p>
-                            <p className="font-semibold w-max">km/h</p>
+                            <p className="font-semibold w-max">{selectWind === "km/h" ? "Km/h" : "Mph"}</p>
                         </div>
                         {listBeaufore.map((item) => (
                             <div className="grid items-center px-[10px] gap-2 ">
@@ -65,7 +67,7 @@ const DetailWind: React.FC = () => {
                                     {item.bft}
                                 </div>
                                 <p className="text-lg text-white/70 w-max">{item.desc}</p>
-                                <p className="text-lg text-white/70 w-max">{item.angel}</p>
+                                <p className="text-lg text-white/70 w-max">{selectWind === "km/h" ? item.angelKmH : item.angelMph}</p>
                             </div>
                         ))}
                     </div>
@@ -74,7 +76,7 @@ const DetailWind: React.FC = () => {
                             <tr>
                                 <th className="text-start px-1 py-2">BFT</th>
                                 <th className="text-start px-1 py-2">Mô tả</th>
-                                <th className="text-start px-1 py-2">km/h</th>
+                                <th className="text-start px-1 py-2">{selectWind === "km/h" ? "Km/h" : "Mph"}</th>
                             </tr>
                         </thead>
                         <tbody >
@@ -92,7 +94,7 @@ const DetailWind: React.FC = () => {
                                     {/* Desc */}
                                     <td className="px-1 py-3 text-lg  text-white/70">{item.desc}</td>
                                     {/* Angel */}
-                                    <td className="px-1 py-3 text-lg  text-white/70">{item.angel}</td>
+                                    <td className="px-1 py-3 text-lg  text-white/70">{selectWind === "km/h" ? item.angelKmH : item.angelMph}</td>
                                 </tr>
                             ))}
                         </tbody>

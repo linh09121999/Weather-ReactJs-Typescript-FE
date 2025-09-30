@@ -32,6 +32,7 @@ const DetailVis: React.FC = () => {
         <div className='grid gap-6'>
             <div className='w-full p-[25px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]' >
                 <ChartLineBase
+                    title="Tầm nhìn"
                     stepSize={stepSizeVis}
                     maxValue={45}
                     currentIndex={isBorderDash}

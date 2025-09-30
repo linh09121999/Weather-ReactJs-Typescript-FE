@@ -1,13 +1,16 @@
 import React from "react";
 import { useGlobal } from '../../../context/GlobalContext';
 import ChartMultiLine from "../../../charts/chartMultiLine";
+import ChartLineBase from "../../../charts/chartLineBase";
 
 const DetailAir: React.FC = () => {
   const {
     selectDetailDay,
     resForecast,
     isBorderDash,
-    isMobile
+    isMobile,
+    typeAir,
+    selectTypeAir, setSelectTypeAir
   } = useGlobal()
 
   const hours = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
@@ -19,46 +22,119 @@ const DetailAir: React.FC = () => {
 
   const dataDetail = [
     resForecast?.forecast.forecastday[selectDetailDay].hour.map(
-      (h) => h.air_quality?.co ?? 0
+      (h) => h.air_quality?.["us-epa-index"] ?? 0
     ) ?? [],
     resForecast?.forecast.forecastday[selectDetailDay].hour.map(
-      (h) => h.air_quality?.no2 ?? 0
-    ) ?? [],
-    resForecast?.forecast.forecastday[selectDetailDay].hour.map(
-      (h) => h.air_quality?.o3 ?? 0
-    ) ?? [],
-    resForecast?.forecast.forecastday[selectDetailDay].hour.map(
-      (h) => h.air_quality?.so2 ?? 0
-    ) ?? [],
-    resForecast?.forecast.forecastday[selectDetailDay].hour.map(
-      (h) => h.air_quality?.pm2_5 ?? 0
-    ) ?? [],
-    resForecast?.forecast.forecastday[selectDetailDay].hour.map(
-      (h) => h.air_quality?.pm10 ?? 0
+      (h) => h.air_quality?.["gb-defra-index"] ?? 0
     ) ?? [],
   ]
 
-  const label = ["CO", "NO2", "O3", "SO2", "PM2_5", "PM10"]
+  const label = ["Us-epa", "Gb-defra"]
+
+  const co = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
+    (h) => h.air_quality?.co ?? 0
+  ) ?? []
+  const no2 = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
+    (h) => h.air_quality?.no2 ?? 0
+  ) ?? []
+  const o3 = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
+    (h) => h.air_quality?.o3 ?? 0
+  ) ?? []
+  const so2 = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
+    (h) => h.air_quality?.so2 ?? 0
+  ) ?? []
+  const pm2_5 = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
+    (h) => h.air_quality?.pm2_5 ?? 0
+  ) ?? []
+  const pm10 = resForecast?.forecast.forecastday[selectDetailDay].hour.map(
+    (h) => h.air_quality?.pm10 ?? 0
+  ) ?? []
+
+  const dvAir = isMobile ? "" : "μg/m³"
 
   return (
     <div className='grid gap-6'>
       <div className="w-full p-[25px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px] grid gap-4">
         <ChartMultiLine
-          stepSize={10}
+          stepSize={0.5}
           label={label}
           hours={hours}
           dataDetail={dataDetail}
-          border={["red", "blue", "green", "orange", "purple", "cyan"]}
+          border={["red", "blue"]}
           background={[
             "rgba(255,0,0,0.2)",
             "rgba(0,0,255,0.2)",
-            "rgba(0,255,0,0.2)",
-            "rgba(255,165,0,0.2)",
-            "rgba(128,0,128,0.2)",
-            "rgba(0,255,255,0.2)",
           ]}
-          currentIndex={isBorderDash} donvi={isMobile ? "" : "μg/m³"} />
+          currentIndex={isBorderDash} donvi={""} />
       </div>
+
+      <div className='grid grid-cols-2 gap-6 max-lg:hidden'>
+        <div className="w-full p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
+          <ChartLineBase stepSize={100} title={typeAir[0].title} currentIndex={isBorderDash} hours={hours} dataDetail={co} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvAir} />
+        </div>
+        <div className="w-full p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
+          <ChartLineBase stepSize={10} title={typeAir[1].title} currentIndex={isBorderDash} hours={hours} dataDetail={no2} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvAir} />
+        </div>
+        <div className="w-full p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
+          <ChartLineBase stepSize={10} title={typeAir[2].title} currentIndex={isBorderDash} hours={hours} dataDetail={o3} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvAir} />
+        </div>
+        <div className="w-full p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
+          <ChartLineBase stepSize={10} title={typeAir[3].title} currentIndex={isBorderDash} hours={hours} dataDetail={so2} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvAir} />
+        </div>
+        <div className="w-full p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
+          <ChartLineBase stepSize={10} title={typeAir[4].title} currentIndex={isBorderDash} hours={hours} dataDetail={pm2_5} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvAir} />
+        </div>
+        <div className="w-full p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
+          <ChartLineBase stepSize={10} title={typeAir[5].title} currentIndex={isBorderDash} hours={hours} dataDetail={pm10} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvAir} />
+        </div>
+      </div>
+      <div className='grid gap-4 lg:hidden'>
+        {/* bieu do theo selectTypeTemp_Fellslike */}
+        {selectTypeAir === 0 &&
+          <div className="w-full max-sm:p-[15px] p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
+            <ChartLineBase stepSize={100} currentIndex={isBorderDash} hours={hours} dataDetail={co} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvAir} />
+          </div>
+        }
+        {selectTypeAir === 1 &&
+          <div className="w-full max-sm:p-[15px] p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
+            <ChartLineBase stepSize={10} currentIndex={isBorderDash} hours={hours} dataDetail={no2} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvAir} />
+          </div>
+        }
+        {selectTypeAir === 2 &&
+          <div className="w-full max-sm:p-[15px] p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
+            <ChartLineBase stepSize={10} currentIndex={isBorderDash} hours={hours} dataDetail={o3} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvAir} />
+          </div>
+        }
+        {selectTypeAir === 3 &&
+          <div className="w-full max-sm:p-[15px] p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
+            <ChartLineBase stepSize={10} currentIndex={isBorderDash} hours={hours} dataDetail={so2} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvAir} />
+          </div>
+        }
+        {selectTypeAir === 4 &&
+          <div className="w-full max-sm:p-[15px] p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
+            <ChartLineBase stepSize={10} currentIndex={isBorderDash} hours={hours} dataDetail={pm2_5} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvAir} />
+          </div>
+        }
+        {selectTypeAir === 5 &&
+          <div className="w-full max-sm:p-[15px] p-[25px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]">
+            <ChartLineBase stepSize={10} currentIndex={isBorderDash} hours={hours} dataDetail={pm10} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={dvAir} />
+          </div>
+        }
+
+        <div className='flex bg-white/5 rounded-[15px] backdrop-blur-[10px] border-[1px] border-solid border-white/10 px-[5px] py-[5px] shadow-lg text-lg '>
+          {typeAir.map((type) => (
+            <>
+              <button key={type.id}
+                className={`px-[6px] w-1/2 py-[2px] rounded-[10px] transition-all duration-300 ease  ${selectTypeAir === type.id ? "bg-white font-bold text-[#2B32B2]" : "text-white"}`}
+                onClick={() => {
+                  setSelectTypeAir(type.id)
+                }}
+              >{type.title.toLowerCase()}</button>
+            </>
+          ))}
+        </div>
+      </div>
+
       <div className='grid gap-4'>
         <p className='text-white text-xl font-bold '>Giới thiệu về khí CO</p>
         <div className='p-[25px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>

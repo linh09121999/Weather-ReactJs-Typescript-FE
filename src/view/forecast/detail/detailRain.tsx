@@ -36,11 +36,13 @@ const DetailRain: React.FC = () => {
     const donviRain = isMobile ? "" :
         selectSrecip === "mm" ? "mm" : "in"
 
+    const stepSize = selectSrecip === "mm" ? 1 : 0.1
+
     return (
         <div className='grid gap-6'>
             <div className='w-full p-[25px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
                 {/* bieu do mmua */}
-                <ChartBarBase currentIndex={isBorderDash} labels={hours} values={rain} borderWidth={0} borderColor="white" backgroundColor="white" donvi={donviRain} />
+                <ChartBarBase title="Lượng mưa" stepSize={stepSize} currentIndex={isBorderDash} labels={hours} values={rain} borderWidth={0} borderColor="white" backgroundColor="white" donvi={donviRain} />
             </div>
 
             <div className='grid gap-4'>
@@ -48,7 +50,7 @@ const DetailRain: React.FC = () => {
                 <p className='text-lg  text-white/70'>Khả năng có mưa  {resForecast?.forecast.forecastday[selectDetailDay].day.daily_chance_of_rain} %</p>
                 {/* bieu do */}
                 <div className='w-full p-[25px] max-sm:p-[15px] bg-white/5 border-[1px] border-solid border-white/10 backdrop-blur-[10px] shadow-lg rounded-[10px]'>
-                    <ChartLineBase currentIndex={isBorderDash} hours={hours} dataDetail={rainChance} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={isMobile ? "" : "%"} />
+                    <ChartLineBase title="Khả năng mưa" currentIndex={isBorderDash} hours={hours} dataDetail={rainChance} borderColor="white" backgroundColor="rgb(255,255,255,0.5)" donvi={isMobile ? "" : "%"} />
                 </div>
                 <p className='text-lg  text-white/70'>Khả năng có mưa hằng ngày có xu hướng cao hơn khả năng mưa cho mỗi giờ</p>
 

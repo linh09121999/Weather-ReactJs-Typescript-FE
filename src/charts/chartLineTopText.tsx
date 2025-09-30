@@ -34,10 +34,10 @@ type LineChartProps = {
   currentIndex: number;
   maxValue?: number
   minValue?: number,
-  stepSize?:number
+  stepSize?: number
 };
 
-const ChartLineBase: React.FC<LineChartProps> = ({
+const ChartLineTopText: React.FC<LineChartProps> = ({
   hours,
   itemTop,
   dataDetail,
@@ -92,7 +92,17 @@ const ChartLineBase: React.FC<LineChartProps> = ({
     },
     plugins: {
       legend: { display: false },
-      title: { display: !!title, text: title ?? "" },
+      title: {
+        display: !!title,
+        text: title ?? "",
+        align: 'start',
+        font: { size: isMobile ? 12 : 16 },
+        color: "white",
+        padding: {
+          top: -35,
+          bottom: 40
+        }
+      },
     },
     scales: {
       y: {
@@ -169,4 +179,4 @@ const ChartLineBase: React.FC<LineChartProps> = ({
   );
 };
 
-export default ChartLineBase;
+export default ChartLineTopText;

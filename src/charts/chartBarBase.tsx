@@ -23,6 +23,9 @@ type BarChartProps = {
     borderWidth: number;
     donvi: string;
     currentIndex: number; // 👈 thêm để biết cột nào là hiện tại
+    maxValue?: number
+    minValue?: number,
+    stepSize?: number
 };
 
 const ChartBarBase: React.FC<BarChartProps> = ({
@@ -34,6 +37,9 @@ const ChartBarBase: React.FC<BarChartProps> = ({
     backgroundColor,
     donvi,
     currentIndex,
+    maxValue,
+    minValue,
+    stepSize
 }) => {
     const { isMobile } = useGlobal()
 
@@ -42,7 +48,17 @@ const ChartBarBase: React.FC<BarChartProps> = ({
         maintainAspectRatio: false,
         plugins: {
             legend: { display: false },
-            title: { display: !!title, text: title ?? "" },
+            title: {
+                display: !!title,
+                text: title ?? "",
+                align: 'start',
+                font: { size: isMobile ? 12 : 16 },
+                color: "white",
+                padding: {
+                    top: 10,
+                    bottom: 25
+                }
+            },
         },
         scales: {
             x: {
@@ -54,10 +70,13 @@ const ChartBarBase: React.FC<BarChartProps> = ({
             },
             y: {
                 beginAtZero: true,
+                max: maxValue,
+                min: minValue,
                 ticks: {
                     color: "rgba(255,255,255,0.7)",
                     font: { size: isMobile ? 12 : 16 },
                     callback: (value) => `${value} ${donvi}`,
+                    stepSize: stepSize
                 },
                 grid: { color: "rgba(255,255,255,0.2)" },
             },

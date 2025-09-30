@@ -728,13 +728,13 @@ const defaultListSelectShowDetail: ListSelectShowDetail[] = [
     },
 ]
 
-export interface TypeTemp_Fellslike {
+export interface TypeButton {
     id: number;
     title: string;
     desc: string;
 }
 
-const defaultTypeTemp_Fellslike: TypeTemp_Fellslike[] = [
+const defaultTypeTemp_Fellslike: TypeButton[] = [
     {
         id: 0,
         title: "Thực tế",
@@ -747,10 +747,44 @@ const defaultTypeTemp_Fellslike: TypeTemp_Fellslike[] = [
     }
 ]
 
+const defaultTypeAir: TypeButton[] = [
+    {
+        id: 0,
+        title: "CO",
+        desc: "Khí Carbon Monoxide"
+    },
+    {
+        id: 1,
+        title: "NO2",
+        desc: "Khí Nitơ đioxit"
+    },
+    {
+        id: 2,
+        title: "O3",
+        desc: "Khí Ozone"
+    },
+    {
+        id: 3,
+        title: "SO2",
+        desc: "Khí Sulfur Dioxide"
+    },
+    {
+        id: 4,
+        title: "PM2.5",
+        desc: "Bụi mịn PM2.5"
+    },
+    {
+        id: 5,
+        title: "PM10",
+        desc: "Bụi mịn PM10"
+    }
+]
+
 export interface ListBeaufore {
     bft: number;
     desc: string;
-    angel: string;
+    angelKmH: string;
+    angelMph: string;
     color: string;
 }
 
@@ -758,79 +792,92 @@ const defaultListBeaufore: ListBeaufore[] = [
     {
         bft: 0,
         desc: "Lặng gió",
-        angel: "< 2",
+        angelKmH: "< 2",
+        angelMph: "< 1",
         color: "bg-sky-600"
     },
     {
         bft: 1,
         desc: "Gió rất nhẹ",
-        angel: "2 - 5",
+        angelKmH: "2 - 5",
+        angelMph: "1 - 2",
         color: "bg-cyan-600"
     },
     {
         bft: 2,
         desc: "Gió yếu",
-        angel: "6 - 11",
+        angelKmH: "6 - 11",
+        angelMph: "3 - 6",
         color: "bg-teal-600"
     },
     {
         bft: 3,
         desc: "Gió nhẹ",
-        angel: "12 - 19",
+        angelKmH: "12 - 19",
+        angelMph: "7 - 11",
         color: "bg-emerald-500"
     },
     {
         bft: 4,
         desc: "Gió vừa phải",
-        angel: "20 - 28",
+        angelKmH: "20 - 28",
+        angelMph: "12 - 17",
         color: "bg-green-400"
     },
     {
         bft: 5,
         desc: "Gió mạnh vừa phải",
-        angel: "29 - 38",
+        angelKmH: "29 - 38",
+        angelMph: "18 - 23",
         color: "bg-lime-300"
     },
     {
         bft: 6,
         desc: "Gió khá mạnh",
-        angel: "39 - 49",
+        angelKmH: "39 - 49",
+        angelMph: "24 - 30",
         color: "bg-yellow-200"
     },
     {
         bft: 7,
         desc: "Gió mạnh",
-        angel: "50 - 61",
+        angelKmH: "50 - 61",
+        angelMph: "31 - 38",
         color: "bg-yellow-300"
     },
     {
         bft: 8,
         desc: "Gió lốc",
-        angel: "62 - 74",
+        angelKmH: "62 - 74",
+        angelMph: "39 - 45",
         color: "bg-amber-400"
     },
     {
         bft: 9,
         desc: "Gió lốc mạnh",
-        angel: "75 - 87",
+        angelKmH: "75 - 87",
+        angelMph: "46 - 54",
         color: "bg-orange-400"
     },
     {
         bft: 10,
         desc: "Bão",
-        angel: "88 - 102",
+        angelKmH: "88 - 102",
+        angelMph: "55 - 63",
         color: "bg-amber-600"
     },
     {
         bft: 11,
         desc: "Bão rất mạnh",
-        angel: "103 - 117",
+        angelKmH: "103 - 117",
+        angelMph: "64 - 72",
         color: "bg-orange-600"
     },
     {
         bft: 12,
         desc: "Siêu bão",
-        angel: "> 118",
+        angelKmH: "> 118",
+        angelMph: "> 73",
         color: "bg-red-600"
     },
 ]
@@ -911,7 +958,8 @@ export interface GlobalState {
     setSelectVis: (selectVis: string) => void;
     selectAir: string;
     setSelectAir: (selectAir: string) => void;
-    typeTemp_Fellslike: TypeTemp_Fellslike[];
+    typeTemp_Fellslike: TypeButton[];
+    typeAir: TypeButton[];
     listBeaufore: ListBeaufore[];
     isSelectDetail: number;
     setIsSelectDetail: (isSelectDetail: number) => void;
@@ -933,6 +981,8 @@ export interface GlobalState {
     timestamp: number | null;
     checkTimeExp: () => boolean;
     setForecast: (data: ResForecast) => void;
+    selectTypeAir: number;
+    setSelectTypeAir: (selectTypeAir: number) => void;
 }
 
 
@@ -1012,6 +1062,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     const [selectAir, setSelectAir] = useState<string>("us-epa")
     const [isSelectDetail, setIsSelectDetail] = useState<number>(0)
     const [selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike] = useState<number>(0)
+    const [selectTypeAir, setSelectTypeAir] = useState<number>(0)
 
     const isBorderDash = selectDetailDay === 0 ? currentHour : 0
 
@@ -1156,6 +1207,8 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         selectVis, setSelectVis,
         selectAir, setSelectAir,
         typeTemp_Fellslike: defaultTypeTemp_Fellslike,
+        typeAir: defaultTypeAir,
+        selectTypeAir, setSelectTypeAir,
         listBeaufore: defaultListBeaufore,
         isSelectDetail, setIsSelectDetail,
         selectTypeTemp_Fellslike, setSelectTypeTemp_Fellslike,

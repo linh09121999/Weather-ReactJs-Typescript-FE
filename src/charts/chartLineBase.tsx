@@ -80,7 +80,17 @@ const ChartLineBase: React.FC<LineChartProps> = ({
         responsive: true,
         plugins: {
             legend: { display: false },
-            title: { display: !!title, text: title ?? "" },
+            title: {
+                display: !!title,
+                text: title ?? "",
+                align: 'start',
+                font: { size: isMobile ? 12 : 16 },
+                color: "white",
+                padding: {
+                    top: 10,
+                    bottom: 30
+                }
+            },
         },
         scales: {
             y: {

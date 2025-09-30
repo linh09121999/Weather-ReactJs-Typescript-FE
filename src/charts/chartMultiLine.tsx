@@ -35,7 +35,7 @@ type LineChartProps = {
     currentIndex: number;
     stepSize?: number,
     maxValue?: number,
-    minValue?:number
+    minValue?: number
 };
 
 const ChartMultiLine: React.FC<LineChartProps> = ({
@@ -91,13 +91,20 @@ const ChartMultiLine: React.FC<LineChartProps> = ({
                     color: "white",
                     font: { size: isMobile ? 12 : 16 },
                     usePointStyle: true,
-                    padding: isMobile ? 18 : 20,
-                    boxHeight: isMobile ? 9 : 10
+                    padding: isMobile ? 6 : 20,
+                    boxHeight: isMobile ? 6 : 10,
                 },
             },
             title: {
                 display: !!title,
-                text: title ?? ""
+                text: title ?? "",
+                align: 'start',
+                font: { size: isMobile ? 12 : 16 },
+                color: "white",
+                padding: {
+                    top: 10,
+                    bottom: 25
+                }
             },
         },
         scales: {
