@@ -506,10 +506,10 @@ const Home: React.FC = () => {
                                         <>
                                             <div className="flex gap-2 items-center">
                                                 <span className="w-[30px] h-[30px] bg-white/20 rounded-full  content-center max-md:text-sm max-sm:h-[25px] max-sm:w-[25px]">{icons.iconSunrise}</span>
-                                                <p className="text-white/70 max-md:text-lg md:text-xl ">Mặt trăng lặn</p>
+                                                <p className="text-white/70 max-md:text-lg md:text-xl ">Mặt trăng mọc</p>
                                             </div>
-                                            <p className="text-3xl my-[15px] font-[600] max-sm:text-2xl">{convertTo24(resForecast?.forecast.forecastday[0].astro.moonset)}</p>
-                                            <p className="text-lg ">Mặt trăng mọc: {convertTo24(resForecast?.forecast.forecastday[0].astro.moonrise)} </p>
+                                            <p className="text-3xl my-[15px] font-[600] max-sm:text-2xl">{convertTo24(resForecast?.forecast.forecastday[0].astro.moonrise)}</p>
+                                            <p className="text-lg ">Mặt trăng lặn: {convertTo24(resForecast?.forecast.forecastday[1].astro.moonset)} </p>
                                         </>
                                     }
                                     {/* thêm minh họa */}
