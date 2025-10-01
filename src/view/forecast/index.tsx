@@ -570,19 +570,19 @@ const Home: React.FC = () => {
                                         <p className="text-white/70 max-md:text-lg md:text-xl ">Bức Xạ Mặt Trời</p>
                                     </div>
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] text-lg ">
-                                        <p className="w-[calc(100%-110px)]">Bức xạ sóng ngắn</p>
+                                        <p className="w-[calc(100%-120px)]">Bức xạ sóng ngắn</p>
                                         <p>{resForecast?.current.short_rad} W/m²</p>
                                     </div>
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] text-lg ">
-                                        <p className="w-[calc(100%-110px)]">Bức xạ khuếch tán</p>
+                                        <p className="w-[calc(100%-120px)]">Bức xạ khuếch tán</p>
                                         <p>{resForecast?.current.diff_rad} W/m²</p>
                                     </div>
                                     <div className="flex border-b-[1px] border-b-white/20 pt-[15px] pb-[5px] text-lg ">
-                                        <p className="w-[calc(100%-110px)]">Bức xạ trực tiếp</p>
+                                        <p className="w-[calc(100%-120px)]">Bức xạ trực tiếp</p>
                                         <p>{resForecast?.current.dni} W/m²</p>
                                     </div>
                                     <div className="flex pt-[15px] pb-[5px] text-lg ">
-                                        <p className="w-[calc(100%-110px)]">Bức xạ nghiêng</p>
+                                        <p className="w-[calc(100%-120px)]">Bức xạ nghiêng</p>
                                         <p>{resForecast?.current.gti} W/m²</p>
                                     </div>
                                     {/* them minh hoa */}
