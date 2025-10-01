@@ -303,13 +303,28 @@ const Home: React.FC = () => {
 
     const convertTo24 = (time12h: string | undefined) => {
         if (!time12h) return undefined;
-        const [time, modifier] = time12h.trim().split(" ");
-        let [hours, minutes] = time.split(":").map(Number);
 
-        if (modifier.toUpperCase() === "PM" && hours < 12) {
+        // nếu dữ liệu trả về là "No moonset" thì trả nguyên
+        if (time12h.trim().toLowerCase() === "no moonset") {
+            return "No moonset";
+        }
+
+        const parts = time12h.trim().split(" ");
+        if (parts.length !== 2) return undefined; // không đúng định dạng "hh:mm AM/PM" hoặc "hh AM/PM"
+
+        const [time, modifier] = parts;
+        const [h, m] = time.split(":");
+
+        if (!h || !modifier) return undefined;
+
+        let hours = Number(h);
+        let minutes = m ? Number(m) : 0; // nếu không có phút thì mặc định 0
+
+        const upperMod = modifier.toUpperCase();
+        if (upperMod === "PM" && hours < 12) {
             hours += 12;
         }
-        if (modifier.toUpperCase() === "AM" && hours === 12) {
+        if (upperMod === "AM" && hours === 12) {
             hours = 0;
         }
 
