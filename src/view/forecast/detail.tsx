@@ -210,7 +210,7 @@ const DetailForecast: React.FC = () => {
                             <p className='text-xl  text-white max-md:text-center'>{formatDateVN(resForecast?.forecast.forecastday[selectDetailDay].date)}</p>
                         </div>
 
-                        <div className='mt-[10px] grid items-center gap-6 '>
+                        <div className='mt-[30px] grid items-center gap-6 '>
                             <div className="max-sm:hidden shadow-lg border-[1px] border-solid border-white/10 gap-1 relative lg:flex lg:justify-between max-lg:grid max-lg:grid-cols-8 max-lg:gap-2 rounded-[15px] bg-white/5 p-1 backdrop-blur-[10px]">
                                 {listSelectShowDetail.map((list, id1) => (
                                     <button key={id1}
