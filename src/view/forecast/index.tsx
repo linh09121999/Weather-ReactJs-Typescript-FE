@@ -70,7 +70,8 @@ const Home: React.FC = () => {
         getUVlevel,
         getRainLever,
         getVisibilityLevel,
-        checkTimeExp, setForecast
+        setForecast,
+        // checkTimeExp, 
     } = useGlobal();
 
     const Api_findForecast = async (q: string, days: number, aqi: string, alerts: string, lang: string) => {
@@ -238,10 +239,10 @@ const Home: React.FC = () => {
 
     useEffect(() => {
         // if (!resForecast || checkTimeExp()) {
-        const isTimeExp = checkTimeExp();
-        if (!isTimeExp) {
-            return;
-        }
+        // const isTimeExp = checkTimeExp();
+        // if (!isTimeExp) {
+        //     return;
+        // }
         Api_findForecast(formatCityName(selectQ!), selectDays, selectAqi, selectAlerts, selectLang)
         // }
     }, [])
